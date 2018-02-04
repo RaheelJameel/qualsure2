@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UniversityComponent } from './university.component';
 import { UniversityRoutingModule } from './university-routing.module';
+import { UniversityLearnMoreComponent } from './university-learn-more/university-learn-more.component';
 
 @NgModule({
   imports: [
@@ -11,10 +12,11 @@ import { UniversityRoutingModule } from './university-routing.module';
   ],
   declarations: [
     UniversityComponent,
+    UniversityLearnMoreComponent,
   ],
   exports: [
     UniversityComponent,
-    UniversityRoutingModule,
+    UniversityLearnMoreComponent,
   ]
 })
 export class UniversityModule { }
