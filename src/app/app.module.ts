@@ -33,7 +33,7 @@ import { VerifyModule } from './verify/verify.module';
     AppComponent,
   ],
   schemas: [
-    NO_ERRORS_SCHEMA
-  ]
+    NO_ERRORS_SCHEMA,
+  ],
 })
 export class AppModule { }

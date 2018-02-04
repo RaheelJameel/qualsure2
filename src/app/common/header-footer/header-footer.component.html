@@ -1,17 +1,81 @@
-<p>
-  This is the Header
-</p>
-<nav>
-  <a routerLink="/" routerLinkActive="active">Home</a>
-  <a routerLink="/univeristy" routerLinkActive="active">University</a>
-  <a routerLink="/student" routerLinkActive="active">Student</a>
-  <a routerLink="/verify" routerLinkActive="active">Verify</a>
-</nav>
+<header>
+  <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark bg-indigo scrolling-navbar navStyle" [containerInside]="false" style="padding-bottom: 12px !important; padding-top: 12px !important;">
+    <logo>
+      <a class="logo navbar-brand" href="#"><strong>QualSure</strong></a>
+    </logo>
+    <links>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active waves-light" mdbRippleRadius>
+          <a class="nav-link" routerLink="/" routerLinkActive="active">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item waves-light" mdbRippleRadius>
+          <a class="nav-link" routerLink="/university" routerLinkActive="active">University</a>
+        </li>
+        <li class="nav-item waves-light" mdbRippleRadius>
+          <a class="nav-link" routerLink="/student" routerLinkActive="active">Student</a>
+        </li>
+        <li class="nav-item waves-light" mdbRippleRadius>
+          <a class="nav-link" routerLink="/verify" routerLinkActive="active">Verify</a>
+        </li>
+      </ul>
+    </links>
+  </mdb-navbar>
+  
+</header>
 
-<ng-content>
+<div class='div-container'>
 
-</ng-content>
+  <ng-content>
 
-<p>
-  This is the Footer
-</p>
+  </ng-content>
+
+  
+<footer>
+        <footer class="footer-distributed">
+                
+                            <div class="footer-left">
+                
+                                <h3 style="font-family:'Times New Roman', Times, serif">Qual<span>Sure</span></h3>
+                
+                                <p class="footer-links">
+                                    <a routerLink="/">Home</a>
+                                    ·
+                                    <a routerLink="/verify">Verify</a>
+                                    ·
+                                    <a routerLink="/university">University</a>
+                                </p>
+                
+                                <p class="footer-company-name">QualSure &copy; 2017</p>
+                            </div>
+                
+                            <div class="footer-center">
+                
+                                <div>
+                                    <i class="fa fa-map-marker"></i>
+                                    <p><span>Hostel 6</span> GIKI, Topi</p>
+                                </div>
+                
+                                <div>
+                                    <i class="fa fa-phone"></i>
+                                    <p>+92 321 1234 567</p>
+                                </div>
+                
+                                <div>
+                                    <i class="fa fa-envelope"></i>
+                                    <p><a href="mailto:support@qualsure.com">support@qualsure.com</a></p>
+                                </div>
+                
+                            </div>
+                
+                            <div class="footer-right">
+                
+                                <p class="footer-company-about">
+                                    <span>About the company</span>
+                                    Established in 2017, QualSure provides a platform for universities to anchor their issued qualifications and/or degrees on the Ethereum blockchain. 
+                                </p>
+                
+                            </div>
+                
+                        </footer>
+</footer>
+</div>
