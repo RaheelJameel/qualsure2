@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UniversityComponent implements OnInit {
 
+  loggedIn: boolean;
+
   constructor() { }
 
   ngOnInit() {
