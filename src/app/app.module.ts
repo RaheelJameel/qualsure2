@@ -5,37 +5,29 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HeaderFooterComponent } from './common/header-footer/header-footer.component';
-import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
-
-import { HomeComponent } from './home/home.component';
-
-import { UniversityComponent } from './university/university.component';
-import { UniversityRoutingModule } from './university/university-routing.module';
-
-import { StudentComponent } from './student/student.component';
-
-import { VerifyComponent } from './verify/verify.component';
+import { AppCommonModule } from './common/app-common.module';
+import { HomeModule } from './home/home.module';
+import { UniversityModule } from './university/university.module';
+import { StudentModule } from './student/student.module';
+import { VerifyModule } from './verify/verify.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    UniversityComponent,
-    StudentComponent,
-    VerifyComponent,
-    HeaderFooterComponent,
-    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
-    UniversityRoutingModule,
+    AppCommonModule,
+    HomeModule,
+    UniversityModule,
+    StudentModule,
+    VerifyModule,
     AppRoutingModule,
   ],
   providers: [],
   bootstrap: [
     AppComponent,
-    ]
+  ]
 })
 export class AppModule { }
