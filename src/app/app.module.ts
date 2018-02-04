@@ -3,11 +3,19 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { UniversityComponent } from './university/university.component';
-import { StudentComponent } from './student/student.component';
-import { VerifyComponent } from './verify/verify.component';
+import { AppRoutingModule } from './app-routing.module';
+
 import { HeaderFooterComponent } from './common/header-footer/header-footer.component';
+import { PageNotFoundComponent } from './common/page-not-found/page-not-found.component';
+
+import { HomeComponent } from './home/home.component';
+
+import { UniversityComponent } from './university/university.component';
+import { UniversityRoutingModule } from './university/university-routing.module';
+
+import { StudentComponent } from './student/student.component';
+
+import { VerifyComponent } from './verify/verify.component';
 
 
 @NgModule({
@@ -17,12 +25,17 @@ import { HeaderFooterComponent } from './common/header-footer/header-footer.comp
     UniversityComponent,
     StudentComponent,
     VerifyComponent,
-    HeaderFooterComponent
+    HeaderFooterComponent,
+    PageNotFoundComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    UniversityRoutingModule,
+    AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+    ]
 })
 export class AppModule { }
