@@ -1,21 +1,21 @@
 <header>
   <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark bg-indigo navStyle" [containerInside]="false" style="padding-bottom: 12px !important; padding-top: 12px !important;">
     <logo>
-      <a class="logo navbar-brand" href="#"><strong>QualSure</strong></a>
+      <a class="logo navbar-brand" routerLink="/"><strong>QualSure</strong></a>
     </logo>
     <links>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active waves-light" mdbRippleRadius>
-          <a class="nav-link" routerLink="/" routerLinkActive="active">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item waves-light" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" mdbRippleRadius>
+          <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item waves-light" mdbRippleRadius>
-          <a class="nav-link" routerLink="/university" routerLinkActive="active">University</a>
+        <li class="nav-item waves-light" routerLinkActive="active" mdbRippleRadius>
+          <a class="nav-link" routerLink="/university">University</a>
         </li>
-        <li class="nav-item waves-light" mdbRippleRadius>
-          <a class="nav-link" routerLink="/student" routerLinkActive="active">Student</a>
+        <li class="nav-item waves-light" routerLinkActive="active" mdbRippleRadius>
+          <a class="nav-link" routerLink="/student">Student</a>
         </li>
-        <li class="nav-item waves-light" mdbRippleRadius>
-          <a class="nav-link" routerLink="/verify" routerLinkActive="active">Verify</a>
+        <li class="nav-item waves-light" routerLinkActive="active" mdbRippleRadius>
+          <a class="nav-link" routerLink="/verify">Verify</a>
         </li>
       </ul>
     </links>
