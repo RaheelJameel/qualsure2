@@ -23,24 +23,25 @@
           <!--Grid column-->
           <div class="col-md-12">
             <!-- Login form -->
-            <form>
+            <form [formGroup]="loginForm" novalidate>
               <div class="text-center cyan-text">
                 <h3><i class="fa fa-lock cyan-text"></i> Login:</h3>
               </div>
               <div class="md-form">
                 <i class="fa fa-envelope prefix grey-text"></i>
-                <input type="text" id="defaultForm-email" class="form-control" mdbActive>
+                <input type="text" id="defaultForm-email" class="form-control"  formControlName="email" mdbActive>
                 <label class="active" for="defaultForm-email">Your email</label>
               </div>
               <div class="md-form">
                 <i class="fa fa-lock prefix grey-text"></i>
-                <input type="password" id="defaultForm-pass" class="form-control" mdbActive>
+                <input type="password" id="defaultForm-pass" class="form-control" formControlName="password" mdbActive>
                 <label class="active" for="defaultForm-pass">Your password</label>
               </div>
               <div class="text-center">
-                <button class="btn btn-default waves-light" mdbRippleRadius>Login</button>
+                <button class="btn btn-default waves-light" (click) = "login()" [disabled] = 'loginForm.invalid' mdbRippleRadius>Login</button>
               </div>
             </form>
+            <p>Form value: {{ loginForm.value | json }}</p>
           </div>
           <!--Grid column-->
         </div>
@@ -52,32 +53,32 @@
   <div class="row">
     <div class="col-md-6" style="margin: auto">
       <!--Register form-->
-      <form>
+      <form [formGroup]="signupForm" >
         <div class="text-center deep-orange-text">
           <h3><i class="fa fa-user deep-orange-text"></i> Sign up:</h3>
         </div>
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
-          <input type="text" id="orangeForm-name" class="form-control" mdbActive>
+          <input type="text" id="orangeForm-name" class="form-control" mdbActive formControlName="name">
           <label for="orangeForm-name">Your name</label>
         </div>
         <div class="md-form">
           <i class="fa fa-envelope prefix grey-text"></i>
-          <input type="text" id="orangeForm-email" class="form-control" mdbActive>
+          <input type="text" id="orangeForm-email" class="form-control" mdbActive formControlName="email">
           <label for="orangeForm-email">Your email</label>
         </div>
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control" mdbActive>
+          <input type="password" id="orangeForm-pass" class="form-control" mdbActive formControlName="password">
           <label for="orangeForm-pass">Your password</label>
         </div>
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control" mdbActive>
+          <input type="password" id="orangeForm-pass" class="form-control" mdbActive formControlName="password">
           <label for="orangeForm-pass">Password again</label>
         </div>
         <div class="text-center">
-          <button class="btn btn-deep-orange waves-light" mdbRippleRadius>Proceed</button>
+          <button class="btn btn-deep-orange waves-light" [disabled] = 'signupForm.invalid' mdbRippleRadius>Proceed</button>
         </div>
       </form>
     </div>
