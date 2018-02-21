@@ -16,7 +16,13 @@ import { UniversityService } from './university/university.service';
 import { MessagesComponent } from './messages/messages.component';
 import { MessageService } from './messages/message.service';
 import { HttpClientModule } from "@angular/common/http";
-
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
+import { UniversityDegreeService } from './university/university-degree.service';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {Ng2Webstorage} from 'ngx-webstorage';
+import { CoolStorageModule } from 'angular2-cool-storage';
 
 @NgModule({
   declarations: [
@@ -33,8 +39,15 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
+    Ng2Webstorage,
+    CoolStorageModule,
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }),
+    
+    Ng2OrderModule,
+    Ng2SearchPipeModule,
   ],
-  providers: [UniversityService, MessageService,HttpClientModule],
+  providers: [UniversityService, MessageService,HttpClientModule, UniversityDegreeService],
   bootstrap: [
     AppComponent,
   ],

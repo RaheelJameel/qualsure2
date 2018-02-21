@@ -6,6 +6,16 @@ import { UniversityComponent } from './university.component';
 import { UniversityRoutingModule } from './university-routing.module';
 import { UniversityLearnMoreComponent } from './university-learn-more/university-learn-more.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { UniversityViewDegreesComponent } from './university-view-degrees/university-view-degrees.component';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FormsModule  } from "@angular/forms";     
+import { TokenStorage } from "./token.storage";
+import { AuthGuard } from "./auth-guard.service";
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Interceptor } from './university.interceptor';
+import {Ng2Webstorage} from 'ngx-webstorage';
+import { CoolStorageModule } from 'angular2-cool-storage';
 
 @NgModule({
   imports: [
@@ -13,15 +23,26 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     UniversityRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    Ng2OrderModule,
+    Ng2SearchPipeModule,
+    FormsModule,
+    Ng2Webstorage,
+    CoolStorageModule
   ],
   declarations: [
     UniversityComponent,
     UniversityLearnMoreComponent,
+    UniversityViewDegreesComponent,
   ],
   exports: [
     UniversityComponent,
     UniversityLearnMoreComponent,
+    UniversityViewDegreesComponent,
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule, TokenStorage,AuthGuard,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: Interceptor,
+    multi: true
+  }  ],
 })
 export class UniversityModule { }

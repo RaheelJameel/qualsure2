@@ -18,6 +18,10 @@
           <a class="nav-link" routerLink="/verify">Verify</a>
         </li>
       </ul>
+      <ul class="navbar-nav">
+        <a *ngIf="isLoggedIn" class="nav-link" (click)="logout()">Log out</a>
+
+      </ul>
     </links>
   </mdb-navbar>
   

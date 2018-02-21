@@ -1,0 +1,52 @@
+<div class="light-font">
+    <ol class="breadcrumb primary-color">
+        <li class="breadcrumb-item"><a class="white-text" routerLink="/university">University Home</a></li>
+        <li class="breadcrumb-item active">View All Degrees</li>
+    </ol>
+</div>
+
+<section class="">
+    <table class="table  table-hover">
+      <thead>
+        <tr>
+          <th>#
+            </th>
+          <th>First Name
+            </th>
+          <th>Last Name
+           
+          </th>
+          <th>Graduation Year
+           
+          </th>
+          <th     style="text-align: -webkit-right;">
+           <input class="form-control" type="search" name="search" [(ngModel)]="filter">      
+
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let degree of degrees | filter:filter;" style="display:table"
+        (click)="goToDetail(degree.id)">
+          <!-- <a routerLink="../detail/{{degree.id}}"> -->
+          <th scope="row">{{degree.id}}</th>
+          <td>{{degree.firstName}}</td>
+          <td>{{degree.lastName}}</td>
+          <td>{{degree.gradYear}}</td>
+          
+            <td><button class="delete" title="delete degree"
+              (click)="delete(degree)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </td>
+          <!-- </a> -->
+        </tr>
+
+              
+      </tbody>
+    </table>
+   
+</section>
+
+<br>
+<br>
+
+
