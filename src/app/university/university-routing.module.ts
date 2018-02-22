@@ -7,7 +7,6 @@ import { UniversityViewDegreesComponent} from './university-view-degrees/univers
 import {AuthGuard} from './auth-guard.service'
 const univeristyRoutes: Routes = [
   { path: 'university',  component: UniversityComponent },
-  { path: 'university/:id',  component: UniversityComponent, canActivate: [AuthGuard] },
   { path: 'university/explore',  component: UniversityLearnMoreComponent },
   { path: 'university/:id/degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
 ];

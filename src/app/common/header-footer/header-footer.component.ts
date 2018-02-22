@@ -8,6 +8,8 @@ import {UniversityService} from '../../university/university.service';
 export class HeaderFooterComponent implements OnInit {
   isLoggedIn: boolean;
   constructor(private universityService: UniversityService) { 
+    this.universityService.loginObservable$.subscribe(data => {if(data) this.isLoggedIn = true;
+    console.log("ddddaaa")});
 
   }
 

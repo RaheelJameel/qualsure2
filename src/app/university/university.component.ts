@@ -22,14 +22,19 @@ export class UniversityComponent implements OnInit {
    private location: Location, private activatedRoute: ActivatedRoute, private token: TokenStorage, private header: HeaderFooterComponent) {
     this.universityInstance=null;
     this.checkLoginStatus();
+    this.universityService.logoutObservable$.subscribe(data => {if(data) {this.loggedIn = false
+    this.clearForms();
+    }});
     this.createLoginForm();
     this.createSignupForm();
    }
 
   ngOnInit() {
-    this.checkLoginStatus();
   }
-
+  clearForms() {
+    this.loginForm.reset();
+    this.signupForm.reset();
+  }
   createLoginForm(){
     this.loginForm=this.fb.group({
       username: ['', [Validators.required]],
@@ -51,8 +56,8 @@ export class UniversityComponent implements OnInit {
       response => {
         console.log(response);
       if(response){
-        this.router.navigate(['/university',this.token.getId()]); 
         this.loggedIn=true;
+        console.log("logged in");
       }},
        error => {
          if(error.error.error == "Unauthorized" || error.error.status == 401) this.loginError="Invalid username or password";
@@ -72,8 +77,7 @@ export class UniversityComponent implements OnInit {
       console.log(response.status);
 
     if(response.status == 201){
-            console.log(response.headers.status);
- 
+      console.log(response.headers.status);
       this.loginForm.value.username=this.signupForm.value.username;
       this.loginForm.value.password=this.signupForm.value.password;
       this.login();
@@ -93,23 +97,18 @@ export class UniversityComponent implements OnInit {
     });
   }
   checkLoginStatus(){
+    
+    console.log("correct");
+
     if(this.universityService.checkLogin()){
-      let checkId = this.activatedRoute.snapshot.toString().split("/");
-      let id=this.token.getId();
-      console.log("in checking");
-      if(checkId[checkId.length - 1] == id ){
-        
-      }
-      else{
-        this.loggedIn=true;
-        this.header.isLoggedIn=true;
-        this.getUniversityInfo(id);
-        this.router.navigate(['/university',id]); 
-        console.log("correct");
-      }
+      
+       this.loggedIn=true;
+       this.getUniversityInfo(this.token.getId());
+       
     }
     else{
       this.loggedIn=false;
+       return false;
     }
   }
 }

@@ -10,6 +10,7 @@ import { Response } from '@angular/http';
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 import {TokenStorage} from "./token.storage";
 import { Router, ActivatedRoute }            from '@angular/router';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UniversityService {
@@ -20,6 +21,10 @@ export class UniversityService {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   observe: "response" as 'body',
   };
+  private logoutObservable = new BehaviorSubject<any>(false);
+  public logoutObservable$ = this.logoutObservable.asObservable();
+  private loginObservable = new BehaviorSubject<any>(false);
+  public loginObservable$ = this.loginObservable.asObservable();
   /**
  * Handle Http operation that failed.
  * Let the app continue.
@@ -48,20 +53,21 @@ private handleError (operation = 'operation', result?: any) {
     this.messageService.add('University Service: ' + message);
   }
   authenticate (loginDetails: any): Observable<any> {
-  let Url = this.universityUrl + '/token/generate-token'
-  return this.http.post(Url, loginDetails, this.httpOptions).
-  pipe(
-    tap((auth: any) => {
-      this.log(`auth req sent for user`);
-      console.log(auth);
-      this.isloggedin=true;
-      this.tokenStorage.saveToken(auth.body.token);
-      let id=auth.body.location.split("/");
-      id=id[id.length-1];
-      this.tokenStorage.saveId(id);
-    }),
-    catchError(this.handleError('auth'))
-  );
+    let Url = this.universityUrl + '/token/generate-token'
+    return this.http.post(Url, loginDetails, this.httpOptions).
+    pipe(
+      tap((auth: any) => {
+        this.log(`auth req sent for user`);
+        console.log(auth);
+        this.isloggedin=true;
+        this.tokenStorage.saveToken(auth.body.token);
+        let id=auth.body.location.split("/");
+        id=id[id.length-1];
+        this.tokenStorage.saveId(id);
+        this.loginObservable.next(true);  
+      }),
+      catchError(this.handleError('auth'))
+    );
 }
 
  signupUser (signupDetails: any): Observable<any> {
@@ -82,8 +88,6 @@ private handleError (operation = 'operation', result?: any) {
   }
   getUniversityInfo(id: any): Observable<any> {
     let Url = this.universityUrl + '/universities/'+id;
-    let token=this.tokenStorage.getToken();
-    this.httpOptions.headers.append("Authorization","Bearer `${this .token.getToken()}`");
     return this.http.get(Url,this.httpOptions)
       .pipe(
         tap((universiyInfo: any) => this.log(`fetched University Info`)),
@@ -93,14 +97,20 @@ private handleError (operation = 'operation', result?: any) {
   logout(){
     this.tokenStorage.signOut();
     this.isloggedin=false;
+    this.inforSubs();
     this.router.navigate(["/university"]);
   }
   checkLogin() : boolean{
     if(this.tokenStorage.getToken() && this.tokenStorage.getId()){
       this.isloggedin=true;
+      this.loginObservable.next(true);  
       return true;
     }
-    return false;
+    else
+      return false;
+  }
+  inforSubs() { 
+    this.logoutObservable.next(true);  
   }
 }
 
