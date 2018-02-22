@@ -23,6 +23,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { CoolStorageModule } from 'angular2-cool-storage';
+import { StudentService } from './student/student.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { CoolStorageModule } from 'angular2-cool-storage';
     Ng2OrderModule,
     Ng2SearchPipeModule,
   ],
-  providers: [UniversityService, MessageService,HttpClientModule, UniversityDegreeService],
+  providers: [UniversityService, MessageService,HttpClientModule, UniversityDegreeService, StudentService],
   bootstrap: [
     AppComponent,
   ],

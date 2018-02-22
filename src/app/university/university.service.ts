@@ -53,7 +53,7 @@ private handleError (operation = 'operation', result?: any) {
   pipe(
     tap((auth: any) => {
       this.log(`auth req sent for user`);
-      console.log(auth.body);
+      console.log(auth);
       this.isloggedin=true;
       this.tokenStorage.saveToken(auth.body.token);
       let id=auth.body.location.split("/");
@@ -80,7 +80,7 @@ private handleError (operation = 'operation', result?: any) {
         catchError(this.handleError('getDegrees', []))
       );
   }
-  getUniversityInfo(id: number): Observable<any> {
+  getUniversityInfo(id: any): Observable<any> {
     let Url = this.universityUrl + '/universities/'+id;
     let token=this.tokenStorage.getToken();
     this.httpOptions.headers.append("Authorization","Bearer `${this .token.getToken()}`");

@@ -1,3 +1,54 @@
-<p>
-  student works!
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <!-- Card -->
+    <div class="card card-image mb-3" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);background-size: cover;">
+      <!-- Content -->
+      <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+        <div style="margin: auto">
+          <h5 class="pink-text"><i class="fa fa-pie-chart"></i> For Students</h5>
+          <h3 class="card-title pt-2"><strong>Decentralized Degrees</strong></h3>
+          <p>Your Degree verification and QR Code is just three steps away!</p>
+          <p>Select Your University <i class="fa fa-chevron-right" aria-hidden="true"></i> Fill your degree details <i class="fa fa-chevron-right" aria-hidden="true"></i> Get your QR code!</p>
+          
+        </div>
+      </div>
+      <!-- Content -->
+    </div>
+  </div>
+</div>
+
+<main class="text-left py-5"> <!-- py-5">  -->
+  <div class="container alt-style">
+      <blockquote class="blockquote bq-success">
+          <p class="bq-title">Select Your University</p>
+      </blockquote>
+      <div class = "text-center">
+        <table class="table table-bordered table-hover">
+          <thead>
+              <th     style="text-align: -webkit-right;">
+                  <input class="form-control" type="search" name="search" placeholder="Search" [(ngModel)]="filter">      
+      
+                </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let university of universityList | filter:filter;" (click)="select(university.id)">
+              {{university.name}}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</div>
+</main>
+<!-- <div class="btn-group" dropdown>
+
+  <!--Trigger-->
+  <!-- <button dropdownToggle class="btn btn-primary dropdown-toggle waves-light" type="button" mdbRippleRadius>
+      Dropdown primary
+  </button> -->
+
+  <!--Menu-->
+  <!-- <div class="dropdown-menu dropdown-primary" >
+      <a class="dropdown-item" *ngFor="let university of universityList" routerLink="/{{university.id}}">{{university.name}}</a>
+      
+  </div>
+</div> --> 

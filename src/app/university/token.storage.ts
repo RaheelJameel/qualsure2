@@ -23,6 +23,7 @@ export class TokenStorage {
   }
   public saveId(userId: string) {
     this.localStorage.removeItem(USER_ID);
+    console.log("from storage         " +userId);
     this.localStorage.setItem(USER_ID,  userId);
   }
   public getToken(): string {

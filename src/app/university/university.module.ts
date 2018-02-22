@@ -16,6 +16,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from './university.interceptor';
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { CoolStorageModule } from 'angular2-cool-storage';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   imports: [
@@ -27,7 +28,9 @@ import { CoolStorageModule } from 'angular2-cool-storage';
     Ng2SearchPipeModule,
     FormsModule,
     Ng2Webstorage,
-    CoolStorageModule
+    CoolStorageModule,
+    MDBBootstrapModule.forRoot(),
+
   ],
   declarations: [
     UniversityComponent,

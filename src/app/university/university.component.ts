@@ -56,7 +56,8 @@ export class UniversityComponent implements OnInit {
       }},
        error => {
          if(error.error.error == "Unauthorized" || error.error.status == 401) this.loginError="Invalid username or password";
-         console.error(error)
+         console.error(error);
+         this.loginError=error.message;
        }
     );
   }
@@ -81,7 +82,7 @@ export class UniversityComponent implements OnInit {
          console.error(error)
        });
   }
-  getUniversityInfo(id: number){
+  getUniversityInfo(id: any){
     this.universityService.getUniversityInfo(id)
     .subscribe(response => {
       this.universityInstance=response.body;
@@ -94,9 +95,9 @@ export class UniversityComponent implements OnInit {
   checkLoginStatus(){
     if(this.universityService.checkLogin()){
       let checkId = this.activatedRoute.snapshot.toString().split("/");
-      let id=+this.token.getId();
+      let id=this.token.getId();
       console.log("in checking");
-      if(+checkId[checkId.length - 1] == id ){
+      if(checkId[checkId.length - 1] == id ){
         
       }
       else{
