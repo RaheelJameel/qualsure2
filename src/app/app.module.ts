@@ -7,6 +7,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { CommonService } from './services/common.service';
+
 import { AppCommonModule } from './common/app-common.module';
 import { HomeModule } from './home/home.module';
 import { UniversityModule } from './university/university.module';
@@ -48,7 +50,14 @@ import { StudentService } from './student/student.service';
     Ng2OrderModule,
     Ng2SearchPipeModule,
   ],
-  providers: [UniversityService, MessageService,HttpClientModule, UniversityDegreeService, StudentService],
+  providers: [
+    UniversityService,
+    MessageService,
+    HttpClientModule,
+    UniversityDegreeService,
+    StudentService,
+    CommonService,
+  ],
   bootstrap: [
     AppComponent,
   ],

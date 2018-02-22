@@ -17,6 +17,8 @@ import { Interceptor } from './university.interceptor';
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { CoolStorageModule } from 'angular2-cool-storage';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { UniversityEditFormComponent } from './university-edit-form/university-edit-form.component';
+import { DynamicFieldInfoComponent } from './university-edit-form/dynamic-field-info/dynamic-field-info.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     UniversityComponent,
     UniversityLearnMoreComponent,
     UniversityViewDegreesComponent,
+    UniversityEditFormComponent,
+    DynamicFieldInfoComponent,
   ],
   exports: [
     UniversityComponent,

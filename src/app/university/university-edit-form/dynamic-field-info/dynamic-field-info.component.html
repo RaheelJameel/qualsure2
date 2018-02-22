@@ -1,0 +1,32 @@
+<form [formGroup]="fieldInfoForm">
+  <div>
+    <label>Field&nbsp;Name</label>
+    <input type="text" formControlName="fieldName">
+    <div *ngIf="(fieldInfoForm.get('fieldName').touched || formInvalid) && fieldInfoForm.get('fieldName').invalid">
+      <small style="color:crimson">*Field&nbsp;Name is required</small>
+    </div>
+  </div>
+
+  <div>
+    <label>Field&nbsp;Type</label>
+    <select formControlName="fieldType">
+      <option value="Text">Text</option>
+      <option value="Number">Number</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Field&nbsp;Validations</label>
+    <select formControlName="fieldValidations">
+      <option value="None">None</option>
+      <option value="[A-Za-z0-9]+">AlphaNumeric</option>
+      <option value="[A-Za-z]+">Alphabets Only</option>
+      <option value="[0-4].?[0-9][0-9]">0.00 - 4.00</option>
+    </select>
+  </div>
+
+  <div>
+    <label>Custom&nbsp;Error&nbsp;Message</label>
+    <input type="text" formControlName="fieldErrorMsg">
+  </div>
+</form>
