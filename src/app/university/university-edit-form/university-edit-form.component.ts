@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 
-import { CommonService, FieldGroup } from '../../services/common.service';
+import { CommonService, FieldGroup, FieldValidator } from '../../services/common.service';
 import { EmptyStringValidator } from '../../common/validators/empty-string-validator';
 
 @Component({
@@ -15,6 +15,7 @@ export class UniversityEditFormComponent implements OnInit {
   formModel: FieldGroup[];
   requiredFields: number;
   formInvalid: boolean;
+  defaultFieldValidators: FieldValidator[];
 
   constructor(
     private commonService: CommonService,
@@ -22,6 +23,7 @@ export class UniversityEditFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getDefaultFieldValidators();
     this.requiredFields = 4;
     this.editForm = this.formBuilder.group({
       fieldArray: new FormArray([]),
@@ -37,7 +39,7 @@ export class UniversityEditFormComponent implements OnInit {
     return this.formBuilder.group({
       fieldName: [fieldGroup ? fieldGroup.name : '', [Validators.required, EmptyStringValidator]],
       fieldType: [fieldGroup ? fieldGroup.type : 'Text'],
-      fieldValidations: [fieldGroup ? fieldGroup.validator : 'None'],
+      fieldValidations: [fieldGroup ? (fieldGroup.validator ? fieldGroup.validator.name : 'None') : 'None'],
       fieldErrorMsg: [fieldGroup ? fieldGroup.customError : '']
     });
   }
@@ -59,6 +61,10 @@ export class UniversityEditFormComponent implements OnInit {
     }
   }
 
+  getDefaultFieldValidators() {
+    this.defaultFieldValidators = this.commonService.getDefaultFieldValidators();
+  }
+
   get editFieldArray(): FormArray {
     return this.editForm.get('fieldArray') as FormArray;
   }
@@ -72,10 +78,16 @@ export class UniversityEditFormComponent implements OnInit {
       return {
         name: value.fieldName,
         type: value.fieldType,
-        validator: value.fieldValidations,
+        validator: this.searchFieldValidators(value.fieldValidations),
         customError: value.fieldErrorMsg
       };
     });
+  }
+
+  searchFieldValidators(searchName: string): FieldValidator {
+    return this.defaultFieldValidators.filter((fieldValidator: FieldValidator) => {
+      return fieldValidator.name === searchName;
+    })[0];
   }
 
   save() {

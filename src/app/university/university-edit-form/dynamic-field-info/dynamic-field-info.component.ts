@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
+import { CommonService, FieldValidator } from '../../../services/common.service';
+
 @Component({
   selector: 'app-dynamic-field-info',
   templateUrl: './dynamic-field-info.component.html',
@@ -12,8 +14,11 @@ export class DynamicFieldInfoComponent implements OnInit {
   @Input() fieldIndex: number;
   @Input() requiredFields: number;
   @Input() formInvalid: boolean;
+  @Input() defaultFieldValidators: FieldValidator[];
 
-  constructor() { }
+  constructor(
+    private commonService: CommonService,
+  ) { }
 
   ngOnInit() {
     this.disableFields();
@@ -29,5 +34,4 @@ export class DynamicFieldInfoComponent implements OnInit {
       this.getFormControl('fieldType').disable();
     }
   }
-
 }

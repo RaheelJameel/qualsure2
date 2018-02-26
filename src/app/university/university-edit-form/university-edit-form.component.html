@@ -2,7 +2,7 @@
   <div *ngFor="let fieldGroup of editFieldArray.controls; let i=index">
     <hr>
     <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
-      [formInvalid]="formInvalid"></app-dynamic-field-info>
+      [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators"></app-dynamic-field-info>
     <button *ngIf="i>3" (click)="removeField(i)"
       type="button" class="btn btn-tb btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Remove Field">
       X

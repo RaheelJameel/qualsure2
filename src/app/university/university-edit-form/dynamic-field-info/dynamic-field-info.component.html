@@ -18,10 +18,7 @@
   <div>
     <label>Field&nbsp;Validations</label>
     <select formControlName="fieldValidations">
-      <option value="None">None</option>
-      <option value="[A-Za-z0-9]+">AlphaNumeric</option>
-      <option value="[A-Za-z]+">Alphabets Only</option>
-      <option value="[0-4].?[0-9][0-9]">0.00 - 4.00</option>
+      <option *ngFor="let fieldValidator of defaultFieldValidators" [value]="fieldValidator.name">{{fieldValidator.name}}</option>
     </select>
   </div>
 
