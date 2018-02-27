@@ -1,21 +1,21 @@
 <form [formGroup]="editForm">
+  <br>
+  <br>
   <div *ngFor="let fieldGroup of editFieldArray.controls; let i=index">
-    <hr>
     <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
-      [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators"></app-dynamic-field-info>
+      [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators" [id]="i"></app-dynamic-field-info>
     <button *ngIf="i>3" (click)="removeField(i)"
       type="button" class="btn btn-tb btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Remove Field">
       X
     </button>
     <br>
     <br>
-    <br>
   </div>
-  <div>
-    <button (click)="addField()">Add Field</button>
+  <div class="center-on-small-only">
+    <a class="btn btn-primary waves-light" mdbRippleRadius (click)="addField()">Add Field</a>
   </div>
-  <div>
-    <button (click)="save()">Save Form</button>
+  <div class="center-on-small-only">
+    <a class="btn btn-primary waves-light" mdbRippleRadius (click)="save()">Save Form</a>
     <div *ngIf="formInvalid && editForm.invalid">
       <small style="color:crimson">*Form is Invalid</small>
     </div>

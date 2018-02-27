@@ -22,11 +22,11 @@ export class UniversityComponent implements OnInit {
    private location: Location, private activatedRoute: ActivatedRoute, private token: TokenStorage, private header: HeaderFooterComponent) {
     this.universityInstance=null;
     this.checkLoginStatus();
+    this.createLoginForm();
+    this.createSignupForm();
     this.universityService.logoutObservable$.subscribe(data => {if(data) {this.loggedIn = false
     this.clearForms();
     }});
-    this.createLoginForm();
-    this.createSignupForm();
    }
 
   ngOnInit() {

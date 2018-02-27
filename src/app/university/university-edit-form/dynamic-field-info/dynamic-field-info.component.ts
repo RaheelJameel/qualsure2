@@ -15,6 +15,9 @@ export class DynamicFieldInfoComponent implements OnInit {
   @Input() requiredFields: number;
   @Input() formInvalid: boolean;
   @Input() defaultFieldValidators: FieldValidator[];
+  @Input() id = 0;
+  optionsSelect1;
+  optionsSelect2;
 
   constructor(
     private commonService: CommonService,

@@ -1,29 +1,71 @@
-<form [formGroup]="fieldInfoForm">
-  <div>
-    <label>Field&nbsp;Name</label>
-    <input type="text" formControlName="fieldName">
-    <div *ngIf="(fieldInfoForm.get('fieldName').touched || formInvalid) && fieldInfoForm.get('fieldName').invalid">
-      <small style="color:crimson">*Field&nbsp;Name is required</small>
-    </div>
-  </div>
+<div class="row">
 
-  <div>
-    <label>Field&nbsp;Type</label>
-    <select formControlName="fieldType">
-      <option value="Text">Text</option>
-      <option value="Number">Number</option>
-    </select>
-  </div>
+        <!--Grid column-->
+        <div class="col-md-8 col-xl-9">
+            <form [formGroup]="fieldInfoForm">
 
-  <div>
-    <label>Field&nbsp;Validations</label>
-    <select formControlName="fieldValidations">
-      <option *ngFor="let fieldValidator of defaultFieldValidators" [value]="fieldValidator.name">{{fieldValidator.name}}</option>
-    </select>
-  </div>
+                <!--Grid row-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-form">
+                            <input mdbActive type="text" [id]="'dynamic-field-info-fieldName'+id" class="form-control" formControlName="fieldName">
+                            <label [for]="'dynamic-field-info-fieldName'+id" class="">Field&nbsp;Name</label>
+                            <div *ngIf="(fieldInfoForm.get('fieldName').touched || formInvalid) && fieldInfoForm.get('fieldName').invalid">
+                              <small style="color:crimson">*Field&nbsp;Name is required</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Grid row-->
 
-  <div>
-    <label>Custom&nbsp;Error&nbsp;Message</label>
-    <input type="text" formControlName="fieldErrorMsg">
-  </div>
-</form>
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="">
+                            <div class="">
+                              <label>Field&nbsp;Type</label>
+                              <select class="browser-default" formControlName="fieldType">
+                                <option value="Text">Text</option>
+                                <option value="Number">Number</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-md-6">
+                        <div class="">
+                            <div class="">
+                              <label>Field&nbsp;Validations</label>
+                              <select class="browser-default" formControlName="fieldValidations">
+                                <option *ngFor="let fieldValidator of defaultFieldValidators" [value]="fieldValidator.name">{{fieldValidator.name}}</option>
+                              </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <input mdbActive type="text" [id]="'dynamic-field-info-fieldErrorMsg'+id" class="form-control" formControlName="fieldErrorMsg">
+                            <label [for]="'dynamic-field-info-fieldErrorMsg'+id">Custom&nbsp;Error&nbsp;Message</label>
+                        </div>
+
+                    </div>
+                </div>
+                <!--Grid row-->
+
+            </form>
+        </div>
+</div>

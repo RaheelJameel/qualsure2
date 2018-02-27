@@ -1,5 +1,4 @@
 <div *ngIf="!loggedIn">
-<div>
   <div class="row">
     <div class="col-md-8">
       <!-- Card -->
@@ -92,30 +91,12 @@
     </div>
   </div>
 </div>
-<div>
-  <h2>
-    University Home Content here
-  </h2>
-  
-<!--Panel-->
-  <div class="card" style="width: 22rem; margin: auto;">
-    <div class="card-header primary-color white-text">
-      Degree Form
-    </div>
-    <div class="card-body">
-      <p class="card-text">You can customise the degrees according to your liking here</p>
-      <a class="btn btn-primary waves-light" routerLink="./edit-form" mdbRippleRadius>Edit Form</a>
-    </div>
-  </div>
-  <!--/.Panel-->
-</div>
-<div class="light-font">
-    <ol class="breadcrumb primary-color">
-        <li class="breadcrumb-item active">University Home</li>
-    </ol>
-</div>
-</div>
 <div *ngIf="loggedIn">
+  <div class="light-font">
+    <ol class="breadcrumb primary-color">
+        <li class="breadcrumb-item">University Home</li>
+    </ol>
+  </div>  
   <div class="card card-image" style="background-image: url('/assets/images/university.jpg');background-size: cover;">
       <div class="text-white text-center d-flex align-items-center rgba-indigo-strong py-5 px-4">
           <div class="py-5" style="margin: auto">
@@ -124,9 +105,23 @@
               <h3 class="card-title pt-2"><strong>Decentralized Degrees</strong></h3>
               <p>Tired of processing an infinity of employer requests to access your records?</p>
               <h5><strong>We have got YOU covered! </strong></h5><br>
-              <a class="btn btn-deep-purple waves-light" routerLink="./addNewDegree" mdbRippleRadius><i class="fa fa-clone left"></i> Add New Degree</a>
+              <a class="btn btn-deep-purple waves-light" routerLink="./add-degree" mdbRippleRadius><i class="fa fa-clone left"></i> Add New Degree</a>
               <a class="btn btn-deep-purple waves-light" routerLink="./degrees" mdbRippleRadius><i class="fa fa-clone left"></i> View All Degrees</a>
           </div>
       </div>
+  </div>
+    <br>
+  <div>
+  <!--Panel-->
+    <div class="card" style="width: 22rem; margin: auto;">
+      <div class="card-header primary-color white-text">
+        Degree Form
+      </div>
+      <div class="card-body">
+        <p class="card-text">You can customise the degrees according to your liking here</p>
+        <a class="btn btn-primary waves-light" routerLink="./edit-form" mdbRippleRadius>Edit Form</a>
+      </div>
+    </div>
+    <!--/.Panel-->
   </div>
 </div>

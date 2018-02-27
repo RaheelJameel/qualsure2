@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { CommonService, FieldGroup, FieldValidator } from '../../services/common.service';
 import { EmptyStringValidator } from '../../common/validators/empty-string-validator';
@@ -18,6 +19,7 @@ export class UniversityEditFormComponent implements OnInit {
   defaultFieldValidators: FieldValidator[];
 
   constructor(
+    private router: Router,
     private commonService: CommonService,
     private formBuilder: FormBuilder,
   ) { }
@@ -95,6 +97,7 @@ export class UniversityEditFormComponent implements OnInit {
     if (this.editForm.valid) {
       console.log(this.formApiValue);
       this.commonService.setForm(this.formApiValue);
+      this.router.navigate(['/university']);
     } else {
       this.formInvalid = true;
     }

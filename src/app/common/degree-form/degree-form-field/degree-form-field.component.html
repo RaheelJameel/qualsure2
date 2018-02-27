@@ -1,0 +1,7 @@
+<div class="md-form">
+  <input [id]="'degree-form-field'+id" class="form-control" mdbActive [type]="type" [formControl]="fieldControl">
+  <label [for]="'degree-form-field'+id">{{label}}</label>
+  <div>
+    <small *ngIf="fieldControl.invalid && fieldControl.touched" style="color:crimson">*{{errorMessage}}</small>
+  </div>
+</div>
