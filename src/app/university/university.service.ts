@@ -11,6 +11,7 @@ import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 import {TokenStorage} from "./token.storage";
 import { Router, ActivatedRoute }            from '@angular/router';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class UniversityService {
@@ -21,10 +22,12 @@ export class UniversityService {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   observe: "response" as 'body',
   };
-  private logoutObservable = new BehaviorSubject<any>(false);
+  private logoutObservable = new ReplaySubject<any>(1);
   public logoutObservable$ = this.logoutObservable.asObservable();
   private loginObservable = new BehaviorSubject<any>(false);
   public loginObservable$ = this.loginObservable.asObservable();
+  public static EMPTY : any;
+
   /**
  * Handle Http operation that failed.
  * Let the app continue.
@@ -86,13 +89,35 @@ private handleError (operation = 'operation', result?: any) {
         catchError(this.handleError('getDegrees', []))
       );
   }
+   getInfo=  new Observable<any>((observer) => {
+    if(this.university) {
+      observer.next({"body" : this.university});
+      observer.complete();
+    }
+    else {
+       this.getUniversityInfo(this.tokenStorage.getId()).subscribe( 
+        response => {observer.next(response); observer.complete();},
+        error => {observer.error(error)})
+    }
+  })
   getUniversityInfo(id: any): Observable<any> {
     let Url = this.universityUrl + '/universities/'+id;
     return this.http.get(Url,this.httpOptions)
       .pipe(
-        tap((universiyInfo: any) => this.log(`fetched University Info`)),
+        tap((universityInfo: any) =>{ 
+          this.log(`fetched University Info`);
+          this.university=new University;
+          this.university.id=universityInfo.body.id;
+          this.university.name=universityInfo.body.name;
+          this.university.formFields=universityInfo.body.formFields;
+          this.university.firstTime=universityInfo.body.firstTime;
+        }
+      ),
         catchError(this.handleError('University Info'))
       )
+  }
+  getFormFields(){
+    
   }
   logout(){
     this.tokenStorage.signOut();
@@ -110,7 +135,9 @@ private handleError (operation = 'operation', result?: any) {
       return false;
   }
   inforSubs() { 
-    this.logoutObservable.next(true);  
+    console.log("in infor")
+    this.logoutObservable.next(true);
+    this.logoutObservable.next(false);
   }
 }
 

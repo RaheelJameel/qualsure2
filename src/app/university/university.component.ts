@@ -6,7 +6,9 @@ import { Router, ActivatedRoute }            from '@angular/router';
 import { Location } from '@angular/common';
 import {TokenStorage} from "./token.storage";
 import { RouterModule, Routes } from '@angular/router';
-import {HeaderFooterComponent} from '../common/header-footer/header-footer.component'
+import {HeaderFooterComponent} from '../common/header-footer/header-footer.component';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-university',
   templateUrl: './university.component.html',
@@ -18,18 +20,26 @@ export class UniversityComponent implements OnInit {
   loginForm: FormGroup;
   signupForm: FormGroup;
   loginError: string;
+  logoutEvent: any;
+
   constructor(private fb: FormBuilder, private universityService: UniversityService,private router:Router,
-   private location: Location, private activatedRoute: ActivatedRoute, private token: TokenStorage, private header: HeaderFooterComponent) {
+   private location: Location, private activatedRoute: ActivatedRoute, private token: TokenStorage, private header: HeaderFooterComponent, private ref: ChangeDetectorRef) {
     this.universityInstance=null;
+    
     this.checkLoginStatus();
     this.createLoginForm();
     this.createSignupForm();
-    this.universityService.logoutObservable$.subscribe(data => {if(data) {this.loggedIn = false
+    this.logoutEvent=this.universityService.logoutObservable$.subscribe(data => { if(data) {this.loggedIn = false;
+      console.log("here");
     this.clearForms();
+    
     }});
    }
 
   ngOnInit() {
+  }
+  ngOnDestroy(){
+    this.logoutEvent.unsubscribe();
   }
   clearForms() {
     this.loginForm.reset();
@@ -88,8 +98,9 @@ export class UniversityComponent implements OnInit {
        });
   }
   getUniversityInfo(id: any){
-    this.universityService.getUniversityInfo(id)
+    this.universityService.getInfo
     .subscribe(response => {
+      if(response.body)
       this.universityInstance=response.body;
       console.log(response);
     },
@@ -98,16 +109,14 @@ export class UniversityComponent implements OnInit {
     });
   }
   checkLoginStatus(){
-    
-    console.log("correct");
-
     if(this.universityService.checkLogin()){
-      
+      console.log("correct");
        this.loggedIn=true;
        this.getUniversityInfo(this.token.getId());
        
     }
     else{
+
       this.loggedIn=false;
        return false;
     }

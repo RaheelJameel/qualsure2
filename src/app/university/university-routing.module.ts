@@ -12,9 +12,9 @@ import {AuthGuard} from './auth-guard.service';
 const univeristyRoutes: Routes = [
   { path: 'university',  component: UniversityComponent },
   { path: 'university/explore',  component: UniversityLearnMoreComponent },
-  { path: 'university/:id/degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
-  { path: 'university/edit-form',  component: UniversityEditFormComponent },
-  { path: 'university/add-degree',  component: DegreeFormComponent },
+  { path: 'university/degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
+  { path: 'university/edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuard] },
+  { path: 'university/add-degree',  component: DegreeFormComponent , canActivate: [AuthGuard]  },
 ];
 
 @NgModule({
