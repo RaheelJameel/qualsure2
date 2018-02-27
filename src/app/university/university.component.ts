@@ -57,6 +57,7 @@ export class UniversityComponent implements OnInit {
         console.log(response);
       if(response){
         this.loggedIn=true;
+        this.getUniversityInfo(this.token.getId());
         console.log("logged in");
       }},
        error => {

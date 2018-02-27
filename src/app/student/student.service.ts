@@ -14,7 +14,7 @@ export class StudentService {
 
   constructor(private http: HttpClient,private messageService: MessageService) { }
 
-  private Url = 'http://192.168.0.102:8080';  // URL to web api
+  private Url = 'http://localhost:8090';  // URL to web api
   private httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   observe: "response" as 'body',
@@ -48,8 +48,10 @@ export class StudentService {
     .pipe(
       tap((response:any) => {
         this.log(`fetched list of universities`);
-        var universityNames=response.body.slice().name
-        return universityNames;
+        console.log(response);
+        return this.getNameandId(response);
+        
+        //return universityNames;
     }),
       catchError(this.handleError('list of universities', []))
     );
@@ -64,5 +66,15 @@ export class StudentService {
     }),
       catchError(this.handleError('list of universities', []))
     );
+  }
+
+  getNameandId(universities: any):Array<any>{
+    let arr=[];
+      universities.forEach(element => {
+      arr.push({"name":element.name,"id":element.id});
+    },
+
+  );
+    return arr;
   }
 }

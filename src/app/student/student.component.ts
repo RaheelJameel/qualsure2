@@ -8,6 +8,7 @@ import { StudentService } from './student.service';
 })
 export class StudentComponent implements OnInit {
   universityList: Array<any>;
+  selectedUniversity:any;
   constructor(private studentService: StudentService) {
     this.universityList=[
       {"name" : "GIKI",
@@ -21,6 +22,7 @@ export class StudentComponent implements OnInit {
       {"name" : "Nust",
       "id" : "128v"},
     ];
+    this.selectedUniversity={};
     console.log(this.universityList);
     }
    
@@ -31,16 +33,17 @@ export class StudentComponent implements OnInit {
   getUniversitiesList(){
     this.studentService.getListOfUniversities().subscribe(
       response => {
+        console.log(response);
         this.universityList=response;
       }
     )
   }
 
-  select(id: any){
-    this.studentService.getFormFields(id).subscribe(
-    (formFields) =>{
-      
-    }
-    );
+  select(Sid: any){
+    console.log(Sid);
+     this.selectedUniversity= this.universityList.filter((list)=> list.id == Sid)
+    console.log(this.selectedUniversity)
   }
+    
+  
 }

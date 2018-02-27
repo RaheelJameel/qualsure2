@@ -16,7 +16,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 export class UniversityService {
   isloggedin: boolean;
   private university: University;
-  private universityUrl = 'http://localhost:8080';  // URL to web api
+  private universityUrl = 'http://localhost:8090';  // URL to web api
   private httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   observe: "response" as 'body',
