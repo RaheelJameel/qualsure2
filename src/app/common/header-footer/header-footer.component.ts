@@ -1,22 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import {UniversityService} from '../../university/university.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UniversityService } from '../../university/university.service';
+import { Subscription } from 'rxjs/Subscription';
+
 @Component({
   selector: 'app-header-footer',
   templateUrl: './header-footer.component.html',
   styleUrls: ['./header-footer.component.scss']
 })
-export class HeaderFooterComponent implements OnInit {
+export class HeaderFooterComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
-  constructor(private universityService: UniversityService) { 
-    this.universityService.loginObservable$.subscribe(data => {if(data) this.isLoggedIn = true;
-    console.log("ddddaaa")});
+  loginObserSub: Subscription;
 
+  constructor(
+    private universityService: UniversityService,
+  ) {
+    this.subcribeToLoginObservable();
   }
 
   ngOnInit() {
   }
-  logout(){
-    this.isLoggedIn=false;
+
+  logout() {
+    this.isLoggedIn = false;
     this.universityService.logout();
+  }
+
+  subcribeToLoginObservable() {
+    this.loginObserSub = this.universityService.loginObservable$
+      .subscribe((data) => {
+        if (data) {
+          this.isLoggedIn = true;
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.loginObserSub.unsubscribe();
   }
 }

@@ -1,44 +1,44 @@
 import { Injectable } from '@angular/core';
 
-export const DefaultFormArray: FieldGroup[] = [
+export const DefaultFormArray: FieldGroupAPI[] = [
   {
     name: 'StudentName',
-    type: 'Text',
-    validator: {
+    attributeType: 'Text',
+    validators: [{
       name:  'Alpha Numeric',
       regex: '[A-Za-z0-9]+',
       type: 'text'
-    },
+    }],
     customError: 'Username is incorrect'
   },
   {
     name: 'GPA',
-    type: 'Number',
-    validator: {
+    attributeType: 'Number',
+    validators: [{
       name:  '0.00 - 4.00',
       regex: '[0-4].?[0-9][0-9]',
       type: 'number'
-    },
+    }],
     customError: 'GPA is incorrect'
   },
   {
     name: 'DegreeType',
-    type: 'Text',
-    validator: {
+    attributeType: 'Text',
+    validators: [{
       name:  'Alpha Numeric',
       regex: '[A-Za-z0-9]+',
       type: 'text'
-    },
+    }],
     customError: 'DegreeType is incorrect'
   },
   {
     name: 'DegreeName',
-    type: 'Text',
-    validator: {
+    attributeType: 'Text',
+    validators: [{
       name:  'Alpha Numeric',
       regex: '[A-Za-z0-9]+',
       type: 'text'
-    },
+    }],
     customError: 'DegreeName is incorrect'
   }
 ];
@@ -73,6 +73,13 @@ export interface FieldGroup {
   customError: string;
 }
 
+export interface FieldGroupAPI {
+  name: string;
+  attributeType: string;
+  validators: FieldValidator[];
+  customError: string;
+}
+
 export interface FieldValidator {
   name:  string;
   regex: string;
@@ -82,15 +89,19 @@ export interface FieldValidator {
 @Injectable()
 export class CommonService {
 
-  private previousForm: FieldGroup[];
+  private previousForm: FieldGroupAPI[];
 
   constructor() { }
 
-  getDefaultForm(): FieldGroup[] {
+  getDefaultForm(): FieldGroupAPI[] {
     return DefaultFormArray;
   }
 
-  getForm(): FieldGroup[] {
+  isFormSaved(): boolean {
+    return !!this.previousForm;
+  }
+
+  getForm(): FieldGroupAPI[] {
     if (this.previousForm) {
       console.log('CommonService getForm(): giving Previous Form', this.previousForm);
       return this.previousForm;
@@ -100,7 +111,7 @@ export class CommonService {
     }
   }
 
-  setForm(newForm: FieldGroup[]) {
+  setForm(newForm: FieldGroupAPI[]) {
     this.previousForm = newForm;
   }
 

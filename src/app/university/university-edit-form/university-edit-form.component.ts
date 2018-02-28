@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { CommonService, FieldGroup, FieldValidator } from '../../services/common.service';
+import { CommonService, FieldGroup, FieldValidator, FieldGroupAPI } from '../../services/common.service';
 import { EmptyStringValidator } from '../../common/validators/empty-string-validator';
+
+import { UniversityService } from '../university.service';
 
 @Component({
   selector: 'app-university-edit-form',
@@ -13,7 +15,7 @@ import { EmptyStringValidator } from '../../common/validators/empty-string-valid
 export class UniversityEditFormComponent implements OnInit {
 
   editForm: FormGroup;
-  formModel: FieldGroup[];
+  formModel: FieldGroupAPI[];
   requiredFields: number;
   formInvalid: boolean;
   defaultFieldValidators: FieldValidator[];
@@ -22,31 +24,38 @@ export class UniversityEditFormComponent implements OnInit {
     private router: Router,
     private commonService: CommonService,
     private formBuilder: FormBuilder,
+    private universityService: UniversityService,
   ) { }
 
   ngOnInit() {
-    this.getDefaultFieldValidators();
+    this.getDefaultValidators();
     this.requiredFields = 4;
     this.editForm = this.formBuilder.group({
       fieldArray: new FormArray([]),
-      // fieldArray: this.formBuilder.array([
-      //   this.createFieldFormGroup(),
-      //   this.createFieldFormGroup()
-      // ]),
     });
     this.initForm();
   }
 
-  createFieldFormGroup(fieldGroup?: FieldGroup): FormGroup {
+  getUniversityInfo() {
+    this.universityService.getInfo
+      .subscribe(response => {
+        if (response.body) {}
+      },
+      error => {
+        console.error(error);
+      });
+  }
+
+  createFieldFormGroup(fieldGroup?: FieldGroupAPI): FormGroup {
     return this.formBuilder.group({
       fieldName: [fieldGroup ? fieldGroup.name : '', [Validators.required, EmptyStringValidator]],
-      fieldType: [fieldGroup ? fieldGroup.type : 'Text'],
-      fieldValidations: [fieldGroup ? (fieldGroup.validator ? fieldGroup.validator.name : 'None') : 'None'],
+      fieldType: [fieldGroup ? fieldGroup.attributeType : 'Text'],
+      fieldValidations: [fieldGroup ? (fieldGroup.validators ? fieldGroup.validators[0].name : 'None') : 'None'],
       fieldErrorMsg: [fieldGroup ? fieldGroup.customError : '']
     });
   }
 
-  addField(fieldGroup?: FieldGroup) {
+  addField(fieldGroup?: FieldGroupAPI) {
     this.formInvalid = false;
     this.editFieldArray.push(this.createFieldFormGroup(fieldGroup));
   }
@@ -56,15 +65,48 @@ export class UniversityEditFormComponent implements OnInit {
     this.editFieldArray.removeAt(index);
   }
 
-  initForm() {
-    this.formModel = this.commonService.getForm();
+  initFormFields() {
     for (let i = 0; i < this.formModel.length; i++) {
       this.addField(this.formModel[i]);
     }
   }
 
-  getDefaultFieldValidators() {
-    this.defaultFieldValidators = this.commonService.getDefaultFieldValidators();
+  initForm() {
+    this.universityService.getInfo
+      .subscribe(response1 => {
+        if (response1.body) {
+          this.universityService.getFormFields()
+            .subscribe(
+              response2 => {
+              if (response2.body) {
+                console.log('----------------initForm():', response2);
+                console.log(response2.body);
+                this.formModel = response2.body;
+                this.initFormFields();
+              }},
+              error => {
+                console.error(error);
+              }
+            );
+        }
+      },
+      error => {
+        console.error(error);
+      });
+  }
+
+  getDefaultValidators() {
+    this.universityService.getDefaultValidators()
+      .subscribe(
+        response => {
+        if (response.body) {
+          console.log(response.body);
+          this.defaultFieldValidators = response.body;
+        }},
+        error => {
+          console.error(error);
+        }
+      );
   }
 
   get editFieldArray(): FormArray {
@@ -75,12 +117,12 @@ export class UniversityEditFormComponent implements OnInit {
     return this.editForm.getRawValue()['fieldArray'];
   }
 
-  get formApiValue(): FieldGroup[] {
+  get formApiValue(): FieldGroupAPI[] {
     return this.formValue.map((value) => {
       return {
         name: value.fieldName,
-        type: value.fieldType,
-        validator: this.searchFieldValidators(value.fieldValidations),
+        attributeType: value.fieldType,
+        validators: [this.searchFieldValidators(value.fieldValidations)],
         customError: value.fieldErrorMsg
       };
     });
@@ -97,7 +139,16 @@ export class UniversityEditFormComponent implements OnInit {
     if (this.editForm.valid) {
       console.log(this.formApiValue);
       this.commonService.setForm(this.formApiValue);
-      this.router.navigate(['/university']);
+      this.universityService.saveFormFields(this.formApiValue)
+        .subscribe(
+        response => {
+        if (response) {
+          this.router.navigate(['/university']);
+        }},
+        error => {
+          console.error(error);
+        }
+      );
     } else {
       this.formInvalid = true;
     }

@@ -1,6 +1,6 @@
 export class University {
   id: number;
   name: string;
-  formFields?: any;
+  formFields?: any[];
   firstTime: any;
 }

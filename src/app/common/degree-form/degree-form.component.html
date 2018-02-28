@@ -3,7 +3,7 @@
   <p class="h5 text-center mb-4">Add Degree</p>
   <div *ngFor="let fieldControl of formFieldArray.controls; let i=index;">
     <app-degree-form-field [fieldControl]="fieldControl" [label]="formFields[i].name" [errorMessage]="formFields[i].customError"
-      [type]="formFields[i].type" [id]="i"></app-degree-form-field>
+      [type]="formFields[i].attributeType" [id]="i"></app-degree-form-field>
   </div>
   <div class="center-on-small-only">
     <a class="btn btn-primary waves-light" mdbRippleRadius (click)="redirect()">Save</a>

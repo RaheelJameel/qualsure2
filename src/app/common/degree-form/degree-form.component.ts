@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { CommonService, FieldGroup, FieldValidator } from '../../services/common.service';
+import { CommonService, FieldGroup, FieldValidator, FieldGroupAPI } from '../../services/common.service';
 
 @Component({
   selector: 'app-degree-form',
@@ -12,7 +12,7 @@ import { CommonService, FieldGroup, FieldValidator } from '../../services/common
 export class DegreeFormComponent implements OnInit {
 
   fieldForm: FormGroup;
-  formFields: FieldGroup[];
+  formFields: FieldGroupAPI[];
 
   constructor(
     private router: Router,
@@ -37,7 +37,7 @@ export class DegreeFormComponent implements OnInit {
   }
 
   makeForm() {
-    this.formFields.forEach((fieldGroup: FieldGroup) => {
+    this.formFields.forEach((fieldGroup: FieldGroupAPI) => {
       this.formFieldArray.push(
           new FormControl('')
       );
