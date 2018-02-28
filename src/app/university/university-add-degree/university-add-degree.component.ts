@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { UniversityService } from '../university.service';
 import { FieldGroupAPI } from '../../services/common.service';
+import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
 
 @Component({
   selector: 'app-university-add-degree',
@@ -16,7 +17,16 @@ export class UniversityAddDegreeComponent implements OnInit {
   constructor(
     private router: Router,
     private universityService: UniversityService,
+    private alertService: AlertService
   ) { }
+
+  success(message: string) {
+    this.alertService.success(message);
+}
+
+  error(message: string) {
+    this.alertService.error(message);
+  }
 
   ngOnInit() {
     this.checkUniInfoAndGetFormField();
@@ -39,10 +49,15 @@ export class UniversityAddDegreeComponent implements OnInit {
       .subscribe(
       response => {
       if (response) {
-        this.router.navigate(['/university']);
+        this.success('Degree Added Successfully');
+        setTimeout(() => {
+          this.router.navigate(['/university']);
+        }, 3000);
       }},
       error => {
         console.error(error);
+        this.error('Operation Failed');
+
       }
     );
   }
