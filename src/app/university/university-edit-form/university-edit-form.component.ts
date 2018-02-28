@@ -49,7 +49,7 @@ export class UniversityEditFormComponent implements OnInit {
   createFieldFormGroup(fieldGroup?: FieldGroupAPI): FormGroup {
     return this.formBuilder.group({
       fieldName: [fieldGroup ? fieldGroup.name : '', [Validators.required, EmptyStringValidator]],
-      fieldType: [fieldGroup ? fieldGroup.attributeType : 'Text'],
+      fieldType: [fieldGroup ? fieldGroup.attributeType : 'text'],
       fieldValidations: [fieldGroup ? (fieldGroup.validators ? fieldGroup.validators[0].name : 'None') : 'None'],
       fieldErrorMsg: [fieldGroup ? fieldGroup.customError : '']
     });
