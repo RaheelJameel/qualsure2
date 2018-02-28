@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
+
 import { CommonService, FieldGroup, FieldValidator, FieldGroupAPI } from '../../services/common.service';
 import { EmptyStringValidator } from '../../common/validators/empty-string-validator';
 
 import { UniversityService } from '../university.service';
+import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
 
 @Component({
   selector: 'app-university-edit-form',
@@ -25,6 +27,7 @@ export class UniversityEditFormComponent implements OnInit {
     private commonService: CommonService,
     private formBuilder: FormBuilder,
     private universityService: UniversityService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -35,6 +38,14 @@ export class UniversityEditFormComponent implements OnInit {
     });
     this.checkUniInfoAndInitForm();
   }
+  success(message: string) {
+    this.alertService.success(message);
+}
+
+  error(message: string) {
+    this.alertService.error(message);
+  }
+
 
   getUniversityInfo() {
     this.universityService.getInfo
@@ -146,7 +157,10 @@ export class UniversityEditFormComponent implements OnInit {
         .subscribe(
         response => {
         if (response) {
-          this.router.navigate(['/university']);
+          this.success('Form Edited Successfully');
+          setTimeout(() => {
+            this.router.navigate(['/university']);
+          }, 3000);
         }},
         error => {
           console.error(error);
