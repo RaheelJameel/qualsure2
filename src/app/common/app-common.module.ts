@@ -25,6 +25,8 @@ import { DegreeFormFieldComponent } from './degree-form/degree-form-field/degree
   exports: [
     HeaderFooterComponent,
     PageNotFoundComponent,
+    DegreeFormComponent,
+    DegreeFormFieldComponent,
   ]
 })
 export class AppCommonModule { }

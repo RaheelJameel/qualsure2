@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { AppCommonModule } from '../common/app-common.module';
+
 import { StudentComponent } from './student.component';
 import { StudentRoutingModule } from './student-routing.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -15,7 +17,7 @@ import { FormsModule } from '@angular/forms';
     MDBBootstrapModule.forRoot(),
     Ng2SearchPipeModule,
     FormsModule,
-
+    AppCommonModule,
   ],
   declarations: [
     StudentComponent,

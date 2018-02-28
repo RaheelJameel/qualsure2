@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { AppCommonModule } from '../common/app-common.module';
 
 import { UniversityComponent } from './university.component';
 import { UniversityRoutingModule } from './university-routing.module';
@@ -19,6 +21,7 @@ import { CoolStorageModule } from 'angular2-cool-storage';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { UniversityEditFormComponent } from './university-edit-form/university-edit-form.component';
 import { DynamicFieldInfoComponent } from './university-edit-form/dynamic-field-info/dynamic-field-info.component';
+import { UniversityAddDegreeComponent } from './university-add-degree/university-add-degree.component';
 
 @NgModule({
   imports: [
@@ -32,7 +35,7 @@ import { DynamicFieldInfoComponent } from './university-edit-form/dynamic-field-
     Ng2Webstorage,
     CoolStorageModule,
     MDBBootstrapModule.forRoot(),
-
+    AppCommonModule,
   ],
   declarations: [
     UniversityComponent,
@@ -40,6 +43,7 @@ import { DynamicFieldInfoComponent } from './university-edit-form/dynamic-field-
     UniversityViewDegreesComponent,
     UniversityEditFormComponent,
     DynamicFieldInfoComponent,
+    UniversityAddDegreeComponent,
   ],
   exports: [
     UniversityComponent,

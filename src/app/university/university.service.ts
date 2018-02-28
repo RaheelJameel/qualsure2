@@ -22,7 +22,7 @@ export class UniversityService {
   public static EMPTY: any;
 
   isloggedin: boolean;
-  private university: University;
+  public university: University;
   private universityUrl = 'http://localhost:9000';  // URL to web api
   private httpOptions = {
     headers: new HttpHeaders({
@@ -173,11 +173,16 @@ private handleError (operation = 'operation', result?: any) {
       );
   }
 
-  getFormFields(): Observable<any> {
+  getFormFields(uniID?: string): Observable<any> {
     if (!(this.university.formFields && this.university.formFields.length)) {
       return this.getDefaultFormFields();
     } else {
-      const url = this.universityUrl + `/universities/${this.university.accountId}/formFields`;
+      let url;
+      if (uniID) {
+        url = this.universityUrl + `/universities/${uniID}/formFields`;
+      } else {
+        url = this.universityUrl + `/universities/${this.university.accountId}/formFields`;
+      }
       return this.http.get(url, this.httpOptions)
         .pipe(
           tap((universiyInfo: any) => {
@@ -211,6 +216,15 @@ private handleError (operation = 'operation', result?: any) {
   saveFormFields(formFields: FieldGroupAPI[]): Observable<any> {
     this.university.formFields = formFields;
     return this.saveUniversityInfo();
+  }
+
+  addDegree(degree) {
+    const url = this.universityUrl + `/universities/${this.university.accountId}/degrees`;
+    return this.http.post(url, degree, this.httpOptions)
+      .pipe(
+        tap((degreeInfo: any) => this.log(`addDegree req sent for user`)),
+        catchError(this.handleError('addDegree'))
+      );
   }
 }
 

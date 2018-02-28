@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
+import { AppCommonModule } from '../common/app-common.module';
+
 import { HomeComponent } from './home.component';
 
 @NgModule({
@@ -11,6 +13,7 @@ import { HomeComponent } from './home.component';
     CommonModule,
     RouterModule,
     MDBBootstrapModule.forRoot(),
+    AppCommonModule,
   ],
   declarations: [
     HomeComponent,

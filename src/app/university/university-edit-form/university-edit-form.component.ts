@@ -33,7 +33,7 @@ export class UniversityEditFormComponent implements OnInit {
     this.editForm = this.formBuilder.group({
       fieldArray: new FormArray([]),
     });
-    this.initForm();
+    this.checkUniInfoAndInitForm();
   }
 
   getUniversityInfo() {
@@ -71,28 +71,31 @@ export class UniversityEditFormComponent implements OnInit {
     }
   }
 
-  initForm() {
+  checkUniInfoAndInitForm() {
     this.universityService.getInfo
-      .subscribe(response1 => {
-        if (response1.body) {
-          this.universityService.getFormFields()
-            .subscribe(
-              response2 => {
-              if (response2.body) {
-                console.log('----------------initForm():', response2);
-                console.log(response2.body);
-                this.formModel = response2.body;
-                this.initFormFields();
-              }},
-              error => {
-                console.error(error);
-              }
-            );
+      .subscribe(response => {
+        if (response.body) {
+          this.initForm();
         }
       },
       error => {
         console.error(error);
       });
+  }
+
+  initForm() {
+    this.universityService.getFormFields()
+      .subscribe((response) => {
+        if (response.body) {
+          console.log('----------------initForm():', response);
+          console.log(response.body);
+          this.formModel = response.body;
+          this.initFormFields();
+        }},
+        error => {
+          console.error(error);
+        }
+      );
   }
 
   getDefaultValidators() {
