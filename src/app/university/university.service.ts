@@ -128,6 +128,7 @@ private handleError (operation = 'operation', result?: any) {
           this.log(`fetched University Info`);
           this.university=new University;
           this.university.id=universityInfo.body.id;
+          this.university.accountId=universityInfo.body.accountId;
           this.university.name=universityInfo.body.name;
           this.university.formFields=universityInfo.body.formFields;
           this.university.firstTime=universityInfo.body.firstTime;
@@ -176,7 +177,7 @@ private handleError (operation = 'operation', result?: any) {
     if (!(this.university.formFields && this.university.formFields.length)) {
       return this.getDefaultFormFields();
     } else {
-      const url = this.universityUrl + `/universities/${this.university.id}/formFields`;
+      const url = this.universityUrl + `/universities/${this.university.accountId}/formFields`;
       return this.http.get(url, this.httpOptions)
         .pipe(
           tap((universiyInfo: any) => {

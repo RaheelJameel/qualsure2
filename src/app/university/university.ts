@@ -1,5 +1,6 @@
 export class University {
-  id: number;
+  id: string;
+  accountId: string;
   name: string;
   formFields?: any[];
   firstTime: any;
