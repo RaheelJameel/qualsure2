@@ -43,7 +43,6 @@
                 <button class="btn btn-default waves-light" (click) = "login()" [disabled] = 'loginForm.invalid' mdbRippleRadius>Login</button>
               </div>
             </form>
-            <p>Form value: {{ loginForm.value | json }}</p>
           </div>
           <!--Grid column-->
         </div>
@@ -81,8 +80,8 @@
         </div>
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-pass" class="form-control" mdbActive formControlName="password">
-          <label for="orangeForm-pass">Password again</label>
+          <input type="password" id="orangeForm-passConfirm" class="form-control" mdbActive formControlName="password">
+          <label for="orangeForm-passConfirm">Password again</label>
         </div>
         <div class="text-center">
           <button class="btn btn-deep-orange waves-light" (click)="signup()" [disabled] = 'signupForm.invalid' mdbRippleRadius>Proceed</button>
