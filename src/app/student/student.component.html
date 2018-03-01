@@ -31,7 +31,7 @@
                 </th>
           </thead>
           <tbody>
-            <tr *ngFor="let university of universityList | filter:filter;" (click)="redirect(university.id)">
+            <tr *ngFor="let university of universityList | filter:filter;" (click)="redirect(university.accountId)">
               {{university.name}}
             </tr>
           </tbody>

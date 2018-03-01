@@ -5,8 +5,8 @@ import { StudentComponent } from './student.component';
 import { StudentDegreeFormComponent } from './student-degree-form/student-degree-form.component';
 
 const studentRoutes: Routes = [
-  { path: 'student',  component: StudentComponent },
-  { path: 'student/:id',  component: StudentDegreeFormComponent },
+  { path: 'degree',  component: StudentComponent },
+  { path: 'degree/:id',  component: StudentDegreeFormComponent },
 ];
 
 @NgModule({

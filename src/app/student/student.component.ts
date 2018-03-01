@@ -35,6 +35,6 @@ export class StudentComponent implements OnInit {
   }
 
   redirect(universityID: string) {
-    this.router.navigate(['/student', universityID]);
+    this.router.navigate(['/degree', universityID]);
   }
 }

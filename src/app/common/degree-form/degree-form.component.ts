@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, AbstractControl, FormBuilder, FormA
 import { Router } from '@angular/router';
 
 import { UniversityService } from '../../university/university.service';
+import { StudentService } from '../../student/student.service';
 
 import { CommonService, FieldGroup, FieldValidator, FieldGroupAPI } from '../../services/common.service';
 
@@ -25,6 +26,7 @@ export class DegreeFormComponent implements OnInit {
     private commonService: CommonService,
     private formBuilder: FormBuilder,
     private universityService: UniversityService,
+    private studentService: StudentService,
   ) { }
 
   ngOnInit() {
@@ -35,16 +37,30 @@ export class DegreeFormComponent implements OnInit {
   }
 
   getFormFieldsAndMakeForm() {
-    this.universityService.getFormFields(this.uniID, this.independentCheck)
-      .subscribe((response) => {
-        if (response.body) {
-          this.formFields = response.body;
-          this.makeForm();
-        }},
-        error => {
-          console.error(error);
-        }
-      );
+    if (!this.independentCheck) {
+      this.universityService.getFormFields(this.uniID, this.independentCheck)
+        .subscribe((response) => {
+          if (response.body) {
+            this.formFields = response.body;
+            this.makeForm();
+          }},
+          error => {
+            console.error(error);
+          }
+        );
+    } else {
+      this.studentService.getFormFields(this.uniID)
+        .subscribe((response) => {
+            console.log('1111111111111', response);
+          if (response) {
+            this.formFields = response.formFields;
+            this.makeForm();
+          }},
+          error => {
+            console.error(error);
+          }
+        );
+    }
   }
 
   get formFieldArray(): FormArray {

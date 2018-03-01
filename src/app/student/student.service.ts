@@ -56,13 +56,12 @@ export class StudentService {
       catchError(this.handleError('list of universities', []))
     );
   }
-  getFormFields(id: any): Observable<any>{
-    return this.http.get(this.Url+"/universities")
+  getFormFields(id: any): Observable<any> {
+    const url = this.Url + `/universities/${id}/formFields`;
+    return this.http.get(url)
     .pipe(
       tap((response:any) => {
         this.log(`fetched list of universities`);
-        var formFields=response.body.slice().formFields
-        return formFields;
     }),
       catchError(this.handleError('list of universities', []))
     );

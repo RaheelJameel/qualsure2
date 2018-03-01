@@ -32,7 +32,7 @@ export class UniversityEditFormComponent implements OnInit {
 
   ngOnInit() {
     this.getDefaultValidators();
-    this.requiredFields = 4;
+    this.requiredFields = 5;
     this.editForm = this.formBuilder.group({
       fieldArray: new FormArray([]),
     });
