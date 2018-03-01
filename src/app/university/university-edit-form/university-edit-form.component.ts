@@ -134,10 +134,10 @@ export class UniversityEditFormComponent implements OnInit {
   get formApiValue(): FieldGroupAPI[] {
     return this.formValue.map((value) => {
       return {
-        name: value.fieldName,
+        name: value.fieldName.trim(),
         attributeType: value.fieldType,
         validators: [this.searchFieldValidators(value.fieldValidations)],
-        customError: value.fieldErrorMsg
+        customError: value.fieldErrorMsg ? value.fieldErrorMsg.trim() : value.fieldErrorMsg
       };
     });
   }

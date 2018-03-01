@@ -1,14 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UniversityService } from './university.service';
-import { University} from './university';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { TokenStorage } from './token.storage';
 import { RouterModule, Routes } from '@angular/router';
-import { HeaderFooterComponent } from '../common/header-footer/header-footer.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { TokenStorage } from './token.storage';
+
+import { HeaderFooterComponent } from '../common/header-footer/header-footer.component';
+import { EmptyStringValidator } from '../common/validators/empty-string-validator';
+
+import { UniversityService } from './university.service';
+import { University} from './university';
 
 @Component({
   selector: 'app-university',
@@ -67,22 +70,28 @@ export class UniversityComponent implements OnInit, OnDestroy {
 
   createLoginForm() {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, EmptyStringValidator]],
       password: ['', Validators.required]
     });
   }
 
   createSignupForm() {
     this.signupForm = this.fb.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
+      name: ['', [Validators.required, EmptyStringValidator]],
+      username: ['', [Validators.required, EmptyStringValidator]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]]
     });
   }
 
   login() {
-    this.universityService.authenticate(this.loginForm.value)
+    const loginFormValue = this.loginForm.value;
+    const loginObject = {
+      username: loginFormValue.username.trim(),
+      password: loginFormValue.password,
+    };
+    this.universityService.authenticate(loginObject)
     .subscribe(
       response => {
         console.log(response);
@@ -99,23 +108,33 @@ export class UniversityComponent implements OnInit, OnDestroy {
     );
   }
 
-  signup(){
-    this.signupForm.value.roles=["USER"];
-    this.signupForm.value.active="true";
-    console.log(this.signupForm.value);
-    this.universityService.signupUser(this.signupForm.value)
+  signup() {
+    const signupFormValue = this.signupForm.value;
+    if (signupFormValue.password !== signupFormValue.confirmPassword) {
+      return;
+    }
+    const signupObject = {
+      name: signupFormValue.name.trim(),
+      username: signupFormValue.username.trim(),
+      email: signupFormValue.email.trim(),
+      password: signupFormValue.password,
+      roles: ['USER'],
+      active: 'true'
+    };
+    console.log(signupObject);
+    this.universityService.signupUser(signupObject)
     .subscribe(response => {
       console.log(response);
       console.log(response.status);
 
-    if(response.status == 201){
+    if (response.status === 201) {
       console.log(response.headers.status);
-      this.loginForm.value.username=this.signupForm.value.username;
-      this.loginForm.value.password=this.signupForm.value.password;
+      this.loginForm.value.username = signupObject.username;
+      this.loginForm.value.password = signupObject.password;
       this.login();
     }},
    error => {
-         console.error(error)
+         console.error(error);
        });
   }
   getUniversityInfo(id: any){

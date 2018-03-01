@@ -62,26 +62,44 @@
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="orangeForm-name" class="form-control" mdbActive formControlName="name">
           <label class="active" for="orangeForm-name">University Name</label>
+          <div *ngIf="(signupForm.get('name').touched || formInvalid) && signupForm.get('name').invalid">
+            <small style="color:crimson">*University Name is required</small>
+          </div>
         </div>
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="orangeForm-username" class="form-control" mdbActive formControlName="username">
           <label for="orangeForm-username">Username</label>
+          <div *ngIf="(signupForm.get('username').touched || formInvalid) && signupForm.get('username').invalid">
+            <small style="color:crimson">*Username is required</small>
+          </div>
         </div>
         <div class="md-form">
           <i class="fa fa-envelope prefix grey-text"></i>
           <input type="text" id="orangeForm-email" class="form-control" mdbActive formControlName="email">
           <label for="orangeForm-email">Your email</label>
+          <div *ngIf="(signupForm.get('email').touched || formInvalid) && signupForm.get('email').invalid">
+            <small style="color:crimson">*Email is required</small>
+          </div>
         </div>
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
           <input type="password" id="orangeForm-pass" class="form-control" mdbActive formControlName="password">
           <label for="orangeForm-pass">Your password</label>
+          <div *ngIf="(signupForm.get('password').touched || formInvalid) && signupForm.get('password').invalid">
+            <small style="color:crimson">*Password is required</small>
+          </div>
         </div>
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
-          <input type="password" id="orangeForm-passConfirm" class="form-control" mdbActive formControlName="password">
+          <input type="password" id="orangeForm-passConfirm" class="form-control" mdbActive formControlName="confirmPassword">
           <label for="orangeForm-passConfirm">Password again</label>
+          <div *ngIf="(signupForm.get('confirmPassword').touched || formInvalid) && signupForm.get('confirmPassword').invalid">
+            <small style="color:crimson">*Confirm Password is required</small>
+          </div>
+          <div *ngIf="(signupForm.get('confirmPassword').value && signupForm.get('confirmPassword').value.trim()) && (signupForm.get('confirmPassword').value.trim() != (signupForm.get('password').value && signupForm.get('password').value.trim()) )">
+            <small style="color:crimson">*Passwords do not match</small>
+          </div>
         </div>
         <div class="text-center">
           <button class="btn btn-deep-orange waves-light" (click)="signup()" [disabled] = 'signupForm.invalid' mdbRippleRadius>Proceed</button>

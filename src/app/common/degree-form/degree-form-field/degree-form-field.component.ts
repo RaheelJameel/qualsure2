@@ -13,6 +13,7 @@ export class DegreeFormFieldComponent implements OnInit {
   @Input() errorMessage = 'Field has Error';
   @Input() type = 'text';
   @Input() id = 0;
+  @Input() formInvalid: boolean;
 
   constructor() { }
 

@@ -9,10 +9,12 @@
   <div *ngFor="let fieldGroup of editFieldArray.controls; let i=index">
     <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
       [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators" [id]="i"></app-dynamic-field-info>
-    <button *ngIf="i>3" (click)="removeField(i)"
+    <button *ngIf="i>(requiredFields-1)" (click)="removeField(i)"
       type="button" class="btn btn-tb btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Remove Field">
       X
     </button>
+    <br *ngIf="i>(requiredFields-1)">
+    <br *ngIf="i>(requiredFields-1)">
     <br>
     <br>
   </div>

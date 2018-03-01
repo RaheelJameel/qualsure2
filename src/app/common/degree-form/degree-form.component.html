@@ -1,9 +1,12 @@
 <form [formGroup]="fieldForm" *ngIf="formFields">
   <div *ngFor="let fieldControl of formFieldArray.controls; let i=index;">
     <app-degree-form-field [fieldControl]="fieldControl" [label]="formFields[i].name" [errorMessage]="formFields[i].customError"
-      [type]="formFields[i].attributeType" [id]="i"></app-degree-form-field>
+      [type]="formFields[i].attributeType" [id]="i" [formInvalid]="formInvalid"></app-degree-form-field>
   </div>
   <div class="center-on-small-only">
     <a class="btn btn-primary waves-light" mdbRippleRadius (click)="giveOutput()">{{buttonLabel}}</a>
+  </div>
+  <div *ngIf="formInvalid && fieldForm.invalid">
+    <small style="color:crimson">*Form is Invalid</small>
   </div>
 </form>

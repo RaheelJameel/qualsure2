@@ -6,6 +6,7 @@ import { UniversityService } from '../../university/university.service';
 import { StudentService } from '../../student/student.service';
 
 import { CommonService, FieldGroup, FieldValidator, FieldGroupAPI } from '../../services/common.service';
+import { EmptyStringValidator } from '../validators/empty-string-validator';
 
 @Component({
   selector: 'app-degree-form',
@@ -20,6 +21,7 @@ export class DegreeFormComponent implements OnInit {
   @Output() outputValue = new EventEmitter<any>();
   formFields: FieldGroupAPI[];
   fieldForm: FormGroup;
+  formInvalid: boolean;
 
   constructor(
     private router: Router,
@@ -70,26 +72,31 @@ export class DegreeFormComponent implements OnInit {
   makeForm() {
     this.formFields.forEach((fieldGroup: FieldGroupAPI) => {
       this.formFieldArray.push(
-          new FormControl('')
+          new FormControl('', [Validators.required, EmptyStringValidator])
       );
     });
   }
 
   giveOutput() {
-    const formValue: any[] = this.fieldForm.getRawValue()['fieldArray'];
-    const degreeObject = {
-      studentName: formValue[0],
-      gpa: formValue[1],
-      graduationYear: formValue[2],
-      degreeType: formValue[3],
-      degreeName: formValue[4]
-    };
-    for (let i = 5; i < formValue.length; i++) {
-      degreeObject[this.formFields[i].name] = formValue[i];
+    this.formInvalid = false;
+    if (this.fieldForm.valid) {
+      const formValue: any[] = this.fieldForm.getRawValue()['fieldArray'];
+      const degreeObject = {
+        studentName: formValue[0].trim(),
+        gpa: formValue[1].trim(),
+        graduationYear: formValue[2].trim(),
+        degreeType: formValue[3].trim(),
+        degreeName: formValue[4].trim()
+      };
+      for (let i = 5; i < formValue.length; i++) {
+        degreeObject[this.formFields[i].name] = formValue[i].trim();
+      }
+      console.log('giveOutput:', degreeObject);
+      this.outputValue.emit(degreeObject);
+      // this.router.navigate(['/university']);
+    } else {
+      this.formInvalid = true;
     }
-    console.log('giveOutput:', degreeObject);
-    this.outputValue.emit(degreeObject);
-    // this.router.navigate(['/university']);
   }
 
 }
