@@ -26,17 +26,19 @@
           <!-- <a routerLink="../detail/{{degree.id}}"> -->
             
               <th scope="row" *ngIf="degree.id != expandedIndex">{{i+1}}</th>
-              <td *ngIf="degree.id != expandedIndex">{{degree.StudentName}}</td>
-              <td *ngIf="degree.id != expandedIndex">{{degree.Gpa}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.studentName}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.gpa}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.graduationYear}}</td>
               <td *ngIf="degree.id != expandedIndex">{{degree.degreeType}}</td>
-              <td *ngIf="degree.id != expandedIndex">{{degree.DegreeName}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeName}}</td>
               <td *ngIf="degree.id != expandedIndex"></td>
             
             <div class= "expanded" *ngIf="degree.id == expandedIndex">
-              Name : {{degree.StudentName}}<br>
-              GPA: {{degree.Gpa}}<br>
+              Name : {{degree.studentName}}<br>
+              GPA: {{degree.gpa}}<br>
+              Graduation Year: {{degree.graduationYear}}<br>
               Type: {{degree.degreeType}}<br>
-              Degree Name:{{degree.DegreeName}}<br></div>
+              Degree Name:{{degree.degreeName}}<br></div>
 
         </tr>
 
