@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
+
 import { UniversityService } from '../../university/university.service';
 import { StudentService } from '../student.service';
 
@@ -17,10 +19,19 @@ export class StudentDegreeFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private universityService: UniversityService,
     private studentService: StudentService,
+    private alertService: AlertService,
   ) { }
 
   ngOnInit() {
     this.setUniversityID();
+  }
+
+  success(message: string) {
+    this.alertService.success(message);
+  }
+
+  error(message: string) {
+    this.alertService.error(message);
   }
 
   setUniversityID() {
@@ -29,11 +40,12 @@ export class StudentDegreeFormComponent implements OnInit {
 
   verifyDegree(degree) {
     this.studentService.verifyDegree(this.universityID, degree)
-      .subscribe(response => {
+      .subscribe(response => {this.success('Sent for Verfication');
         if (response) {
         }
       },
       error => {
+        this.error('Failled');
         console.error(error);
       });
   }
