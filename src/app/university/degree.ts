@@ -1,5 +1,5 @@
 export class Degree {
-  id?: number;
+  id: number;
   firstName: string;
   lastName: string;
   degreeType: string;

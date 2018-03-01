@@ -7,7 +7,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Degree } from './degree';
 import { MessageService } from '../messages/message.service';
-
+import {UniversityService} from './university.service';
+import {TokenStorage} from './token.storage'
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -15,15 +16,19 @@ const httpOptions = {
 @Injectable()
 export class UniversityDegreeService {
 
-  private degreesUrl = 'api/degrees';  // URL to web api
+  private degreesUrl = 'http://localhost:9000';  // URL to web api
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private universityService: UniversityService,
+    private tokenStorage: TokenStorage
+  ) { }
 
   /** GET degrees from the server */
   getDegrees (): Observable<Degree[]> {
-    return this.http.get<Degree[]>(this.degreesUrl)
+    let url = this.degreesUrl + '/universities/' + this.tokenStorage.getId() + '/degrees'
+    return this.http.get<Degree[]>(url)
       .pipe(
         tap(degrees => this.log(`fetched degrees`)),
         catchError(this.handleError('getDegrees', []))
@@ -31,14 +36,27 @@ export class UniversityDegreeService {
   }
 
   /** GET degree by id. Will 404 if id not found */
-  getDegree(id: number): Observable<Degree> {
-    const url = `${this.degreesUrl}/${id}`;
+  getDegree(id: number): Observable<any> {
+    let url = this.degreesUrl + '/universities/' + this.tokenStorage.getId() + '/degrees/'+id
     return this.http.get<Degree>(url).pipe(
-      tap(_ => this.log(`fetched degree id=${id}`)),
+      tap(_ => {
+        console.log(_)
+        this.log(`fetched degree id=${id}`)}),
       catchError(this.handleError<Degree>(`getDegree id=${id}`))
     );
   }
-
+  getFormFields =  new Observable<any>((observer) => {
+    this.universityService.getDefaultFormFields().subscribe(
+      response => {
+        observer.next(response);
+        observer.complete();
+      },
+      error => {
+        observer.error(error);
+        observer.complete();
+      }
+    )
+  });
   //////// Save methods //////////
 
   /** POST: add a new degree to the server */

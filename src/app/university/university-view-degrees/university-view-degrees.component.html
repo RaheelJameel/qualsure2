@@ -8,17 +8,12 @@
 <section class="">
     <table class="table  table-hover">
       <thead>
-        <tr>
+        <tr  >
           <th>#
             </th>
-          <th>First Name
+          <th *ngFor="let formField of formFields;">{{formField.name}}
             </th>
-          <th>Last Name
-           
-          </th>
-          <th>Graduation Year
-           
-          </th>
+          
           <th     style="text-align: -webkit-right;">
            <input class="form-control" type="search" name="search" [(ngModel)]="filter">      
 
@@ -26,18 +21,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr  *ngFor="let degree of degrees | filter:filter;" style="display:table"
-        (click)="goToDetail(degree.id)">
+        <tr  *ngFor="let degree of degrees | filter:filter; let i=index" style="display:table"
+        (click)="goToDetail(degree.id) ">
           <!-- <a routerLink="../detail/{{degree.id}}"> -->
-          <th scope="row">{{degree.id}}</th>
-          <td>{{degree.firstName}}</td>
-          <td>{{degree.lastName}}</td>
-          <td>{{degree.gradYear}}</td>
-          
-            <td><button class="delete" title="delete degree"
-              (click)="delete(degree)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-            </td>
-          <!-- </a> -->
+            
+              <th scope="row" *ngIf="degree.id != expandedIndex">{{i+1}}</th>
+              <td *ngIf="degree.id != expandedIndex">{{degree.StudentName}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.Gpa}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeType}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.DegreeName}</td>
+              <td *ngIf="degree.id != expandedIndex"></td>
+            
+            <div class= "expanded" *ngIf="degree.id == expandedIndex">
+              Name : {{degree.StudentName}}<br>
+              GPA: {{degree.Gpa}}<br>
+              Type: {{degree.degreeType}}<br>
+              Degree Name:{{degree.DegreeName}}<br></div>
+
         </tr>
 
               
