@@ -1,4 +1,4 @@
 <br>
 <p class="h5 text-center mb-4">Degree Form</p>
 <app-degree-form *ngIf="universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'"
-  (outputValue)="addDegree($event)" [independentCheck]="true"></app-degree-form>
+  (outputValue)="verifyDegree($event)" [independentCheck]="true"></app-degree-form>

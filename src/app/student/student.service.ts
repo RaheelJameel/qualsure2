@@ -67,6 +67,17 @@ export class StudentService {
     );
   }
 
+
+  verifyDegree(uniID: string, degree: any): Observable<any> {
+    const url = this.Url + `/universities/${uniID}/verifyDegree`;
+    return this.http.post(url, degree)
+    .pipe(
+      tap((response:any) => {
+    }),
+      catchError(this.handleError('verifyDegree', []))
+    );
+  }
+
   getNameandId(universities: any):Array<any>{
     let arr=[];
       universities.forEach(element => {
