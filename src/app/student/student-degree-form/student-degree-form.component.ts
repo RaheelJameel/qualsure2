@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
 
@@ -16,6 +17,7 @@ export class StudentDegreeFormComponent implements OnInit {
   universityID: string;
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private universityService: UniversityService,
     private studentService: StudentService,
@@ -40,12 +42,19 @@ export class StudentDegreeFormComponent implements OnInit {
 
   verifyDegree(degree) {
     this.studentService.verifyDegree(this.universityID, degree)
-      .subscribe(response => {this.success('Sent for Verfication');
-        if (response) {
+      .subscribe(response => {
+        if (response && response.status) {
+          if (response.status === 'Success') {
+            this.success('Verified');
+            setTimeout(() => {
+              this.router.navigate(['/degree']);
+            }, 3000);
+          } else {
+            this.error('Verification Failed');
+          }
         }
       },
       error => {
-        this.error('Failled');
         console.error(error);
       });
   }
