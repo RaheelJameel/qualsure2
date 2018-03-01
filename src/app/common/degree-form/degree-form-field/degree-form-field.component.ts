@@ -18,6 +18,13 @@ export class DegreeFormFieldComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.validateErrorMessage();
+  }
+
+  validateErrorMessage() {
+    if (!this.errorMessage || !this.errorMessage.trim()) {
+      this.errorMessage = `${this.label} is incorrect`;
+    }
   }
 
 }
