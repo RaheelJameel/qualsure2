@@ -15,6 +15,7 @@ export class DegreeFormComponent implements OnInit {
 
   @Input() uniID: string;
   @Input() buttonLabel = 'Add';
+  @Input() independentCheck: boolean;
   @Output() outputValue = new EventEmitter<any>();
   formFields: FieldGroupAPI[];
   fieldForm: FormGroup;
@@ -34,7 +35,7 @@ export class DegreeFormComponent implements OnInit {
   }
 
   getFormFieldsAndMakeForm() {
-    this.universityService.getFormFields(this.uniID)
+    this.universityService.getFormFields(this.uniID, this.independentCheck)
       .subscribe((response) => {
         if (response.body) {
           this.formFields = response.body;

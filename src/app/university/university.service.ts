@@ -173,24 +173,35 @@ private handleError (operation = 'operation', result?: any) {
       );
   }
 
-  getFormFields(uniID?: string): Observable<any> {
-    if (!(this.university.formFields && this.university.formFields.length)) {
-      return this.getDefaultFormFields();
-    } else {
-      let url;
-      if (uniID) {
-        url = this.universityUrl + `/universities/${uniID}/formFields`;
-      } else {
-        url = this.universityUrl + `/universities/${this.university.accountId}/formFields`;
-      }
-      return this.http.get(url, this.httpOptions)
+  getFormFields(uniID?: string, independentCheck?: boolean): Observable<any> {
+    if (independentCheck) {
+      const url = this.universityUrl + `/universities/${uniID}/formFields`;
+      return this.http.get(url)
         .pipe(
-          tap((universiyInfo: any) => {
-            universiyInfo.body = universiyInfo.body.formFields;
-            this.log(`fetched UnivesityFormFields`);
-          }),
-          catchError(this.handleError('getFormFields'))
-        );
+            tap((universiyInfo: any) => {
+              this.log(`fetched UnivesityFormFields`);
+            }),
+            catchError(this.handleError('getFormFields'))
+          );
+    } else {
+      if (!(this.university.formFields && this.university.formFields.length)) {
+        return this.getDefaultFormFields();
+      } else {
+        let url;
+        if (uniID) {
+          url = this.universityUrl + `/universities/${uniID}/formFields`;
+        } else {
+          url = this.universityUrl + `/universities/${this.university.accountId}/formFields`;
+        }
+        return this.http.get(url, this.httpOptions)
+          .pipe(
+            tap((universiyInfo: any) => {
+              universiyInfo.body = universiyInfo.body.formFields;
+              this.log(`fetched UnivesityFormFields`);
+            }),
+            catchError(this.handleError('getFormFields'))
+          );
+      }
     }
   }
 
