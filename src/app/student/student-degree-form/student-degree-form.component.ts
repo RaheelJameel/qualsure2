@@ -23,7 +23,6 @@ export class StudentDegreeFormComponent implements OnInit {
 
   setUniversityID() {
     this.universityID = this.activatedRoute.snapshot.paramMap.get('id');
-    console.log('213333333333333333333333:', this.universityID);
   }
 
 }
