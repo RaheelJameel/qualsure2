@@ -11,6 +11,7 @@ import { CollapseDirective } from 'angular-bootstrap-md';
 })
 export class UniversityViewDegreesComponent implements OnInit {
 
+  filterVar: string;
   degrees: Degree[];
   formFields: any;
   degreeDetail: Degree;

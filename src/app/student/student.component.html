@@ -26,12 +26,12 @@
         <table class="table table-bordered table-hover">
           <thead>
               <th     style="text-align: -webkit-right;">
-                  <input class="form-control" type="search" name="search" placeholder="Search" [(ngModel)]="filter">      
+                  <input class="form-control" type="search" name="search" placeholder="Search" [(ngModel)]="filterVar">      
       
                 </th>
           </thead>
           <tbody>
-            <tr *ngFor="let university of universityList | filter:filter;" (click)="redirect(university.accountId)">
+            <tr *ngFor="let university of universityList | filter:filterVar;" (click)="redirect(university.accountId)">
               {{university.name}}
             </tr>
           </tbody>

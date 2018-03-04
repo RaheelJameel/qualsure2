@@ -9,6 +9,7 @@ import { StudentService } from './student.service';
   styleUrls: ['./student.component.scss']
 })
 export class StudentComponent implements OnInit {
+  filterVar: string;
   universityList: Array<any>;
   selectedUniversity:any;
   constructor(
