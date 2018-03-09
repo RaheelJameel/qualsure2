@@ -1,0 +1,131 @@
+<div *ngIf="!loggedIn">
+  <div class="row">
+    <div class="col-md-8">
+      <!-- Card -->
+      <div class="card card-image mb-3" style="background-image: url(/assets/images/img%20%2814%29.jpg);background-size: cover;">
+        <!-- Content -->
+        <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+          <div style="margin: auto">
+            <h5 class="pink-text"><i class="fa fa-pie-chart"></i> For Universities</h5>
+            <h3 class="card-title pt-2"><strong>Decentralized Degrees</strong></h3>
+            <p>Tired of processing an infinity of employer requests to access your records?</p>
+            <a class="btn btn-pink waves-light" routerLink="./explore" mdbRippleRadius><i class="fa fa-clone left"></i> Learn More</a>
+          </div>
+        </div>
+        <!-- Content -->
+      </div>
+    </div>
+    <div class="col-md-4">
+      <section class="section">
+        <!--Grid row-->
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-md-12">
+            <!-- Login form -->
+            <form [formGroup]="loginForm" novalidate>
+              <div class="text-center cyan-text">
+                <h3><i class="fa fa-lock cyan-text"></i> Login:</h3>
+              </div>
+              <div class="md-form">
+                <i class="fa fa-envelope prefix grey-text"></i>
+                <input type="text" id="defaultForm-username" class="form-control"  formControlName="username" mdbActive>
+                <label class="active" for="defaultForm-username">Your Username</label>
+              </div>
+              <div class="md-form">
+                <i class="fa fa-lock prefix grey-text"></i>
+                <input type="password" id="defaultForm-pass" class="form-control" formControlName="password" mdbActive>
+                <label class="active" for="defaultForm-pass">Your password</label>
+              </div>
+              <div class="text-center">
+                <p class="red-text">{{loginError}}</p>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-default waves-light" (click) = "login()" [disabled] = 'loginForm.invalid' mdbRippleRadius>Login</button>
+              </div>
+            </form>
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </section>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6" style="margin: auto">
+      <!--Register form-->
+      <form [formGroup]="signupForm" >
+        <div class="text-center deep-orange-text">
+          <h3><i class="fa fa-user deep-orange-text"></i> Sign up:</h3>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-user prefix grey-text"></i>
+          <input type="text" id="orangeForm-name" class="form-control" mdbActive formControlName="name">
+          <label class="active" for="orangeForm-name">University Name</label>
+          <div *ngIf="(signupForm.get('name').touched || formInvalid) && signupForm.get('name').invalid">
+            <small style="color:crimson">*University Name is required</small>
+          </div>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-user prefix grey-text"></i>
+          <input type="text" id="orangeForm-username" class="form-control" mdbActive formControlName="username">
+          <label for="orangeForm-username">Username</label>
+          <div *ngIf="(signupForm.get('username').touched || formInvalid) && signupForm.get('username').invalid">
+            <small style="color:crimson">*Username is required</small>
+          </div>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input type="text" id="orangeForm-email" class="form-control" mdbActive formControlName="email">
+          <label for="orangeForm-email">Your email</label>
+          <div *ngIf="(signupForm.get('email').touched || formInvalid) && signupForm.get('email').invalid">
+            <small style="color:crimson">*Email is required</small>
+          </div>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input type="password" id="orangeForm-pass" class="form-control" mdbActive formControlName="password">
+          <label for="orangeForm-pass">Your password</label>
+          <div *ngIf="(signupForm.get('password').touched || formInvalid) && signupForm.get('password').invalid">
+            <small style="color:crimson">*Password is required</small>
+          </div>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input type="password" id="orangeForm-passConfirm" class="form-control" mdbActive formControlName="confirmPassword">
+          <label for="orangeForm-passConfirm">Password again</label>
+          <div *ngIf="(signupForm.get('confirmPassword').touched || formInvalid) && signupForm.get('confirmPassword').invalid">
+            <small style="color:crimson">*Confirm Password is required</small>
+          </div>
+          <div *ngIf="(signupForm.get('confirmPassword').value && signupForm.get('confirmPassword').value.trim()) && (signupForm.get('confirmPassword').value.trim() != (signupForm.get('password').value && signupForm.get('password').value.trim()) )">
+            <small style="color:crimson">*Passwords do not match</small>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-deep-orange waves-light" (click)="signup()" [disabled] = 'signupForm.invalid' mdbRippleRadius>Proceed</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div *ngIf="loggedIn">
+  <div class="light-font">
+    <ol class="breadcrumb primary-color">
+        <li class="breadcrumb-item">University Home</li>
+    </ol>
+  </div>  
+  <div class="card card-image" style="background-image: url('/assets/images/university.jpg');background-size: cover;">
+      <div class="text-white text-center d-flex align-items-center rgba-indigo-strong py-5 px-4">
+          <div class="py-5" style="margin: auto">
+              <h5 *ngIf="universityInstance" class="text-white"><i class="fa fa-desktop"></i> Welcome {{universityInstance.name}}</h5>
+              <h5 *ngIf="!universityInstance" class="text-white"><i class="fa fa-desktop"></i> For Universities</h5>
+              <h3 class="card-title pt-2"><strong>Decentralized Degrees</strong></h3>
+              <p>Tired of processing an infinity of employer requests to access your records?</p>
+              <h5><strong>We have got YOU covered! </strong></h5><br>
+              <a class="btn btn-deep-purple waves-light" routerLink="./add-degree" mdbRippleRadius>Add New Degree</a>
+              <a class="btn btn-deep-purple waves-light" routerLink="./degrees" mdbRippleRadius>View All Degrees</a>
+              <a class="btn btn-deep-purple waves-light" routerLink="./edit-form" mdbRippleRadius>Edit Form</a>
+          </div>
+      </div>
+  </div>
+</div>

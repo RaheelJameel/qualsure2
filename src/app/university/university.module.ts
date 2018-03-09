@@ -22,6 +22,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { UniversityEditFormComponent } from './university-edit-form/university-edit-form.component';
 import { DynamicFieldInfoComponent } from './university-edit-form/dynamic-field-info/dynamic-field-info.component';
 import { UniversityAddDegreeComponent } from './university-add-degree/university-add-degree.component';
+import { UniversityHomeComponent } from './university-home/university-home.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { UniversityAddDegreeComponent } from './university-add-degree/university
     UniversityEditFormComponent,
     DynamicFieldInfoComponent,
     UniversityAddDegreeComponent,
+    UniversityHomeComponent,
   ],
   exports: [
     UniversityComponent,
