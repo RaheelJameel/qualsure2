@@ -34,6 +34,19 @@
   text-align: center;
 }
 
+/* Create a Parallax Effect */
+.dc_front {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.dc_front {
+  background-image: url('/assets/images/dc_front.jpg');
+  min-height: 100%;
+}
 
 /* not being used rn
 .text-center h2 {
