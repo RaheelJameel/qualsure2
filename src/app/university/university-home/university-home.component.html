@@ -20,7 +20,7 @@
                 <!-- Login form -->
                 <form [formGroup]="loginForm" novalidate>
                   <div class="md-form">
-                    <i class="fa fa-envelope prefix grey-text"></i>
+                    <i class="fa fa-user prefix grey-text"></i>
                     <input type="text" id="defaultForm-username" class="form-control" formControlName="username" mdbActive>
                     <label class="active" for="defaultForm-username">Your Username</label>
                   </div>
@@ -29,7 +29,7 @@
                     <input type="password" id="defaultForm-pass" class="form-control" formControlName="password" mdbActive>
                     <label class="active" for="defaultForm-pass">Your password</label>
                   </div>
-                  <div class="text-center">
+                  <div *ngIf="loginForm.get('username').pristine && loginForm.get('password').pristine " class="text-center">
                     <p class="red-text">{{loginError}}</p>
                   </div>
                   <div class="text-center">
