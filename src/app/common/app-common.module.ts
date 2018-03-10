@@ -12,6 +12,7 @@ import { DegreeFormComponent } from './degree-form/degree-form.component';
 import { DegreeFormFieldComponent } from './degree-form/degree-form-field/degree-form-field.component';
 
 import { ConfirmChangesComponent } from './modals/confirm-changes/confirm-changes.component';
+import { InfoDialogComponent } from './modals/info-dialog/info-dialog.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { ConfirmChangesComponent } from './modals/confirm-changes/confirm-change
     DegreeFormComponent,
     DegreeFormFieldComponent,
     ConfirmChangesComponent,
+    InfoDialogComponent,
   ],
   exports: [
     HeaderFooterComponent,
