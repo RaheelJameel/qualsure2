@@ -222,6 +222,15 @@ private handleError (operation = 'operation', result?: any) {
       );
   }
 
+  checkUsernameAvailability(username): Observable<any>{
+    const url = this.universityUrl + `/checkUsername/${username}`;
+    return this.http.get(url, this.httpOptions)
+      .pipe(
+        tap((avail: any) => this.log(`checked username availability`)),
+        catchError(this.handleError('Username Availability'))
+      );
+  }
+
   saveFormFields(formFields: FieldGroupAPI[]): Observable<any> {
     this.university.formFields = formFields;
     return this.saveUniversityInfo();
