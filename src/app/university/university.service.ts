@@ -38,10 +38,12 @@ export class UniversityService {
   getInfo =  new Observable<any>((observer) => {
     console.log('------------------------------------UniversityService: getInfo');
     if (this.university) {
-      console.log('----------------------------------------------UniversityService: getInfo -> previously saved');
-      observer.next({'body' : this.university});
-      observer.complete();
-    } else {
+      if(this.university.id){
+          console.log('----------------------------------------------UniversityService: getInfo -> previously saved');
+          observer.next({'body' : this.university});
+          observer.complete();
+      }
+    }
       console.log('----------------------------------------------UniversityService: getInfo -> not previously saved');
       this.getUniversityInfo(this.tokenStorage.getId())
         .subscribe((response) => {
@@ -49,7 +51,7 @@ export class UniversityService {
           }, (error) => {
             observer.error(error);
           });
-    }
+    
   });
 
   /**
@@ -141,6 +143,9 @@ private handleError (operation = 'operation', result?: any) {
     this.tokenStorage.signOut();
     this.isloggedin=false;
     this.emitLogoutObservable();
+    for (const prop of Object.getOwnPropertyNames(this.university)) {
+      delete this.university[prop];
+    }
     this.router.navigate(["/university"]);
   }
   checkLogin(): boolean {

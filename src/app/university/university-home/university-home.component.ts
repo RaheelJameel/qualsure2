@@ -25,8 +25,9 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
   signupForm: FormGroup;
   loginError: string;
   logoutObserSub: Subscription;
-
-
+  signUpError: string;
+  stepTwoForm: FormGroup;
+  stepTwo:boolean;
   constructor(
     private fb: FormBuilder,
     private universityService: UniversityService,
@@ -80,12 +81,26 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required, EmptyStringValidator]],
       username: ['', [Validators.required, EmptyStringValidator]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$')]],
       confirmPassword: ['', [Validators.required]]
     });
   }
+  createStepTwoForm() {
+    this.stepTwoForm = this.fb.group({
+      phoneNumberP1: ['', [Validators.required, Validators.pattern('+?([0-9]{2})')]],
+      phoneNumberP2: ['', [Validators.required, Validators.pattern('[0-9]{2-3}')]],
+      phoneNumberP3: ['', [Validators.required, Validators.pattern('[0-9]{7-8}')]],
+      universityRepresentativeCnicP1: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
+      universityRepresentativeCnicP2: ['', [Validators.required, Validators.pattern('[0-9]{7}')]],
+      universityRepresentativeCnicP3: ['', [Validators.required,Validators.pattern('[0-9]{1}')]],
+      universityRepresentativeName: ['', [Validators.required,Validators.pattern('[a-zA-Z]')]],
+      universityRepresentativePhoneNumberP1: ['', [Validators.required, Validators.pattern('+?([0-9]{2})')]],
+      universityRepresentativePhoneNumberP2: ['', [Validators.required, Validators.pattern('[0-9]{2-3}')]],
+      universityRepresentativePhoneNumberP3: ['', [Validators.required, Validators.pattern('[0-9]{7-8}')]],
+    });
+  }
 
-  login() {
+  login(fromSignup?: boolean) {
     const loginFormValue = this.loginForm.value;
     const loginObject = {
       username: loginFormValue.username.trim(),
@@ -93,7 +108,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
     };
     this.universityService.authenticate(loginObject)
     .subscribe(
-      response => {
+      response => { 
         console.log(response);
       if (response) {
         this.loggedIn = true;
@@ -101,13 +116,20 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
         console.log('logged in');
       }},
        error => {
-         if(error.error.error == "Unauthorized" || error.error.status == 401) this.loginError="Invalid username or password";
-         console.error(error);
-         this.loginError=error.message;
+        console.error(error);
+         if(fromSignup){
+          this.signUpError=error.message;
+         }
+         else{
+          if(error.error.error == "Unauthorized" || error.error.status == 401) this.loginError="Invalid username or password";
+          else this.loginError=error.message;
+         }
        }
     );
   }
-
+  nextStep() {
+    this.createStepTwoForm();
+  }
   signup() {
     const signupFormValue = this.signupForm.value;
     if (signupFormValue.password !== signupFormValue.confirmPassword) {
@@ -131,10 +153,11 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       console.log(response.headers.status);
       this.loginForm.value.username = signupObject.username;
       this.loginForm.value.password = signupObject.password;
-      this.login();
+      this.login(true);
     }},
    error => {
-         console.error(error);
+    this.signUpError=error.message;
+    console.error(error);
        });
   }
   getUniversityInfo(id: any){
