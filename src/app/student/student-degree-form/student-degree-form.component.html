@@ -8,6 +8,16 @@
   <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree"><i class="fa fa-caret-left  mr-1"></i> Back</a>
 </div>
 <br>
-<p class="h5 text-center mb-4">Degree Form</p>
-<app-degree-form *ngIf="universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'"
-  (outputValue)="verifyDegree($event)" [independentCheck]="true"></app-degree-form>
+<div class="view intro hm-black-light">
+  <div class="full-bg-img rgba-black-strong card-pad">
+    <div class="container">
+      <div class="card">
+        <p class="h5 text-center mb-4 verifyDegree-text">Degree Form</p>
+        <div class="card-body">
+          <app-degree-form *ngIf="universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'"(outputValue)="verifyDegree($event)" [independentCheck]="true"></app-degree-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>      
+

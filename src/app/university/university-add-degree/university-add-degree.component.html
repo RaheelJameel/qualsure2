@@ -6,6 +6,17 @@
 </div>
 <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/university"><i class="fa fa-caret-left  mr-1"></i> Back</a>
 <br>
-<p class="h5 text-center mb-4">Add Degree Form</p>
-<app-degree-form *ngIf="uniID" [uniID]="uniID" [buttonLabel]="'Add Degree'"
-  (outputValue)="addDegree($event)"></app-degree-form>
+<div class="view intro hm-black-light">
+    <div class="full-bg-img rgba-black-strong card-pad">
+        <div class="container">
+            <div class="card">
+                <p class="h5 text-center mb-4 addDegree-text">Add Degree Form</p>
+                <div class="card-body">
+                    <app-degree-form *ngIf="uniID" [uniID]="uniID" [buttonLabel]="'Add Degree'"(outputValue)="addDegree($event)"></app-degree-form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
