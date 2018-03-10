@@ -22,13 +22,15 @@
                 <div class="row">
 
                     <!--Grid column-->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="">
                             <div class="">
                               <label>Field&nbsp;Type</label>
                               <select class="browser-default" formControlName="fieldType">
                                 <option value="text">Text</option>
                                 <option value="number">Number</option>
+                                <option value="cnic">CNIC</option>
+
                               </select>
                             </div>
                         </div>
@@ -36,13 +38,35 @@
                     <!--Grid column-->
 
                     <!--Grid column-->
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="">
                             <div class="">
                               <label>Field&nbsp;Validations</label>
                               <select class="browser-default" formControlName="fieldValidations">
-                                <option *ngFor="let fieldValidator of defaultFieldValidators" [value]="fieldValidator.name">{{fieldValidator.name}}</option>
+                                <option *ngFor="let fieldValidator of refinedValidators" [value]="fieldValidator.name">{{fieldValidator.name}}</option>
                               </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                    
+                    <!--Grid column-->
+                    <div class="col-md-2" *ngIf="isRange">
+                        <div class="">
+                            <div class="">
+                              <label>Min</label>
+                              <input type="number" required name="min" min="0" value="0" step=".01" formControlName="min">
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid column-->
+
+                     <!--Grid column-->
+                     <div class="col-md-2" *ngIf="isRange">
+                        <div class="">
+                            <div class="">
+                              <label>Max</label>
+                              <input type="number" required name="max" min="0" value="0" step=".01" formControlName="max">
                             </div>
                         </div>
                     </div>
