@@ -11,11 +11,16 @@
     <div class="full-bg-img rgba-black-strong card-pad"> -->
         <div class="container">
             <div class="card">
+              <div class="cardView intro hm-black-light">
                 <div class="card-body">
                     <form [formGroup]="editForm" *ngIf="defaultFieldValidators">
                         <div  *ngFor="let fieldGroup of editFieldArray.controls; let i=index">
-                          <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
-                            [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators" [id]="i"></app-dynamic-field-info>
+                          <div class="card card-pad">
+                            <div class="container">
+                              <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
+                              [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators" [id]="i"></app-dynamic-field-info>
+                            </div>                              
+                          </div>
                           <button *ngIf="i>(requiredFields-1)" (click)="removeField(i)"
                             type="button" class="btn btn-tb btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Remove Field">
                             X
@@ -25,7 +30,7 @@
                           <br>
                           <br>
                         </div>
-                      </form>
+                    </form>
                       <div class="center-on-small-only">
                         <a class="btn btn-primary waves-light" mdbRippleRadius (click)="addField()">Add Field</a>
                       </div>
@@ -36,6 +41,7 @@
                         </div>
                       </div>
                 </div>
+              </div>  
             </div>
         </div>
     <!-- </div>
