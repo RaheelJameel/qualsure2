@@ -115,9 +115,11 @@
     <ol class="breadcrumb primary-color">
         <li class="breadcrumb-item">University Home</li>
     </ol>
-  </div>  
-  <div class="full-bg-img rgba-black-strong" style="background-image: url('/assets/images/university.jpg');background-size: cover;">
-      <div class="text-white text-center d-flex align-items-center rgba-indigo-strong py-5 px-4">
+  </div> 
+  <br><br>
+  <div class="container-fluid round-edges"> 
+  <div class="full-bg-img rgba-black-strong" style="background-image: url('/assets/images/university.jpg');background-size: cover; ">
+      <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
           <div class="py-5" style="margin: auto">
               <h5 *ngIf="universityInstance" class="text-white"><i class="fa fa-desktop"></i> Welcome {{universityInstance.name}}</h5>
               <h5 *ngIf="!universityInstance" class="text-white"><i class="fa fa-desktop"></i> For Universities</h5>
@@ -130,4 +132,5 @@
           </div>
       </div>
   </div>
+</div>
 </div>
