@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,6 +12,7 @@ import { EmptyStringValidator } from '../../common/validators/empty-string-valid
 
 import { UniversityService } from '../university.service';
 import { University} from '../university';
+import { error } from 'util';
 
 @Component({
   selector: 'app-university-home',
@@ -28,6 +29,10 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
   signUpError: string;
   stepTwoForm: FormGroup;
   stepTwo:boolean;
+  stepTwoFormError:string;
+  phoneMask: any[] = ['+',/[1-9]/, /[0-9]/ ,' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+  cnicMask: any[] = [/\d/, /\d/, /\d/ ,/\d/ ,/\d/  ,'-', /\d/, /\d/, /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/];
+
   constructor(
     private fb: FormBuilder,
     private universityService: UniversityService,
@@ -43,11 +48,13 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
     this.checkLoginStatus();
     this.createLoginForm();
     this.createSignupForm();
+    this.createStepTwoForm();
     this.subcribeToLogoutObservable();
    }
 
   ngOnInit() {
   }
+
 
   ngOnDestroy() {
     this.logoutObserSub.unsubscribe();
@@ -77,27 +84,22 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
   }
 
   createSignupForm() {
-    this.signupForm = this.fb.group({
-      name: ['', [Validators.required, EmptyStringValidator,Validators.pattern('^[A-Za-z]+$')]],
-      username: ['', [Validators.required, EmptyStringValidator,Validators.pattern('(?!^\d+$)^[a-zA-Z\d\-\_]*$')]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$')]],
-      confirmPassword: ['', [Validators.required]]
-    });
+    this.signupForm = new FormGroup({
+      name: new FormControl('', [Validators.required, EmptyStringValidator,Validators.pattern('^[A-Za-z]+$')]),
+      username: new FormControl ('', [Validators.required, EmptyStringValidator,Validators.pattern('^[a-zA-Z0-9\\d\\-\\_]*$')]),
+      email:  new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$')]),
+      confirmPassword: new FormControl('', [Validators.required])
+    },{updateOn: 'blur'});
   }
   createStepTwoForm() {
-    this.stepTwoForm = this.fb.group({
-      phoneNumberP1: ['', [Validators.required, Validators.pattern('+?([0-9]{2})')]],
-      phoneNumberP2: ['', [Validators.required, Validators.pattern('[0-9]{2-3}')]],
-      phoneNumberP3: ['', [Validators.required, Validators.pattern('[0-9]{7-8}')]],
-      universityRepresentativeCnicP1: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
-      universityRepresentativeCnicP2: ['', [Validators.required, Validators.pattern('[0-9]{7}')]],
-      universityRepresentativeCnicP3: ['', [Validators.required,Validators.pattern('[0-9]{1}')]],
-      universityRepresentativeName: ['', [Validators.required,Validators.pattern('[a-zA-Z]')]],
-      universityRepresentativePhoneNumberP1: ['', [Validators.required, Validators.pattern('+?([0-9]{2})')]],
-      universityRepresentativePhoneNumberP2: ['', [Validators.required, Validators.pattern('[0-9]{2-3}')]],
-      universityRepresentativePhoneNumberP3: ['', [Validators.required, Validators.pattern('[0-9]{7-8}')]],
-    });
+    this.stepTwoForm = new FormGroup({
+      phoneNumber: new FormControl('', [Validators.required,Validators.pattern('^\\+?[0-9]{2}\\s?\\([0-9]{3}\\)\\s?[0-9]{3}\\-[0-9]{4}$')]),
+      universityRepresentativePhoneNumber: new FormControl('', [Validators.required,Validators.pattern('^\\+?[0-9]{2}\\s?\\([0-9]{3}\\)\\s?[0-9]{3}\\-[0-9]{4}$')]),
+      universityRepresentativeCnic: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5}\\-[0-9]{7}\\-[0-9]{1}$')]),
+      universityRepresentativeName: new FormControl('', [Validators.required,Validators.pattern('^[A-Za-z]+$')]),
+      address: new FormControl('',[Validators.required])
+    },{updateOn: 'blur'});
   }
 
   login(fromSignup?: boolean) {
@@ -111,14 +113,18 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       response => { 
         console.log(response);
       if (response) {
+        window.scrollTo(0,0);
         this.loggedIn = true;
+        this.stepTwo=false;
         this.getUniversityInfo(this.token.getId());
         console.log('logged in');
+        this.signUpError=null;
+        this.loginError=null;
       }},
        error => {
         console.error(error);
          if(fromSignup){
-          this.signUpError=error.message;
+          this.stepTwoFormError=error.message;
          }
          else{
           if(error.error.error == "Unauthorized" || error.error.status == 401) this.loginError="Invalid username or password";
@@ -129,10 +135,28 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
     );
   }
   nextStep() {
-    this.createStepTwoForm();
+   this.universityService.checkUsernameAvailability(this.signupForm.get('username').value).subscribe(
+     response => {
+      console.log(response.body.success);
+      if(response.body.success===true)
+        {
+          window.scrollTo(0,0);
+          this.stepTwo=true;
+        }
+        else{
+          this.signUpError="Username already used please choose a different one";
+        }
+     },
+     error => {
+       this.signUpError=error
+      console.error(error);
+     }
+   )
+      
   }
   signup() {
     const signupFormValue = this.signupForm.value;
+    const stepTwoFormValue= this.stepTwoForm.value;
     if (signupFormValue.password !== signupFormValue.confirmPassword) {
       return;
     }
@@ -142,7 +166,12 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       email: signupFormValue.email.trim(),
       password: signupFormValue.password,
       roles: ['USER'],
-      active: 'true'
+      active: 'true',
+      number: stepTwoFormValue.phoneNumber,
+      representativeName: stepTwoFormValue.universityRepresentativeName,
+      representativeNumber: stepTwoFormValue.universityRepresentativePhoneNumber,
+      representativeCNIC: stepTwoFormValue.universityRepresentativeCnic,
+      address: stepTwoFormValue.address
     };
     console.log(signupObject);
     this.universityService.signupUser(signupObject)
@@ -157,7 +186,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       this.login(true);
     }},
    error => {
-    this.signUpError=error.message;
+    this.stepTwoFormError=error.message;
     console.error(error);
        });
   }

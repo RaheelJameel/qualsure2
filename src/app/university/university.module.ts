@@ -25,7 +25,7 @@ import { UniversityEditFormComponent } from './university-edit-form/university-e
 import { DynamicFieldInfoComponent } from './university-edit-form/dynamic-field-info/dynamic-field-info.component';
 import { UniversityAddDegreeComponent } from './university-add-degree/university-add-degree.component';
 import { UniversityHomeComponent } from './university-home/university-home.component';
-
+import { TextMaskModule } from 'angular2-text-mask';
 import { PendingChangesGuard } from './pending-changes-guard';
 
 @NgModule({
@@ -42,6 +42,7 @@ import { PendingChangesGuard } from './pending-changes-guard';
     MDBBootstrapModule.forRoot(),
     AppCommonModule,
     NgbModule,
+    TextMaskModule,
   ],
   declarations: [
     UniversityComponent,

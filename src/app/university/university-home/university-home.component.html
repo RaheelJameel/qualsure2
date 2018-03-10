@@ -1,4 +1,4 @@
-<div *ngIf="!loggedIn">
+<div *ngIf="!loggedIn && !stepTwo">
   <div class="view intro hm-black-light">
     <div class="full-bg-img flex-center rgba-black-strong">
       <!--Card-->
@@ -64,33 +64,74 @@
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="orangeForm-name" class="form-control" mdbActive formControlName="name">
           <label class="active" for="orangeForm-name">University Name</label>
-          <div *ngIf="(signupForm.get('name').touched || formInvalid) && signupForm.get('name').invalid">
-            <small style="color:crimson">*University Name is required</small>
+          <div *ngIf="(signupForm.get('name').touched || signupForm.get('name').dirty) && signupForm.get('name').invalid">
+              <div *ngIf="signupForm.get('name').errors.required">
+                  <small style="color:crimson">*Name is required</small>
+              </div>
+              <div *ngIf="signupForm.get('name').errors.pattern">
+                  <small style="color:crimson">*Name can only contain alphabets</small>
+              </div>
           </div>
         </div>
         <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
           <input type="text" id="orangeForm-username" class="form-control" mdbActive formControlName="username">
           <label for="orangeForm-username">Username</label>
-          <div *ngIf="(signupForm.get('username').touched || formInvalid) && signupForm.get('username').invalid">
-            <small style="color:crimson">*Username is required</small>
-          </div>
+          <div *ngIf="(signupForm.get('username').touched || signupForm.get('username').dirty) && signupForm.get('username').invalid">
+              <div *ngIf="signupForm.get('username').errors.required">
+                  <small style="color:crimson">*Username is required</small>
+              </div>
+              <div *ngIf="signupForm.get('username').errors.pattern">
+                  <small style="color:crimson">*Username can only contain numbers, alphabets, hyphen and underscore
+                  </small>
+              </div>
+           </div>
         </div>
         <div class="md-form">
           <i class="fa fa-envelope prefix grey-text"></i>
           <input type="text" id="orangeForm-email" class="form-control" mdbActive formControlName="email">
           <label for="orangeForm-email">Your email</label>
-          <div *ngIf="(signupForm.get('email').touched || formInvalid) && signupForm.get('email').invalid">
-            <small style="color:crimson">*Email is required</small>
+          <div *ngIf="(signupForm.get('email').touched || signupForm.get('email').dirty) && signupForm.get('email').invalid">
+              <div *ngIf="signupForm.get('email').errors.required">
+                  <small style="color:crimson">*Email is required</small>
+              </div>
+              <div *ngIf="signupForm.get('email').errors.email">
+                  <small style="color:crimson">*Email not in correct format</small>
+              </div>
           </div>
         </div>
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
           <input type="password" id="orangeForm-pass" class="form-control" mdbActive formControlName="password">
           <label for="orangeForm-pass">Your password</label>
-          <div *ngIf="(signupForm.get('password').touched || formInvalid) && signupForm.get('password').invalid">
-            <small style="color:crimson">*Password is required</small>
+          <div *ngIf="(signupForm.get('password').touched || signupForm.get('password').dirty) && signupForm.get('password').invalid">
+            <div *ngIf="signupForm.get('password').errors.required">
+              <small style="color:crimson">*Password is required</small>
+            </div>   
+            <div *ngIf="signupForm.get('password').errors.pattern">
+              <small style="color:crimson">*Password is not in correct format:
+                 <br>
+                 <ul>
+                  <li>
+                    Password should have one lower-case character
+                  </li>
+                  <li>
+                    Password should have one upper-case character
+                  </li>
+                  <li>
+                    Password should have one number
+                  </li>
+                  <li>
+                    Password should have one special character
+                  </li>
+                  <li>
+                    Password should contain atleast 8 characters
+                  </li>
+                 </ul> 
+                </small>
+            </div>       
           </div>
+          
         </div>
         <div class="md-form">
           <i class="fa fa-lock prefix grey-text"></i>
@@ -107,14 +148,14 @@
           <p class="red-text">{{signUpError}}</p>
         </div>
         <div class="text-center">
-          <input type="submit" class="btn btn-deep-orange waves-light" (click)="signup()" [disabled]='signupForm.invalid' value="Proceed"
+          <input type="submit" class="btn btn-deep-orange waves-light" (click)="nextStep()" [disabled]='signupForm.invalid' value="Proceed"
             mdbRippleRadius>
         </div>
       </form>
     </div>
   </div>
 </div>
-<div *ngIf="!loggedIn">
+<div *ngIf="!loggedIn && stepTwo">
   <div class="row">
     <div class="col-md-6" style="margin: auto">
       <!--Register form-->
@@ -124,33 +165,90 @@
             <i class="fa fa-user deep-orange-text"></i> Sign up:</h3>
         </div>
         <div class="md-form">
+          <i class="fa fa-phone prefix grey-text"></i>
+
+      
+            <input type="tel" id="orangeForm-p1" class="form-control" mdbActive formControlName="phoneNumber"
+            [textMask]="{mask: phoneMask}"/>
+
+          <label class="active" for="orangeForm-p1">University Phone Number</label>
+          <div *ngIf="(stepTwoForm.get('phoneNumber').touched || formInvalid) && stepTwoForm.get('phoneNumber').invalid">
+            <div *ngIf="stepTwoForm.get('phoneNumber').errors.required">
+                <small style="color:crimson">*Phone Number is required</small>
+            </div>
+            <div *ngIf="stepTwoForm.get('phoneNumber').errors.pattern">
+                <small style="color:crimson">*Phone Number not in correct format</small>
+            </div>
+          </div>
+        </div>
+        <div class="md-form">
+            <i class="fa fa-map-marker prefix grey-text" ></i>
+            <input type="text" id="orangeForm-address" class="form-control" mdbActive formControlName="address">
+            <label class="active" for="orangeForm-address">University Address</label>
+            <div *ngIf="(stepTwoForm.get('address').touched || formInvalid) && stepTwoForm.get('address').invalid">
+                <div *ngIf="stepTwoForm.get('adsress').errors.required">
+                    <small style="color:crimson">*Address is required</small>
+                </div>
+            </div>
+          </div>
+        <div class="md-form">
           <i class="fa fa-user prefix grey-text"></i>
-          <span>
-            <input type="tel" id="orangeForm-p1" class="form-control" mdbActive formControlName="phoneNumberP1">
-          </span>
-          <span>
-            <input type="tel" id="orangeForm-p2" class="form-control" mdbActive formControlName="phoneNumberP2">
-          </span>
-          <span>
-            <input type="tel" id="orangeForm-p3" class="form-control" mdbActive formControlName="phoneNumberP3">
-          </span>
-
-          <label class="active" for="orangeForm-name">University Phone Number</label>
-
+          <input type="text" id="orangeForm-representative-name" class="form-control" mdbActive formControlName="universityRepresentativeName">
+          <label class="active" for="orangeForm-representative-name">University Representative Name</label>
+          <div *ngIf="(stepTwoForm.get('universityRepresentativeName').touched || formInvalid) && stepTwoForm.get('universityRepresentativeName').invalid">
+              <div *ngIf="stepTwoForm.get('universityRepresentativeName').errors.required">
+                  <small style="color:crimson">*Representative Name is required</small>
+              </div>
+              <div *ngIf="stepTwoForm.get('universityRepresentativeName').errors.pattern">
+                  <small style="color:crimson">*Representative Name not in correct format</small>
+              </div>
+          </div>
         </div>
+        <div class="md-form">
+          <i class="fa fa-phone prefix grey-text"></i>
 
-        <div class="text-center">
-          <p class="red-text">{{signUpError}}</p>
+      
+            <input type="tel" id="orangeForm-p2" class="form-control" mdbActive formControlName="universityRepresentativePhoneNumber"
+            [textMask]="{mask: phoneMask}"/>
+
+          <label class="active" for="orangeForm-p2">University Representative Number</label>
+          <div *ngIf="(stepTwoForm.get('universityRepresentativePhoneNumber').touched || formInvalid) && stepTwoForm.get('universityRepresentativePhoneNumber').invalid">
+              <div *ngIf="stepTwoForm.get('universityRepresentativePhoneNumber').errors.required">
+                  <small style="color:crimson">*Representative Number is required</small>
+              </div>
+              <div *ngIf="stepTwoForm.get('universityRepresentativePhoneNumber').errors.pattern">
+                  <small style="color:crimson">*Representative Number not in correct format</small>
+              </div>
+           </div>
+        </div>
+        <div class="md-form">
+          <i class="fa fa-id-card prefix grey-text"></i>
+      
+            <input type="tel" id="orangeForm-p3" class="form-control" mdbActive  formControlName="universityRepresentativeCnic"
+            [textMask]="{mask: cnicMask}"/>
+
+          <label class="active" for="orangeForm-p3">University Representative Cnic</label>
+          <div *ngIf="(stepTwoForm.get('universityRepresentativeCnic').touched || formInvalid) && stepTwoForm.get('universityRepresentativeCnic').invalid">
+              <div *ngIf="stepTwoForm.get('universityRepresentativeCnic').errors.required">
+                  <small style="color:crimson">*Representative cnic is required</small>
+              </div>
+              <div *ngIf="stepTwoForm.get('universityRepresentativeCnic').errors.pattern">
+                  <small style="color:crimson">*Representative cnic not in correct format</small>
+              </div>
+          </div>
         </div>
         <div class="text-center">
-          <input type="submit" class="btn btn-deep-orange waves-light" (click)="signup()" [disabled]='signupForm.invalid' value="Proceed"
+          <p class="red-text">{{stepTwoFormError}}</p>
+        </div>
+        <div class="text-center">
+          <input type="submit" class="btn btn-deep-orange waves-light" (click)="signup()" [disabled]='stepTwoForm.invalid' value="Proceed"
             mdbRippleRadius>
         </div>
       </form>
     </div>
   </div>
 </div>
-<div *ngIf="loggedIn">
+<div *ngIf="loggedIn && !stepTwo">
   <div class="light-font">
     <ol class="breadcrumb primary-color">
         <li class="breadcrumb-item">University Home</li>
