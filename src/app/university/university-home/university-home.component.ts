@@ -78,10 +78,10 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
 
   createSignupForm() {
     this.signupForm = this.fb.group({
-      name: ['', [Validators.required, EmptyStringValidator]],
-      username: ['', [Validators.required, EmptyStringValidator]],
+      name: ['', [Validators.required, EmptyStringValidator,Validators.pattern('^[A-Za-z]+$')]],
+      username: ['', [Validators.required, EmptyStringValidator,Validators.pattern('(?!^\d+$)^[a-zA-Z\d\-\_]*$')]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$')]],
+      password: ['', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$')]],
       confirmPassword: ['', [Validators.required]]
     });
   }
@@ -123,6 +123,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
          else{
           if(error.error.error == "Unauthorized" || error.error.status == 401) this.loginError="Invalid username or password";
           else this.loginError=error.message;
+          this.clearForms();
          }
        }
     );
