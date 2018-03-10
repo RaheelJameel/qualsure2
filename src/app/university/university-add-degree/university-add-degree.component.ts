@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 import { UniversityService } from '../university.service';
+import { ComponentCanDeactivate } from '../pending-changes-guard';
+
 import { FieldGroupAPI } from '../../services/common.service';
+import { UnsavedChangesErrorMsg } from '../../common/constants';
+
 import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
 
 @Component({
@@ -10,9 +15,11 @@ import { AlertService } from '../../common/angular2-alert-notifications/_service
   templateUrl: './university-add-degree.component.html',
   styleUrls: ['./university-add-degree.component.scss']
 })
-export class UniversityAddDegreeComponent implements OnInit {
+export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactivate {
 
   uniID: string;
+  isFormDity: boolean;
+  bypassConfirmChangesCheck: boolean;
 
   constructor(
     private router: Router,
@@ -45,6 +52,7 @@ export class UniversityAddDegreeComponent implements OnInit {
   }
 
   addDegree(degree) {
+    this.bypassConfirmChangesCheck = true;
     this.universityService.addDegree(degree)
       .subscribe(
       response => {
@@ -60,6 +68,20 @@ export class UniversityAddDegreeComponent implements OnInit {
 
       }
     );
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    // insert logic to check if there are pending changes here;
+    // returning true will navigate without confirmation
+    // returning false will show a confirm dialog before navigating away
+    return this.bypassConfirmChangesCheck || !this.isFormDity;
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (!this.canDeactivate()) {
+      $event.returnValue = UnsavedChangesErrorMsg;
+    }
   }
 
 }

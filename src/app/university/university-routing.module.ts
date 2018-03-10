@@ -20,7 +20,7 @@ const univeristyRoutes: Routes = [
       { path: 'explore',  component: UniversityLearnMoreComponent, canDeactivate: [PendingChangesGuard] },
       { path: 'degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
       { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuard] },
-      { path: 'add-degree',  component: UniversityAddDegreeComponent , canActivate: [AuthGuard]  },
+      { path: 'add-degree',  component: UniversityAddDegreeComponent , canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard]  },
     ]
   },
 ];

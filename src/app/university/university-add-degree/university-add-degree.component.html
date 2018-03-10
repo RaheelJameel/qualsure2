@@ -12,7 +12,8 @@
             <div class="card">
                 <p class="h5 text-center mb-4 addDegree-text">Add Degree Form</p>
                 <div class="card-body">
-                    <app-degree-form *ngIf="uniID" [uniID]="uniID" [buttonLabel]="'Add Degree'"(outputValue)="addDegree($event)"></app-degree-form>
+                    <app-degree-form *ngIf="uniID" [uniID]="uniID" [buttonLabel]="'Add Degree'"(outputValue)="addDegree($event)"
+                        (dirtyFormOutput)="isFormDity=$event"></app-degree-form>
                 </div>
             </div>
         </div>
