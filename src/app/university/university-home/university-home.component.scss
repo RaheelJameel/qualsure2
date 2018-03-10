@@ -1,0 +1,55 @@
+.view {
+    background: url("/assets/images/img%20%2814%29.jpg") no-repeat center center;
+    background-size: cover;
+    
+    
+    
+}
+
+.rgba-black-strong{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    
+}
+.round-edges .full-bg-img {
+    
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.view .white-text {
+  position: relative;
+  bottom: 100px;
+}
+
+.card {
+    margin: 10%;
+    width: 30rem;
+}
+
+.abc {
+    position: relative;
+}
+
+.card-bg {
+    background-color: #00bcd4 !important;
+    height: 7.5rem;
+}
+
+.login-text {
+    padding-top: 2.6rem;
+    font-weight: bolder;
+    font-size: 2rem;
+}
+
+.second{
+    border:2px solid blue;
+    width:40%;
+    height:200px;
+	position: relative;
+    top: 315px;
+}
