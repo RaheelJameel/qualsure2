@@ -8,6 +8,8 @@ import { UniversityEditFormComponent } from './university-edit-form/university-e
 import { UniversityViewDegreesComponent} from './university-view-degrees/university-view-degrees.component';
 import { UniversityAddDegreeComponent } from './university-add-degree/university-add-degree.component';
 
+import { PendingChangesGuard } from './pending-changes-guard';
+
 import {AuthGuard} from './auth-guard.service';
 const univeristyRoutes: Routes = [
   {
@@ -15,7 +17,7 @@ const univeristyRoutes: Routes = [
     component: UniversityComponent,
     children: [
       { path: '', component: UniversityHomeComponent },
-      { path: 'explore',  component: UniversityLearnMoreComponent },
+      { path: 'explore',  component: UniversityLearnMoreComponent, canDeactivate: [PendingChangesGuard] },
       { path: 'degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
       { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuard] },
       { path: 'add-degree',  component: UniversityAddDegreeComponent , canActivate: [AuthGuard]  },

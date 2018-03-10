@@ -26,6 +26,8 @@ import { DynamicFieldInfoComponent } from './university-edit-form/dynamic-field-
 import { UniversityAddDegreeComponent } from './university-add-degree/university-add-degree.component';
 import { UniversityHomeComponent } from './university-home/university-home.component';
 
+import { PendingChangesGuard } from './pending-changes-guard';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -55,10 +57,16 @@ import { UniversityHomeComponent } from './university-home/university-home.compo
     UniversityLearnMoreComponent,
     UniversityViewDegreesComponent,
   ],
-  providers: [HttpClientModule, TokenStorage,AuthGuard,{
-    provide: HTTP_INTERCEPTORS,
-    useClass: Interceptor,
-    multi: true
-  }  ],
+  providers: [
+    HttpClientModule,
+    TokenStorage,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true
+    },
+    PendingChangesGuard,
+    ],
 })
 export class UniversityModule { }
