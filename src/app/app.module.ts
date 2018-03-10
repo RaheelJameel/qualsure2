@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {ReactiveFormsModule} from '@angular/forms';
 
@@ -54,6 +56,7 @@ import { AlertService } from './common/angular2-alert-notifications/_services/in
     //   InMemoryDataService, { dataEncapsulation: false }),
     Ng2OrderModule,
     Ng2SearchPipeModule,
+    NgbModule.forRoot(),
   ],
   providers: [
     UniversityService,

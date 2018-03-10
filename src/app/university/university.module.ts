@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppCommonModule } from '../common/app-common.module';
 
 import { UniversityComponent } from './university.component';
@@ -37,6 +39,7 @@ import { UniversityHomeComponent } from './university-home/university-home.compo
     CoolStorageModule,
     MDBBootstrapModule.forRoot(),
     AppCommonModule,
+    NgbModule,
   ],
   declarations: [
     UniversityComponent,
