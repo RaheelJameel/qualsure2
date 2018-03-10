@@ -7,58 +7,34 @@
 <div>
   <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/university"><i class="fa fa-caret-left  mr-1"></i> Back</a>
 </div>
-<br>
-<form [formGroup]="editForm" *ngIf="defaultFieldValidators">
-  <div  *ngFor="let fieldGroup of editFieldArray.controls; let i=index">
-    <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
-      [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators" [id]="i"></app-dynamic-field-info>
-    <button *ngIf="i>(requiredFields-1)" (click)="removeField(i)"
-      type="button" class="btn btn-tb btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Remove Field">
-      X
-    </button>
-    <br *ngIf="i>(requiredFields-1)">
-    <br *ngIf="i>(requiredFields-1)">
-    <br>
-    <br>
-  </div>
-</form>
-<div class="center-on-small-only">
-  <a class="btn btn-primary waves-light" mdbRippleRadius (click)="addField()">Add Field</a>
-</div>
-<div class="center-on-small-only">
-  <a class="btn btn-primary waves-light" mdbRippleRadius (click)="save()">Save Form</a>
-  <div *ngIf="formInvalid && editForm.invalid">
-    <small style="color:crimson">*Form is Invalid</small>
-  </div>
-</div>
 <!-- <div class="view intro hm-black-light">
     <div class="full-bg-img rgba-black-strong card-pad"> -->
         <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <form [formGroup]="editForm">
-                      <div *ngFor="let fieldGroup of editFieldArray.controls; let i=index">
-                        <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
-                          [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators" [id]="i"></app-dynamic-field-info>
-                        <button *ngIf="i>(requiredFields-1)" (click)="removeField(i)"
-                          type="button" class="btn btn-tb btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Remove Field">
-                          X
-                        </button>
-                        <br *ngIf="i>(requiredFields-1)">
-                        <br *ngIf="i>(requiredFields-1)">
-                        <br>
-                        <br>
+                    <form [formGroup]="editForm" *ngIf="defaultFieldValidators">
+                        <div  *ngFor="let fieldGroup of editFieldArray.controls; let i=index">
+                          <app-dynamic-field-info [fieldInfoForm]="fieldGroup" [fieldIndex]="i" [requiredFields]="requiredFields"
+                            [formInvalid]="formInvalid" [defaultFieldValidators]="defaultFieldValidators" [id]="i"></app-dynamic-field-info>
+                          <button *ngIf="i>(requiredFields-1)" (click)="removeField(i)"
+                            type="button" class="btn btn-tb btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top" title="Remove Field">
+                            X
+                          </button>
+                          <br *ngIf="i>(requiredFields-1)">
+                          <br *ngIf="i>(requiredFields-1)">
+                          <br>
+                          <br>
+                        </div>
+                      </form>
+                      <div class="center-on-small-only">
+                        <a class="btn btn-primary waves-light" mdbRippleRadius (click)="addField()">Add Field</a>
                       </div>
-                    </form>
-                    <div class="center-on-small-only">
-                      <a class="btn btn-primary waves-light" mdbRippleRadius (click)="addField()">Add Field</a>
-                    </div>
-                    <div class="center-on-small-only">
-                      <a class="btn btn-primary waves-light" mdbRippleRadius (click)="save()">Save Form</a>
-                      <div *ngIf="formInvalid && editForm.invalid">
-                        <small style="color:crimson">*Form is Invalid</small>
+                      <div class="center-on-small-only">
+                        <a class="btn btn-primary waves-light" mdbRippleRadius (click)="save()">Save Form</a>
+                        <div *ngIf="formInvalid && editForm.invalid">
+                          <small style="color:crimson">*Form is Invalid</small>
+                        </div>
                       </div>
-                    </div>
                 </div>
             </div>
         </div>
