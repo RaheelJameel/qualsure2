@@ -1,6 +1,24 @@
 .view {
     background: url("/assets/images/img%20%2814%29.jpg") no-repeat center center;
     background-size: cover;
+    
+    
+    
+}
+
+.rgba-black-strong{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    
+}
+.round-edges .full-bg-img {
+    
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .view .white-text {
