@@ -33,20 +33,33 @@ export class DynamicFieldInfoComponent implements OnInit {
     if (this.fieldInfoForm.get('fieldValidations').value === 'Range') {
            this.isRange = true;
     }
-    this.fieldInfoForm.addControl('min', new FormControl('', Validators.required));
-    this.fieldInfoForm.addControl('max', new FormControl('', Validators.required));
+    // this.fieldInfoForm.addControl('min', new FormControl('', Validators.required));
+    // this.fieldInfoForm.addControl('max', new FormControl('', Validators.required));
 
-   // console.log(this.fieldInfoForm);
     this.onChanges();
   }
   onChanges(): void {
     this.fieldInfoForm.get('fieldType').valueChanges.subscribe(validatorType => {
    //   console.log('valueee= ' + validatorType);
+      if (validatorType !== 'number') {
+        this.isRange = false;
+      }
       this.refinedValidators = this.getRefinedValidators(validatorType);
     });
     this.fieldInfoForm.get('fieldValidations').valueChanges.subscribe(validator => {
       if (validator === 'Range') {
+          if (!(this.fieldInfoForm.contains('min') && this.fieldInfoForm.contains('max')) ) {
+          this.fieldInfoForm.addControl('min', new FormControl('', Validators.required));
+          this.fieldInfoForm.addControl('max', new FormControl('', Validators.required));
+          }
         this.isRange = true;
+      } else {
+        if (this.fieldInfoForm.contains('min') && this.fieldInfoForm.contains('max') ) {
+          this.fieldInfoForm.removeControl('min');
+          this.fieldInfoForm.removeControl('max');
+          }
+
+        this.isRange = false;
       }
        });
        // continue work from here

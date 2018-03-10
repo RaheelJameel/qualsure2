@@ -57,7 +57,18 @@ export class UniversityEditFormComponent implements OnInit {
       });
   }
 
-  createFieldFormGroup(fieldGroup?: FieldGroupAPI): FormGroup {
+  createFieldFormGroup(fieldGroup?: FieldGroupAPI, range?: boolean): FormGroup {
+    if (range) {
+      return this.formBuilder.group({
+        fieldName: [fieldGroup ? fieldGroup.name : '', [Validators.required, EmptyStringValidator]],
+        fieldType: [fieldGroup ? fieldGroup.attributeType : 'text'],
+        fieldValidations: [fieldGroup ? (fieldGroup.validators ? fieldGroup.validators[0].name : 'None') : 'None'],
+        fieldErrorMsg: [fieldGroup ? fieldGroup.customError : ''],
+        min: ['0'],
+        max: ['4']
+      });
+
+    } else {
     return this.formBuilder.group({
       fieldName: [fieldGroup ? fieldGroup.name : '', [Validators.required, EmptyStringValidator]],
       fieldType: [fieldGroup ? fieldGroup.attributeType : 'text'],
@@ -65,10 +76,16 @@ export class UniversityEditFormComponent implements OnInit {
       fieldErrorMsg: [fieldGroup ? fieldGroup.customError : '']
     });
   }
+  }
 
   addField(fieldGroup?: FieldGroupAPI) {
     this.formInvalid = false;
-    this.editFieldArray.push(this.createFieldFormGroup(fieldGroup));
+    if (fieldGroup && fieldGroup.validators[0].name === 'Range') {
+        this.editFieldArray.push(this.createFieldFormGroup(fieldGroup, true));
+   } else {
+       this.editFieldArray.push(this.createFieldFormGroup(fieldGroup));
+  }
+
   }
 
   removeField(index: number) {
@@ -98,8 +115,8 @@ export class UniversityEditFormComponent implements OnInit {
     this.universityService.getFormFields()
       .subscribe((response) => {
         if (response.body) {
-          console.log('----------------initForm():', response);
-          console.log(response.body);
+          // console.log('----------------initForm():', response);
+          // console.log(response.body);
           this.formModel = response.body;
           this.initFormFields();
         }},
@@ -114,7 +131,7 @@ export class UniversityEditFormComponent implements OnInit {
       .subscribe(
         response => {
         if (response.body) {
-          console.log(response.body);
+       //   console.log(response.body);
           this.defaultFieldValidators = response.body;
         }},
         error => {
@@ -133,17 +150,27 @@ export class UniversityEditFormComponent implements OnInit {
 
   get formApiValue(): FieldGroupAPI[] {
     return this.formValue.map((value) => {
-      return {
+           return {
         name: value.fieldName.trim(),
         attributeType: value.fieldType,
-        validators: [this.searchFieldValidators(value.fieldValidations)],
+        validators: [this.searchFieldValidators(value.fieldValidations, value.min, value.max)],
         customError: value.fieldErrorMsg ? value.fieldErrorMsg.trim() : value.fieldErrorMsg
       };
     });
   }
 
-  searchFieldValidators(searchName: string): FieldValidator {
-    return this.defaultFieldValidators.filter((fieldValidator: FieldValidator) => {
+  searchFieldValidators(searchName: string, min?: string, max?: string): FieldValidator {
+    return this.defaultFieldValidators.map((fieldValidator: FieldValidator) => {
+      if (min !== undefined && max !== undefined) {
+        fieldValidator.regex = '[' + min + '-' + max + ']' + '+';
+      }
+      return fieldValidator;
+    })
+    .filter((fieldValidator: FieldValidator) => {
+      if (searchName === 'Range') {
+        console.log(searchName);
+        console.log(fieldValidator.regex);
+      }
       return fieldValidator.name === searchName;
     })[0];
   }
@@ -151,7 +178,7 @@ export class UniversityEditFormComponent implements OnInit {
   save() {
     this.formInvalid = false;
     if (this.editForm.valid) {
-      console.log(this.formApiValue);
+    //  console.log(this.formApiValue);
       this.commonService.setForm(this.formApiValue);
       this.universityService.saveFormFields(this.formApiValue)
         .subscribe(

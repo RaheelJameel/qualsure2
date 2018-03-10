@@ -57,7 +57,7 @@ export class DegreeFormComponent implements OnInit {
     } else {
       this.studentService.getFormFields(this.uniID)
         .subscribe((response) => {
-            console.log('1111111111111', response);
+        //    console.log('1111111111111', response);
           if (response) {
             this.formFields = response.formFields;
             this.makeForm();

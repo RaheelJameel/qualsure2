@@ -36,22 +36,19 @@ export class UniversityService {
   public loginObservable$ = this.loginObservable.asObservable();
 
   getInfo =  new Observable<any>((observer) => {
-    console.log('------------------------------------UniversityService: getInfo');
     if (this.university) {
-      if(this.university.id){
-          console.log('----------------------------------------------UniversityService: getInfo -> previously saved');
+      if (this.university.id) {
           observer.next({'body' : this.university});
           observer.complete();
       }
     }
-      console.log('----------------------------------------------UniversityService: getInfo -> not previously saved');
       this.getUniversityInfo(this.tokenStorage.getId())
         .subscribe((response) => {
             observer.next(response); observer.complete();
           }, (error) => {
             observer.error(error);
           });
-    
+
   });
 
   /**
@@ -92,8 +89,6 @@ private handleError (operation = 'operation', result?: any) {
     return this.http.post(Url, loginDetails, this.httpOptions).
     pipe(
       tap((auth: any) => {
-        this.log(`auth req sent for user`);
-        console.log(auth);
         this.isloggedin=true;
         this.tokenStorage.saveToken(auth.body.token);
         let id=auth.body.location.split("/");
@@ -158,13 +153,11 @@ private handleError (operation = 'operation', result?: any) {
   }
 
   emitLogoutObservable() {
-    console.log('emitLogoutObservable()');
     this.logoutObservable.next(true);
     this.logoutObservable.next(false);
   }
 
   emitLoginObservable() {
-    console.log('emitLoginObservable()');
     this.loginObservable.next(true);
     this.loginObservable.next(false);
   }
