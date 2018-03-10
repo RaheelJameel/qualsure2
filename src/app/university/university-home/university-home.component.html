@@ -1,4 +1,4 @@
-<div *ngIf="!loggedIn">
+<div *ngIf="!loggedIn && !stepTwo">
   <div class="row">
     <div class="col-md-8">
       <!-- Card -->
@@ -40,7 +40,7 @@
                 <p class="red-text">{{loginError}}</p>
               </div>
               <div class="text-center">
-                <button class="btn btn-default waves-light" (click) = "login()" [disabled] = 'loginForm.invalid' mdbRippleRadius>Login</button>
+                <input class="btn btn-default waves-light" (click) = "login()" [disabled] = 'loginForm.invalid' value="Login" mdbRippleRadius>
               </div>
             </form>
           </div>
@@ -102,11 +102,48 @@
           </div>
         </div>
         <div class="text-center">
-          <button class="btn btn-deep-orange waves-light" (click)="signup()" [disabled] = 'signupForm.invalid' mdbRippleRadius>Proceed</button>
+          <p class="red-text">{{signUpError}}</p>
+        </div>
+        <div class="text-center">
+          <input type="submit" class="btn btn-deep-orange waves-light" (click)="stepTwo=true" [disabled] = 'signupForm.invalid' value="Proceed" mdbRippleRadius>
         </div>
       </form>
     </div>
   </div>
+</div>
+<div *ngIf="!loggedIn">
+    <div class="row">
+        <div class="col-md-6" style="margin: auto">
+          <!--Register form-->
+          <form [formGroup]="stepTwoForm" >
+            <div class="text-center deep-orange-text">
+              <h3><i class="fa fa-user deep-orange-text"></i> Sign up:</h3>
+            </div>
+            <div class="md-form">
+              <i class="fa fa-user prefix grey-text"></i>
+              <span>
+                  <input type="tel" id="orangeForm-p1" class="form-control" mdbActive formControlName="phoneNumberP1">
+              </span>
+              <span>
+                  <input type="tel" id="orangeForm-p2" class="form-control" mdbActive formControlName="phoneNumberP2">
+              </span>
+              <span>
+                  <input type="tel" id="orangeForm-p3" class="form-control" mdbActive formControlName="phoneNumberP3">
+              </span>
+
+              <label class="active" for="orangeForm-name">University Phone Number</label>
+              
+            </div>
+            
+            <div class="text-center">
+              <p class="red-text">{{signUpError}}</p>
+            </div>
+            <div class="text-center">
+              <input type="submit" class="btn btn-deep-orange waves-light" (click)="signup()" [disabled] = 'signupForm.invalid' value="Proceed" mdbRippleRadius>
+            </div>
+          </form>
+        </div>
+      </div>
 </div>
 <div *ngIf="loggedIn">
   <div class="light-font">
