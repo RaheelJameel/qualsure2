@@ -19,6 +19,9 @@ export class DegreeFormFieldComponent implements OnInit {
 
   ngOnInit() {
     this.validateErrorMessage();
+    if (this.type === 'cnic') {
+      this.type = 'text';
+    }
   }
 
   validateErrorMessage() {
