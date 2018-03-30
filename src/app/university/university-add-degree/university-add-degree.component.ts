@@ -9,6 +9,8 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import * as $ from 'jquery';
 
+import * as io from 'socket.io-client';
+
 @Component({
   selector: 'app-university-add-degree',
   templateUrl: './university-add-degree.component.html',
@@ -17,7 +19,7 @@ import * as $ from 'jquery';
 export class UniversityAddDegreeComponent implements OnInit {
 
   uniID: string;
-  private serverUrl = 'http://localhost:9000/socket';
+  private serverUrl = 'http://localhost:8090';
   private stompClient;
 
 
@@ -30,23 +32,30 @@ export class UniversityAddDegreeComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-    let ws = new SockJS(this.serverUrl);
-    this.stompClient = Stomp.over(ws);
-    let that = this;
-    this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe('/chat', (message) => {
-        if (message.body) {
-          $('.chat').append("<div class='message'>" + message.body + "</div>" );
-          console.log(message.body);
+    var socket = io("http://localhost:8090");
+    console.log('Connecting');
+    socket.on("connect", function () {
+      console.log('Connected');
+      socket.on("message", function (msg) {
+        console.log('Received message: '+msg);
+        if($("#events_list").text() == "No Transaction Found"){
+          $("#events_list").html("<li>Txn Hash: " + msg.transactionHash +
+          "nOwner: " + msg.args.owner + "nFile Hash: " + msg.args.fileHash +
+          "</li>");
+        }
+        else{
+          $("#events_list").prepend("<li>Txn Hash: " + msg.transactionHash +
+          "nOwner: " + msg.args.owner + "nFile Hash: " + msg.args.fileHash +
+          "</li>");
         }
       });
     });
   }
 
-  sendMessage(message) {
-    this.stompClient.send('/app/send/message' , {}, message);
-    $('#input').val('');
-  }
+  // sendMessage(message) {
+  //   this.stompClient.send('/app/send/message' , {}, message);
+  //   $('#input').val('');
+  // }
 
   success(message: string) {
     this.alertService.success(message);
