@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { HeaderFooterComponent } from './header-footer/header-footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -21,6 +22,7 @@ import { InfoDialogComponent } from './modals/info-dialog/info-dialog.component'
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     NgbModule,
+    TextMaskModule,
   ],
   declarations: [
     HeaderFooterComponent,

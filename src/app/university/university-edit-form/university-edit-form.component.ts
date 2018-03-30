@@ -160,19 +160,16 @@ export class UniversityEditFormComponent implements OnInit {
   }
 
   searchFieldValidators(searchName: string, min?: string, max?: string): FieldValidator {
-    return this.defaultFieldValidators.map((fieldValidator: FieldValidator) => {
-      if (min !== undefined && max !== undefined) {
-        fieldValidator.regex = '[' + min + '-' + max + ']' + '+';
-      }
-      return fieldValidator;
-    })
-    .filter((fieldValidator: FieldValidator) => {
-      if (searchName === 'Range') {
-        console.log(searchName);
-        console.log(fieldValidator.regex);
-      }
+    const validatorObject: FieldValidator = this.defaultFieldValidators.filter((fieldValidator: FieldValidator) => {
       return fieldValidator.name === searchName;
     })[0];
+    let newValidatorObject = validatorObject;
+    if (min !== undefined && max !== undefined) {
+      // When change is needed, make a new object to prevent change to original object
+      newValidatorObject = JSON.parse(JSON.stringify(validatorObject));
+      newValidatorObject.regex = '[' + min + '-' + max + ']' + '+';
+    }
+    return newValidatorObject;
   }
 
   save() {

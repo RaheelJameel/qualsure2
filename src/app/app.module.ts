@@ -27,6 +27,7 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { CoolStorageModule } from 'angular2-cool-storage';
+import { TextMaskModule } from 'angular2-text-mask';
 import { StudentService } from './student/student.service';
 
 // import alert service and component
@@ -57,6 +58,7 @@ import { AlertService } from './common/angular2-alert-notifications/_services/in
     Ng2OrderModule,
     Ng2SearchPipeModule,
     NgbModule.forRoot(),
+    TextMaskModule,
   ],
   providers: [
     UniversityService,

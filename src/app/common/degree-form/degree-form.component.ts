@@ -85,7 +85,7 @@ export class DegreeFormComponent implements OnInit {
   makeForm() {
     this.formFields.forEach((fieldGroup: FieldGroupAPI) => {
       this.formFieldArray.push(
-          new FormControl('', [Validators.required, EmptyStringValidator])
+          new FormControl('', [Validators.required, Validators.pattern(fieldGroup.validators[0].regex)  ])
       );
     });
   }

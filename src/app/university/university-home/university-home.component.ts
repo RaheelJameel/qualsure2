@@ -7,6 +7,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { TokenStorage } from '../token.storage';
 
+import { phoneMask, cnicMask } from '../../common/constants';
 import { HeaderFooterComponent } from '../../common/header-footer/header-footer.component';
 import { EmptyStringValidator } from '../../common/validators/empty-string-validator';
 
@@ -30,8 +31,8 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
   stepTwoForm: FormGroup;
   stepTwo:boolean;
   stepTwoFormError:string;
-  phoneMask: any[] = ['+',/[1-9]/, /[0-9]/ ,' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  cnicMask: any[] = [/\d/, /\d/, /\d/ ,/\d/ ,/\d/  ,'-', /\d/, /\d/, /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/];
+  localPhoneMask = phoneMask;
+  localCnicMask = cnicMask;
 
   constructor(
     private fb: FormBuilder,

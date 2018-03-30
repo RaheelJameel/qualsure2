@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { cnicMask } from '../../constants';
 
 @Component({
   selector: 'app-degree-form-field',
@@ -14,13 +15,17 @@ export class DegreeFormFieldComponent implements OnInit {
   @Input() type = 'text';
   @Input() id = 0;
   @Input() formInvalid: boolean;
+  fieldType: string;
+  localCnicMask = cnicMask;
 
   constructor() { }
 
   ngOnInit() {
     this.validateErrorMessage();
     if (this.type === 'cnic') {
-      this.type = 'text';
+      this.fieldType = 'text';
+    } else {
+      this.fieldType = this.type;
     }
   }
 
