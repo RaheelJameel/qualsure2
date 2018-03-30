@@ -15,6 +15,11 @@ import { StudentService } from '../student.service';
 export class StudentDegreeFormComponent implements OnInit {
 
   universityID: string;
+  submitted: boolean;
+  validDegree: boolean;
+  invalidDegree: boolean;
+  serverIp: string;
+  qrCodeData: string;
 
   constructor(
     private router: Router,
@@ -25,6 +30,7 @@ export class StudentDegreeFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getFile();
     this.setUniversityID();
   }
 
@@ -41,21 +47,40 @@ export class StudentDegreeFormComponent implements OnInit {
   }
 
   verifyDegree(degree) {
+    this.submitted = true;
+    this.validDegree = false;
+    this.invalidDegree = false;
     this.studentService.verifyDegree(this.universityID, degree)
       .subscribe(response => {
         if (response && response.status) {
           if (response.status === 'Success') {
-            this.success('Verified');
             setTimeout(() => {
-              this.router.navigate(['/degree']);
-            }, 3000);
+              this.validDegree = true;
+              this.success('Verified');
+              this.qrCodeData = this.serverIp + '/degree/' + this.universityID + '/' + '568522465';
+              // setTimeout(() => {
+              //   this.router.navigate(['/degree']);
+              // }, 3000);
+            }, 2000);
           } else {
-            this.error('Verification Failed');
+            setTimeout(() => {
+              this.invalidDegree = true;
+              this.error('Verification Failed');
+            }, 2000);
           }
         }
       },
       error => {
         console.error(error);
+      });
+  }
+
+  getFile() {
+    fetch('/assets/server-ip.txt')
+      .then(response => response.text())
+      .then((inputString) => {
+        const inputArray = inputString.split('\n');
+        this.serverIp = inputArray[0];
       });
   }
 

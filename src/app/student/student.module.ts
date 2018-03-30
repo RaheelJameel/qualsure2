@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import { AppCommonModule } from '../common/app-common.module';
 
@@ -22,6 +23,7 @@ import { StudentDegreeFormComponent } from './student-degree-form/student-degree
     FormsModule,
     AppCommonModule,
     NgbModule,
+    QRCodeModule,
   ],
   declarations: [
     StudentComponent,

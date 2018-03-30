@@ -14,7 +14,34 @@
       <div class="card">
         <p class="h5 text-center mb-4 verifyDegree-text">Degree Form</p>
         <div class="card-body">
-          <app-degree-form *ngIf="universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'"(outputValue)="verifyDegree($event)" [independentCheck]="true"></app-degree-form>
+          <app-degree-form *ngIf="!submitted && universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'" (outputValue)="verifyDegree($event)" [independentCheck]="true"></app-degree-form>
+          <div *ngIf="submitted" class="reponse-containers">
+            <div *ngIf="!validDegree && !invalidDegree">
+              <img src="/assets/images/cyan-loading.gif">
+              <p>
+                Verifying Degree Please Wait...
+              </p>
+            </div>
+            <div *ngIf="validDegree">
+              <img src="/assets/images/green-tick.png">
+              <h2>
+                Degree Verified!
+              </h2>
+              <qrcode *ngIf="qrCodeData" [qrdata]="qrCodeData" [size]="256" [level]="'M'"></qrcode>
+              <div class="center-on-small-only">
+                <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree">Go Back</a>
+              </div>
+            </div>
+            <div *ngIf="invalidDegree">
+              <img src="/assets/images/red-cross.png">
+              <h2>
+                Invalid Degree!
+              </h2>
+              <div class="center-on-small-only">
+                <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree">Go Back</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
