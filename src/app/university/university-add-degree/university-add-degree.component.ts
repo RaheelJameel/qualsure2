@@ -5,9 +5,9 @@ import { UniversityService } from '../university.service';
 import { FieldGroupAPI } from '../../services/common.service';
 import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
 
-import Stomp from 'stompjs';
-import SockJS from 'sockjs-client';
-import $ from 'jquery';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-university-add-degree',
@@ -25,27 +25,26 @@ export class UniversityAddDegreeComponent implements OnInit {
     private router: Router,
     private universityService: UniversityService,
     private alertService: AlertService
-  ) { 
+  ) {
     this.initializeWebSocketConnection();
-
   }
 
-  initializeWebSocketConnection(){
+  initializeWebSocketConnection() {
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function(frame) {
-      that.stompClient.subscribe("/chat", (message) => {
-        if(message.body) {
-          $(".chat").append("<div class='message'>"+message.body+"</div>")
+      that.stompClient.subscribe('/chat', (message) => {
+        if (message.body) {
+          $('.chat').append("<div class='message'>" + message.body + "</div>" );
           console.log(message.body);
         }
       });
     });
   }
 
-  sendMessage(message){
-    this.stompClient.send("/app/send/message" , {}, message);
+  sendMessage(message) {
+    this.stompClient.send('/app/send/message' , {}, message);
     $('#input').val('');
   }
 
