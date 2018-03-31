@@ -27,6 +27,7 @@ import { UniversityAddDegreeComponent } from './university-add-degree/university
 import { UniversityHomeComponent } from './university-home/university-home.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { PendingChangesGuard } from './pending-changes-guard';
+import { UniversityWalletComponent } from './university-wallet/university-wallet.component';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { PendingChangesGuard } from './pending-changes-guard';
     DynamicFieldInfoComponent,
     UniversityAddDegreeComponent,
     UniversityHomeComponent,
+    UniversityWalletComponent,
   ],
   exports: [
     UniversityComponent,

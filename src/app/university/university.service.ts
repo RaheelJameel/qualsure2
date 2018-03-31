@@ -41,12 +41,14 @@ export class UniversityService {
       if(this.university.id){
           console.log('----------------------------------------------UniversityService: getInfo -> previously saved');
           observer.next({'body' : this.university});
+          this.emitLoginObservable();
           observer.complete();
       }
     }
       console.log('----------------------------------------------UniversityService: getInfo -> not previously saved');
       this.getUniversityInfo(this.tokenStorage.getId())
         .subscribe((response) => {
+            this.emitLoginObservable();
             observer.next(response); observer.complete();
           }, (error) => {
             observer.error(error);
@@ -99,7 +101,6 @@ private handleError (operation = 'operation', result?: any) {
         let id=auth.body.location.split("/");
         id=id[id.length-1];
         this.tokenStorage.saveId(id);
-        this.emitLoginObservable();
       }),
       catchError(this.handleError('auth'))
     );
@@ -151,7 +152,6 @@ private handleError (operation = 'operation', result?: any) {
   checkLogin(): boolean {
     if (this.tokenStorage.getToken() && this.tokenStorage.getId()){
       this.isloggedin = true;
-      this.emitLoginObservable();
       return true;
     } else
       return false;

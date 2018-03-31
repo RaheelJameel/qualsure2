@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class HeaderFooterComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   loginObserSub: Subscription;
-
+  universityName: string;
   constructor(
     private universityService: UniversityService,
   ) {
@@ -30,6 +30,7 @@ export class HeaderFooterComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (data) {
           this.isLoggedIn = true;
+          this.universityName=this.universityService.university.name;
         }
       });
   }

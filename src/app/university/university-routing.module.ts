@@ -7,7 +7,7 @@ import { UniversityLearnMoreComponent } from './university-learn-more/university
 import { UniversityEditFormComponent } from './university-edit-form/university-edit-form.component';
 import { UniversityViewDegreesComponent} from './university-view-degrees/university-view-degrees.component';
 import { UniversityAddDegreeComponent } from './university-add-degree/university-add-degree.component';
-
+import {UniversityWalletComponent} from './university-wallet/university-wallet.component';
 import { PendingChangesGuard } from './pending-changes-guard';
 
 import {AuthGuard} from './auth-guard.service';
@@ -21,6 +21,7 @@ const univeristyRoutes: Routes = [
       { path: 'degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
       { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuard] },
       { path: 'add-degree',  component: UniversityAddDegreeComponent , canActivate: [AuthGuard]  },
+      { path: 'wallet',  component: UniversityWalletComponent , canActivate: [AuthGuard]  },
     ]
   },
 ];
