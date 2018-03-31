@@ -36,16 +36,13 @@ export class UniversityService {
   public loginObservable$ = this.loginObservable.asObservable();
 
   getInfo =  new Observable<any>((observer) => {
-    console.log('------------------------------------UniversityService: getInfo');
     if (this.university) {
-      if(this.university.id){
-          console.log('----------------------------------------------UniversityService: getInfo -> previously saved');
+      if (this.university.id) {
           observer.next({'body' : this.university});
           this.emitLoginObservable();
           observer.complete();
       }
     }
-      console.log('----------------------------------------------UniversityService: getInfo -> not previously saved');
       this.getUniversityInfo(this.tokenStorage.getId())
         .subscribe((response) => {
             this.emitLoginObservable();
@@ -53,7 +50,7 @@ export class UniversityService {
           }, (error) => {
             observer.error(error);
           });
-    
+
   });
 
   /**
@@ -94,8 +91,6 @@ private handleError (operation = 'operation', result?: any) {
     return this.http.post(Url, loginDetails, this.httpOptions).
     pipe(
       tap((auth: any) => {
-        this.log(`auth req sent for user`);
-        console.log(auth);
         this.isloggedin=true;
         this.tokenStorage.saveToken(auth.body.token);
         let id=auth.body.location.split("/");
@@ -158,13 +153,11 @@ private handleError (operation = 'operation', result?: any) {
   }
 
   emitLogoutObservable() {
-    console.log('emitLogoutObservable()');
     this.logoutObservable.next(true);
     this.logoutObservable.next(false);
   }
 
   emitLoginObservable() {
-    console.log('emitLoginObservable()');
     this.loginObservable.next(true);
     this.loginObservable.next(false);
   }
@@ -243,12 +236,31 @@ private handleError (operation = 'operation', result?: any) {
     return this.saveUniversityInfo();
   }
 
-  addDegree(degree) {
+  addDegree(degree,password) {
     const url = this.universityUrl + `/universities/${this.university.accountId}/degrees`;
+    degree.password=password;
     return this.http.post(url, degree, this.httpOptions)
       .pipe(
         tap((degreeInfo: any) => this.log(`addDegree req sent for user`)),
         catchError(this.handleError('addDegree'))
+      );
+  }
+
+  getPublicAddress(){
+    console.log(this.tokenStorage.getId());
+    const url = this.universityUrl + `/universities/${this.tokenStorage.getId()}/getPublicAddress`;
+    return this.http.get(url, this.httpOptions)
+      .pipe(
+        tap((degreeInfo: any) => this.log(`getPublicAddress req sent for user`)),
+        catchError(this.handleError('getPublicAddress'))
+      );
+  }
+  getAccountBalance(){
+    const url = this.universityUrl + `/universities/${this.tokenStorage.getId()}/getAccountBalance`;
+    return this.http.get(url, this.httpOptions)
+      .pipe(
+        tap((degreeInfo: any) => this.log(`getPublicAddress req sent for user`)),
+        catchError(this.handleError('getPublicAddress'))
       );
   }
 }

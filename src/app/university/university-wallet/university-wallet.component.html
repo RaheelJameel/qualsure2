@@ -1,17 +1,19 @@
-<p>
-  university-wallet works!
-</p>
+
 <div class="container">
   <div class="card">
 
-    <!--Card content-->
+    <!--Card content--> 
     <div class="card-body">
         <!--Title-->
         <h4 class="card-title">Ethereum Wallet</h4>
         <!--Text-->
         <p class="card-text">Your address</p>
-        <span class="d-block bg-primary p-3">Ethereum address goes here</span>
-        <a href="#" class="btn btn-primary waves-light" mdbRippleRadius>Button</a>
+        <span *ngIf="!publicAddress" class="d-block bg-primary p-3">Ethereum address goes here</span>
+        <span *ngIf="publicAddress" class="d-block bg-primary p-3">{{publicAddress}}</span>
+
+        <p class="card-text">Your Account Balance</p>
+        <span *ngIf="!accountBalance" class="d-block bg-primary p-3">Account Balance goes here</span>
+        <span *ngIf="accountBalance" class="d-block bg-primary p-3">{{accountBalance}}</span>
 
     </div>
   

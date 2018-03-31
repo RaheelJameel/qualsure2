@@ -1,6 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+import { UnsavedChangesErrorMsg } from '../../common/constants';
+
 import { ComponentCanDeactivate } from '../pending-changes-guard';
 
 @Component({
@@ -25,7 +27,7 @@ export class UniversityLearnMoreComponent implements OnInit, ComponentCanDeactiv
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if (!this.canDeactivate()) {
-      $event.returnValue = 'You have unsaved changes. Upon leaving this page you will lose these changes';
+      $event.returnValue = UnsavedChangesErrorMsg;
     }
   }
 

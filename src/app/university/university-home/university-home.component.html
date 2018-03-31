@@ -169,7 +169,7 @@
 
       
             <input type="tel" id="orangeForm-p1" class="form-control" mdbActive formControlName="phoneNumber"
-            [textMask]="{mask: phoneMask}"/>
+            [textMask]="{mask: localPhoneMask}"/>
 
           <label class="active" for="orangeForm-p1">University Phone Number</label>
           <div *ngIf="(stepTwoForm.get('phoneNumber').touched || formInvalid) && stepTwoForm.get('phoneNumber').invalid">
@@ -209,7 +209,7 @@
 
       
             <input type="tel" id="orangeForm-p2" class="form-control" mdbActive formControlName="universityRepresentativePhoneNumber"
-            [textMask]="{mask: phoneMask}"/>
+            [textMask]="{mask: localPhoneMask}"/>
 
           <label class="active" for="orangeForm-p2">University Representative Number</label>
           <div *ngIf="(stepTwoForm.get('universityRepresentativePhoneNumber').touched || formInvalid) && stepTwoForm.get('universityRepresentativePhoneNumber').invalid">
@@ -225,7 +225,7 @@
           <i class="fa fa-id-card prefix grey-text"></i>
       
             <input type="tel" id="orangeForm-p3" class="form-control" mdbActive  formControlName="universityRepresentativeCnic"
-            [textMask]="{mask: cnicMask}"/>
+            [textMask]="{mask: localCnicMask}"/>
 
           <label class="active" for="orangeForm-p3">University Representative Cnic</label>
           <div *ngIf="(stepTwoForm.get('universityRepresentativeCnic').touched || formInvalid) && stepTwoForm.get('universityRepresentativeCnic').invalid">
