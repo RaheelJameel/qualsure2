@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,11 +14,13 @@ import { DegreeFormFieldComponent } from './degree-form/degree-form-field/degree
 
 import { ConfirmChangesComponent } from './modals/confirm-changes/confirm-changes.component';
 import { InfoDialogComponent } from './modals/info-dialog/info-dialog.component';
+import { PasswordDialogComponent } from './modals/password-dialog/password-dialog.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     NgbModule,
@@ -31,6 +33,7 @@ import { InfoDialogComponent } from './modals/info-dialog/info-dialog.component'
     DegreeFormFieldComponent,
     ConfirmChangesComponent,
     InfoDialogComponent,
+    PasswordDialogComponent,
   ],
   exports: [
     HeaderFooterComponent,
@@ -40,6 +43,8 @@ import { InfoDialogComponent } from './modals/info-dialog/info-dialog.component'
   ],
   entryComponents: [
     ConfirmChangesComponent,
+    InfoDialogComponent,
+    PasswordDialogComponent,
   ],
 })
 export class AppCommonModule { }

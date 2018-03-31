@@ -2,11 +2,14 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 import { UniversityService } from '../university.service';
 import { ComponentCanDeactivate } from '../pending-changes-guard';
 
 import { FieldGroupAPI } from '../../services/common.service';
 import { UnsavedChangesErrorMsg } from '../../common/constants';
+import { PasswordDialogComponent } from '../../common/modals/password-dialog/password-dialog.component';
 
 import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
 
@@ -24,7 +27,8 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
   constructor(
     private router: Router,
     private universityService: UniversityService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private modalService: NgbModal,
   ) { }
 
   success(message: string) {
@@ -53,21 +57,37 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
 
   addDegree(degree) {
     this.bypassConfirmChangesCheck = true;
-    this.universityService.addDegree(degree)
-      .subscribe(
-      response => {
-      if (response) {
-        this.success('Degree Added Successfully');
-        setTimeout(() => {
-          this.router.navigate(['/university']);
-        }, 3000);
-      }},
-      error => {
-        console.error(error);
-        this.error('Operation Failed');
+    this.modalService.open(PasswordDialogComponent, { backdrop: 'static', windowClass: 'align-modal' }).result
+      .then((result) => {
+        console.log(`Password Entered: ${result}`);
+        this.universityService.addDegree(degree)
+          .subscribe(
+          response => {
+          if (response) {
+            this.success('Degree Added Successfully');
+            setTimeout(() => {
+              this.router.navigate(['/university']);
+            }, 3000);
+          }},
+          error => {
+            console.error(error);
+            this.error('Operation Failed');
+          }
+        );
+      }, (reason) => {
+        console.log(`Cancelled`);
+      });
+    
+  }
 
-      }
-    );
+  promptPassword() {
+    console.log('promptPassword');
+    this.modalService.open(PasswordDialogComponent, { backdrop: 'static', windowClass: 'align-modal' }).result
+      .then((result) => {
+        console.log(`Password Entered: ${result}`);
+      }, (reason) => {
+        console.log(`Cancelled`);
+      });
   }
 
   canDeactivate(): Observable<boolean> | boolean {
