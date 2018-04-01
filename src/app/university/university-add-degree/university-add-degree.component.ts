@@ -23,6 +23,8 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
   uniID: string;
   isFormDity: boolean;
   bypassConfirmChangesCheck: boolean;
+  submitted: boolean;
+  submissionFailed: boolean;
 
   constructor(
     private router: Router,
@@ -56,6 +58,8 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
   }
 
   addDegree(degree) {
+    this.submitted = true;
+    this.submissionFailed = false;
     this.bypassConfirmChangesCheck = true;
     this.modalService.open(PasswordDialogComponent, { backdrop: 'static', windowClass: 'align-modal' }).result
       .then((result) => {
