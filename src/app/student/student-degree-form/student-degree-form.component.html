@@ -14,7 +14,8 @@
       <div class="card">
         <p class="h5 text-center mb-4 verifyDegree-text">Degree Form</p>
         <div class="card-body">
-          <app-degree-form *ngIf="!submitted && universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'" (outputValue)="verifyDegree($event)" [independentCheck]="true"></app-degree-form>
+          <app-degree-form *ngIf="showDegreeForm && !submitted && universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'" (outputValue)="verifyDegree($event)" [independentCheck]="true"
+            [degreeDetail]="reloadedDegree"></app-degree-form>
           <div *ngIf="submitted" class="reponse-containers">
             <div *ngIf="!validDegree && !invalidDegree">
               <img src="/assets/images/cyan-loading.gif">

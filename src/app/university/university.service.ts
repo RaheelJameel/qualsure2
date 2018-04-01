@@ -171,6 +171,8 @@ private handleError (operation = 'operation', result?: any) {
       );
   }
 
+  // I think independentCheck is to forcefully get the formfields and not save it in the uni object
+  // For the Student component
   getFormFields(uniID?: string, independentCheck?: boolean): Observable<any> {
     if (independentCheck) {
       const url = this.universityUrl + `/universities/${uniID}/formFields`;

@@ -19,6 +19,7 @@ export class DegreeFormComponent implements OnInit {
   @Input() uniID: string;
   @Input() buttonLabel = 'Add';
   @Input() independentCheck: boolean;
+  @Input() degreeDetail: any;
   @Output() outputValue = new EventEmitter<any>();
   @Output() dirtyFormOutput = new EventEmitter<boolean>();
   dityFormSubscription: Subscription;
@@ -39,7 +40,10 @@ export class DegreeFormComponent implements OnInit {
       fieldArray: new FormArray([]),
     });
     this.getFormFieldsAndMakeForm();
-    this.emitFormDirtyValue();
+  }
+
+  get fieldArray(): FormArray {
+    return <FormArray>this.fieldForm.get('fieldArray');
   }
 
   getFormFieldsAndMakeForm() {
@@ -88,6 +92,8 @@ export class DegreeFormComponent implements OnInit {
           new FormControl('', [Validators.required, Validators.pattern(fieldGroup.validators[0].regex)  ])
       );
     });
+    this.populateDegreeDetail();
+    this.emitFormDirtyValue();
   }
 
   giveOutput() {
@@ -109,6 +115,17 @@ export class DegreeFormComponent implements OnInit {
       // this.router.navigate(['/university']);
     } else {
       this.formInvalid = true;
+    }
+  }
+
+  populateDegreeDetail() {
+    if (this.degreeDetail) {
+      console.log(this.fieldForm);
+      const fieldNames: string[] = Object.keys(this.degreeDetail);
+      console.log('keys:', fieldNames);
+      fieldNames.forEach((fieldName: string, index: number) => {
+        this.fieldArray.controls[index].setValue(this.degreeDetail[fieldName]);
+      });
     }
   }
 

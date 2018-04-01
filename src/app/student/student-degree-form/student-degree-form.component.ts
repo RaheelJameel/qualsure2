@@ -15,11 +15,15 @@ import { StudentService } from '../student.service';
 export class StudentDegreeFormComponent implements OnInit {
 
   universityID: string;
+  degreeID: string;
   submitted: boolean;
   validDegree: boolean;
   invalidDegree: boolean;
   serverIp: string;
   qrCodeData: string;
+
+  reloadedDegree: any;
+  showDegreeForm: boolean;
 
   constructor(
     private router: Router,
@@ -32,6 +36,7 @@ export class StudentDegreeFormComponent implements OnInit {
   ngOnInit() {
     this.getFile();
     this.setUniversityID();
+    this.getOptionalDegreeDetails();
   }
 
   success(message: string) {
@@ -44,6 +49,24 @@ export class StudentDegreeFormComponent implements OnInit {
 
   setUniversityID() {
     this.universityID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.degreeID = this.activatedRoute.snapshot.paramMap.get('degreeId');
+  }
+
+  getOptionalDegreeDetails() {
+    if (this.degreeID) {
+      this.studentService.getDegree(this.universityID, this.degreeID)
+        .subscribe((response) => {
+          console.log('getOptionalDegreeDetails :', response);
+          this.reloadedDegree = {"studentName":"a","gpa":"1","graduationYear":"1","degreeType":"a","degreeName":"a","CNIC":"11111-1111111-1","ABC":"11111-1111111-1"};
+          this.showDegreeForm = true;
+          },
+          error => {
+            console.error(error);
+          }
+        );
+    } else {
+      this.showDegreeForm = true;
+    }
   }
 
   verifyDegree(degree) {
@@ -57,7 +80,7 @@ export class StudentDegreeFormComponent implements OnInit {
             setTimeout(() => {
               this.validDegree = true;
               this.success('Verified');
-              this.qrCodeData = this.serverIp + '/degree/' + this.universityID + '/' + '568522465';
+              this.qrCodeData = this.serverIp + '/degree/' + this.universityID + '/' + '5abf902f8d027f1c0820fc51';
               // setTimeout(() => {
               //   this.router.navigate(['/degree']);
               // }, 3000);

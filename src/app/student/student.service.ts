@@ -87,4 +87,14 @@ export class StudentService {
   );
     return arr;
   }
+
+  getDegree(uniID: string, degreeID:  string): Observable<any> {
+    const url = this.Url + `/universities/${uniID}/degrees/${degreeID}`;
+    return this.http.get(url)
+      .pipe(
+        tap((response: any) => {
+      }),
+        catchError(this.handleError('getDegree in Student Service failed', []))
+      );
+  }
 }
