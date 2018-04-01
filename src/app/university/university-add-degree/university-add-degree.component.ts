@@ -58,11 +58,10 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
   }
 
   addDegree(degree) {
-    this.submitted = true;
-    this.submissionFailed = false;
     this.bypassConfirmChangesCheck = true;
     this.modalService.open(PasswordDialogComponent, { backdrop: 'static', windowClass: 'align-modal' }).result
       .then((result) => {
+        this.submitted = true;
         console.log(`Password Entered: ${result}`);
         this.universityService.addDegree(degree,result)
           .subscribe(
