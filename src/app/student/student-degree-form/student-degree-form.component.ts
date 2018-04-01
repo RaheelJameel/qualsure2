@@ -58,6 +58,9 @@ export class StudentDegreeFormComponent implements OnInit {
         .subscribe((response) => {
           console.log('getOptionalDegreeDetails :', response);
           //this.reloadedDegree = {"studentName":"a","gpa":"1","graduationYear":"1","degreeType":"a","degreeName":"a","CNIC":"11111-1111111-1","ABC":"11111-1111111-1"};
+          if (response && response.degreeDetails && response.degreeDetails.universityId) {
+            delete response.degreeDetails.universityId;
+          }
           this.reloadedDegree = response.degreeDetails;
           this.showDegreeForm = true;
           },
