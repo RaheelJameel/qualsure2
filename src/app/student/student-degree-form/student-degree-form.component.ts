@@ -57,7 +57,8 @@ export class StudentDegreeFormComponent implements OnInit {
       this.studentService.getDegree(this.universityID, this.degreeID)
         .subscribe((response) => {
           console.log('getOptionalDegreeDetails :', response);
-          this.reloadedDegree = {"studentName":"a","gpa":"1","graduationYear":"1","degreeType":"a","degreeName":"a","CNIC":"11111-1111111-1","ABC":"11111-1111111-1"};
+          //this.reloadedDegree = {"studentName":"a","gpa":"1","graduationYear":"1","degreeType":"a","degreeName":"a","CNIC":"11111-1111111-1","ABC":"11111-1111111-1"};
+          this.reloadedDegree = response.degreeDetails;
           this.showDegreeForm = true;
           },
           error => {
@@ -80,7 +81,7 @@ export class StudentDegreeFormComponent implements OnInit {
             setTimeout(() => {
               this.validDegree = true;
               this.success('Verified');
-              this.qrCodeData = this.serverIp + '/degree/' + this.universityID + '/' + '5abf902f8d027f1c0820fc51';
+              this.qrCodeData = this.serverIp + '/degree/' + this.universityID + '/' + response.degreeId;
               // setTimeout(() => {
               //   this.router.navigate(['/degree']);
               // }, 3000);
