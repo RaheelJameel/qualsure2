@@ -28,6 +28,7 @@
               <h2>
                 Degree Verified!
               </h2>
+              <a [href]="qrCodeData">{{qrCodeData}}</a>
               <qrcode *ngIf="qrCodeData" [qrdata]="qrCodeData" [size]="256" [level]="'M'"></qrcode>
               <div class="center-on-small-only">
                 <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree">Go Back</a>
