@@ -20,6 +20,7 @@ export class DegreeFormComponent implements OnInit {
   @Input() buttonLabel = 'Add';
   @Input() independentCheck: boolean;
   @Input() degreeDetail: any;
+  @Input() disablePrefilledForm: boolean;
   @Output() outputValue = new EventEmitter<any>();
   @Output() dirtyFormOutput = new EventEmitter<boolean>();
   dityFormSubscription: Subscription;
@@ -98,7 +99,8 @@ export class DegreeFormComponent implements OnInit {
 
   giveOutput() {
     this.formInvalid = false;
-    if (this.fieldForm.valid) {
+    // the second part of the following if is because when the form is diabled so the form validity is false
+    if (this.fieldForm.valid || (this.disablePrefilledForm && this.degreeDetail)) {
       const formValue: any[] = this.fieldForm.getRawValue()['fieldArray'];
       const degreeObject = {
         studentName: formValue[0].trim(),
@@ -110,7 +112,6 @@ export class DegreeFormComponent implements OnInit {
       for (let i = 5; i < formValue.length; i++) {
         degreeObject[this.formFields[i].name] = formValue[i].trim();
       }
-      console.log('giveOutput:', degreeObject);
       this.outputValue.emit(degreeObject);
       // this.router.navigate(['/university']);
     } else {
@@ -120,10 +121,11 @@ export class DegreeFormComponent implements OnInit {
 
   populateDegreeDetail() {
     if (this.degreeDetail) {
-      console.log(this.fieldForm);
       const fieldNames: string[] = Object.keys(this.degreeDetail);
-      console.log('keys:', fieldNames);
       fieldNames.forEach((fieldName: string, index: number) => {
+        if (this.disablePrefilledForm) {
+          this.fieldArray.controls[index].disable();
+        }
         this.fieldArray.controls[index].setValue(this.degreeDetail[fieldName]);
       });
     }
