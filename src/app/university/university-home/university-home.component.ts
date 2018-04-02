@@ -35,6 +35,10 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
   cnicMask: any[] = [/\d/, /\d/, /\d/ ,/\d/ ,/\d/  ,'-', /\d/, /\d/, /\d/,/\d/,/\d/,/\d/,/\d/, '-', /\d/];
   localPhoneMask = phoneMask;
   localCnicMask = cnicMask;
+  signupFormInvalid: boolean;
+  stepTwoFormInvalid: boolean;
+  submitted: boolean;
+  loginNotSignup: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -90,10 +94,10 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, EmptyStringValidator,Validators.pattern('^[A-Za-z]+$')]),
       username: new FormControl ('', [Validators.required, EmptyStringValidator,Validators.pattern('^[a-zA-Z0-9\\d\\-\\_]*$')]),
-      email:  new FormControl('', [Validators.required, Validators.email]),
+      email:  new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
       password: new FormControl('', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$')]),
       confirmPassword: new FormControl('', [Validators.required])
-    },{updateOn: 'blur'});
+    });
   }
   createStepTwoForm() {
     this.stepTwoForm = new FormGroup({
@@ -102,99 +106,122 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       universityRepresentativeCnic: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5}\\-[0-9]{7}\\-[0-9]{1}$')]),
       universityRepresentativeName: new FormControl('', [Validators.required,Validators.pattern('^[A-Za-z]+$')]),
       address: new FormControl('',[Validators.required])
-    },{updateOn: 'blur'});
+    });
   }
 
   login(fromSignup?: boolean) {
+    this.submitted = true;
+    this.loginError = null;
+    if (!fromSignup) {
+      this.loginNotSignup = true;
+    }
     const loginFormValue = this.loginForm.value;
     const loginObject = {
       username: loginFormValue.username.trim(),
       password: loginFormValue.password,
     };
+    window.scrollTo(0, 0);
     this.universityService.authenticate(loginObject)
     .subscribe(
       response => { 
         console.log(response);
       if (response) {
-        window.scrollTo(0,0);
-        this.loggedIn = true;
-        this.stepTwo=false;
-        this.getUniversityInfo(this.token.getId());
-        console.log('logged in');
-        this.signUpError=null;
-        this.loginError=null;
+        setTimeout(() => {
+          window.scrollTo(0,0);
+          this.loggedIn = true;
+          this.stepTwo=false;
+          this.getUniversityInfo(this.token.getId());
+          console.log('logged in');
+          this.signUpError=null;
+          this.loginError=null;
+          this.submitted = false;
+          this.loginForm.reset();
+        });
       }},
        error => {
+        this.submitted = false;
         console.error(error);
          if(fromSignup){
           this.stepTwoFormError=error.message;
          }
          else{
-          if(error.error.error == "Unauthorized" || error.error.status == 401) this.loginError="Invalid username or password";
-          else this.loginError=error.message;
-          this.clearForms();
+          if(error.error.error == "Unauthorized" || error.error.status == 401) {
+            this.loginError = "Invalid username or password";
+          } else {
+            this.loginError = error.message;
+          }
+          // this.clearForms();
          }
        }
     );
   }
   nextStep() {
-   this.universityService.checkUsernameAvailability(this.signupForm.get('username').value).subscribe(
-     response => {
-      console.log(response.body.success);
-      if(response.body.success===true)
-        {
-          window.scrollTo(0,0);
-          this.stepTwo=true;
-        }
-        else{
-          this.signUpError="Username already used please choose a different one";
-        }
-     },
-     error => {
-       this.signUpError=error
-      console.error(error);
-     }
-   )
-      
-  }
-  signup() {
+    this.signupFormInvalid = false;
     const signupFormValue = this.signupForm.value;
-    const stepTwoFormValue= this.stepTwoForm.value;
-    if (signupFormValue.password !== signupFormValue.confirmPassword) {
-      return;
+    if (this.signupForm.valid && signupFormValue.password === signupFormValue.confirmPassword) {
+      this.universityService.checkUsernameAvailability(this.signupForm.get('username').value)
+        .subscribe(
+          response => {
+            console.log(response.body.success);
+            if(response.body.success===true)
+              {
+                window.scrollTo(0,0);
+                this.stepTwo=true;
+              }
+              else{
+                this.signUpError="Username already used please choose a different one";
+              }
+          },
+          error => {
+            this.signUpError=error
+            console.error(error);
+          }
+        );
+    } else {
+      this.signupFormInvalid = true;
     }
-    const signupObject = {
-      name: signupFormValue.name.trim(),
-      username: signupFormValue.username.trim(),
-      email: signupFormValue.email.trim(),
-      password: signupFormValue.password,
-      roles: ['USER'],
-      active: 'true',
-      number: stepTwoFormValue.phoneNumber,
-      representativeName: stepTwoFormValue.universityRepresentativeName,
-      representativeNumber: stepTwoFormValue.universityRepresentativePhoneNumber,
-      representativeCNIC: stepTwoFormValue.universityRepresentativeCnic,
-      address: stepTwoFormValue.address
-    };
-    console.log(signupObject);
-    this.universityService.signupUser(signupObject)
-    .subscribe(response => {
-      console.log(response);
-      console.log(response.status);
-
-    if (response.status === 201) {
-      console.log(response.headers.status);
-      this.loginForm.value.username = signupObject.username;
-      this.loginForm.value.password = signupObject.password;
-      this.login(true);
-    }},
-   error => {
-    this.stepTwoFormError=error.message;
-    console.error(error);
-       });
   }
-  getUniversityInfo(id: any){
-    console.log('------------------------------------UniversityComponent: getUniversityInfo()');
+
+  signup() {
+    this.stepTwoFormInvalid = false;
+    if (this.stepTwoForm.valid) {
+      const signupFormValue = this.signupForm.value;
+      const stepTwoFormValue = this.stepTwoForm.value;
+      const signupObject = {
+        name: signupFormValue.name.trim(),
+        username: signupFormValue.username.trim(),
+        email: signupFormValue.email.trim(),
+        password: signupFormValue.password,
+        roles: ['USER'],
+        active: 'true',
+        number: stepTwoFormValue.phoneNumber,
+        representativeName: stepTwoFormValue.universityRepresentativeName,
+        representativeNumber: stepTwoFormValue.universityRepresentativePhoneNumber,
+        representativeCNIC: stepTwoFormValue.universityRepresentativeCnic,
+        address: stepTwoFormValue.address
+      };
+      this.submitted = true;
+      this.universityService.signupUser(signupObject)
+        .subscribe(response => {
+          if (response.status === 201) {
+            this.loginForm.value.username = signupObject.username;
+            this.loginForm.value.password = signupObject.password;
+            this.signupForm.reset();
+            this.stepTwoForm.reset();
+            this.loginNotSignup = false;
+            this.login(true);
+          }},
+          error => {
+            this.stepTwoFormError=error.message;
+            console.error(error);
+          }
+        );
+    } else {
+      this.stepTwoFormInvalid = true;
+    }
+  }
+
+  getUniversityInfo(id: any) {
     this.universityService.getInfo
     .subscribe(response => {
       if(response.body)
