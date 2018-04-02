@@ -27,19 +27,29 @@
           <!-- <a routerLink="../detail/{{degree.id}}"> -->
             
               <th scope="row" *ngIf="degree.id != expandedIndex">{{i+1}}</th>
-              <td *ngIf="degree.id != expandedIndex">{{degree.studentName}}</td>
-              <td *ngIf="degree.id != expandedIndex">{{degree.gpa}}</td>
-              <td *ngIf="degree.id != expandedIndex">{{degree.graduationYear}}</td>
-              <td *ngIf="degree.id != expandedIndex">{{degree.degreeType}}</td>
-              <td *ngIf="degree.id != expandedIndex">{{degree.degreeName}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeDetails.studentName}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeDetails.gpa}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeDetails.graduationYear}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeDetails.degreeType}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeDetails.degreeName}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.degreeDetails.CNIC}}</td>
+              <td *ngIf="degree.id != expandedIndex">{{degree.status}}</td>
               <td *ngIf="degree.id != expandedIndex"></td>
             
             <div class= "expanded" *ngIf="degree.id == expandedIndex">
-              Name : {{degree.studentName}}<br>
+              <!-- Name : {{degree.studentName}}<br>
               GPA: {{degree.gpa}}<br>
               Graduation Year: {{degree.graduationYear}}<br>
               Type: {{degree.degreeType}}<br>
-              Degree Name:{{degree.degreeName}}<br></div>
+              Degree Name:{{degree.degreeName}}<br> -->
+
+              <span *ngFor="let key of formFieldUniKeys[i], let i2 = index ">
+                {{key}} : {{formFieldUniValues[i][i2]}}
+                <br>
+              </span>
+            
+            
+            </div>
 
         </tr>
 
