@@ -12,9 +12,9 @@
             <div class="card">
                 <p class="h5 text-center mb-4 addDegree-text">Add Degree Form</p>
                 <div class="card-body">
-                    <app-degree-form *ngIf="uniID && !submitted" [uniID]="uniID" [buttonLabel]="'Add Degree'"(outputValue)="addDegree($event)"
+                    <app-degree-form *ngIf="uniID" [class.hide-object]="submitted" [uniID]="uniID" [buttonLabel]="'Add Degree'"(outputValue)="addDegree($event)"
                         (dirtyFormOutput)="isFormDity=$event"></app-degree-form>
-                    <div *ngIf="submitted" class="reponse-containers">
+                    <div [class.hide-object]="!submitted" class="reponse-containers">
                         <div *ngIf="!submissionFailed">
                             <img src="/assets/images/cyan-loading.gif">
                             <p>
@@ -25,9 +25,12 @@
                             <img src="/assets/images/red-cross.png">
                             <h2>
                             Degree submission failed!
-                            </h2>
+                            </h2><br/>
+                            <h4>
+                                {{errorMessage}}
+                            </h4>
                             <div class="center-on-small-only">
-                            <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree">Go Back</a>
+                            <a class="btn btn-primary waves-light" mdbRippleRadius (click)="goBack()">Go Back</a>
                             </div>
                         </div>
                     </div>    
