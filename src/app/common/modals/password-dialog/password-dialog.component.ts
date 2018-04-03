@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,7 +10,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PasswordDialogComponent implements OnInit {
 
-  passwordString: string;
+  passwordForm: FormGroup;
   formSubmitted: boolean;
 
   constructor(
@@ -17,12 +18,15 @@ export class PasswordDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.passwordForm = new FormGroup({
+      password: new FormControl('', Validators.required)
+    });
   }
 
   ok() {
     this.formSubmitted = true;
-    if (this.passwordString) {
-      this.activeModal.close(this.passwordString);
+    if (this.passwordForm.valid) {
+      this.activeModal.close(this.passwordForm.get('password').value);
     }
   }
 
