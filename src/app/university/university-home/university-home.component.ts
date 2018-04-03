@@ -13,7 +13,6 @@ import { EmptyStringValidator } from '../../common/validators/empty-string-valid
 
 import { UniversityService } from '../university.service';
 import { University} from '../university';
-import { error } from 'util';
 
 @Component({
   selector: 'app-university-home',
@@ -110,11 +109,11 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
   }
 
   login(fromSignup?: boolean) {
-    this.submitted = true;
-    this.loginError = null;
     if (!fromSignup) {
       this.loginNotSignup = true;
     }
+    this.submitted = true;
+    this.loginError = null;
     const loginFormValue = this.loginForm.value;
     const loginObject = {
       username: loginFormValue.username.trim(),
@@ -123,32 +122,29 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
     this.universityService.authenticate(loginObject)
     .subscribe(
-      response => { 
-        console.log(response);
-      if (response) {
-        setTimeout(() => {
-          window.scrollTo(0,0);
-          this.loggedIn = true;
-          this.stepTwo=false;
-          this.getUniversityInfo(this.token.getId());
-          console.log('logged in');
-          this.signUpError=null;
-          this.loginError=null;
-          this.submitted = false;
-          this.loginForm.reset();
-        });
-      }},
-       error => {
-         console.log('Error Catch:', error);
+      (response) => {
+        if (response) {
+          setTimeout(() => {
+            this.loggedIn = true;
+            this.stepTwo = false;
+            this.getUniversityInfo(this.token.getId());
+            this.signUpError = null;
+            this.loginError = null;
+            this.submitted = false;
+            this.loginForm.reset();
+          }, 1000);
+        }
+      },
+      (error) => {
         this.submitted = false;
         console.error(error);
-        if(fromSignup){
-          this.stepTwoFormError=error.message;
+        if (fromSignup) {
+          this.stepTwoFormError = error.message;
         } else {
-          if (!error.error.error && !error.error.status) {
+          if (error.status === 0) {
             this.loginError = 'Connection Timed Out';
-          } else if (error.error.error == "Unauthorized" || error.error.status == 401) {
-            this.loginError = "Invalid username or password";
+          } else if (error.error.error === 'Unauthorized' || error.status === 401) {
+            this.loginError = 'Invalid username or password';
           } else {
             this.loginError = error.message;
           }
@@ -163,19 +159,20 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
     if (this.signupForm.valid && signupFormValue.password === signupFormValue.confirmPassword) {
       this.universityService.checkUsernameAvailability(this.signupForm.get('username').value)
         .subscribe(
-          response => {
-            console.log(response.body.success);
-            if(response.body.success===true)
-              {
-                window.scrollTo(0,0);
-                this.stepTwo=true;
+          (response) => {
+            if (response.body.status === 'true') {
+              if (response.body.success === 'true') {
+                window.scrollTo(0, 0);
+                this.stepTwo = true;
+              } else {
+                this.signUpError = 'Username already used please choose a different one';
               }
-              else{
-                this.signUpError="Username already used please choose a different one";
-              }
+            } else {
+              this.signUpError = response.body.errorMessage;
+            }
           },
-          error => {
-            if (!error.error.error && !error.error.status) {
+          (error) => {
+            if (error.status === 0) {
               this.signUpError = 'Connection Timed Out';
             } else {
               this.signUpError = error.message;
@@ -207,6 +204,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
         address: stepTwoFormValue.address
       };
       this.submitted = true;
+      window.scrollTo(0, 0);
       this.universityService.signupUser(signupObject)
         .subscribe(response => {
           if (response.status === 201) {
@@ -218,8 +216,16 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
             this.login(true);
           }},
           error => {
-            this.stepTwoFormError=error.message;
+            console.log('Signup Error?:', error);
+            if (error.status === 0) {
+              this.stepTwoFormError = 'Connection Timed Out';
+            } else if (error.error.status === 'false') {
+              this.stepTwoFormError = error.error.errorMessage;
+            } else {
+              this.stepTwoFormError = error.message;
+            }
             console.error(error);
+            this.submitted = false;
           }
         );
     } else {

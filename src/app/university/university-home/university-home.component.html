@@ -149,7 +149,7 @@
             <p class="red-text">{{signUpError}}</p>
           </div>
           <div class="text-center">
-            <input type="submit" class="btn btn-deep-orange waves-light" (click)="nextStep()" value="Proceed"
+            <input type="submit" class="btn btn-deep-orange waves-light" (click)="nextStep()" value="Next"
               mdbRippleRadius>
           </div>
         </form>
@@ -163,7 +163,7 @@
         <form [formGroup]="stepTwoForm">
           <div class="text-center deep-orange-text">
             <h3>
-              <i class="fa fa-user deep-orange-text"></i> Sign up:</h3>
+              <i class="fa fa-user deep-orange-text"></i> Sign up Step Two:</h3>
           </div>
           <div class="md-form">
             <i class="fa fa-phone prefix grey-text"></i>
@@ -242,7 +242,7 @@
             <p class="red-text">{{stepTwoFormError}}</p>
           </div>
           <div class="text-center">
-            <input type="submit" class="btn btn-deep-orange waves-light" (click)="signup()" value="Proceed"
+            <input type="submit" class="btn btn-deep-orange waves-light" (click)="signup()" value="Sign up"
               mdbRippleRadius>
           </div>
         </form>
