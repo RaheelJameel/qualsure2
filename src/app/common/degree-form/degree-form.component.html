@@ -4,7 +4,7 @@
       [type]="formFields[i].attributeType" [id]="i" [formInvalid]="formInvalid"></app-degree-form-field>
   </div>
   <div class="center-on-small-only">
-    <a class="btn btn-primary waves-light" mdbRippleRadius (click)="giveOutput()">{{buttonLabel}}</a>
+    <input type="submit" class="btn btn-primary waves-light" (click)="giveOutput()" [value]="buttonLabel" mdbRippleRadius>
   </div>
   <div *ngIf="formInvalid && fieldForm.invalid">
     <small style="color:crimson">*Form is Invalid</small>
