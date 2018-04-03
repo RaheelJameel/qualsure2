@@ -42,8 +42,11 @@ export class UniversityViewDegreesComponent implements OnInit {
    }
    if(lowerCase===0)
        return x;
-
-   initCap=initCap.concat(String.fromCharCode(x.charCodeAt(0)-32));
+   if (x.charCodeAt(0)>90) {
+    initCap=initCap.concat(String.fromCharCode(x.charCodeAt(0)-32));
+   } else {
+    initCap=initCap.concat(x.charAt(0));
+   }
    var j=1;
    for(var i=1; i<x.length; i++){
        if(x.charCodeAt(i)<97) {
