@@ -139,20 +139,22 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
         });
       }},
        error => {
+         console.log('Error Catch:', error);
         this.submitted = false;
         console.error(error);
-         if(fromSignup){
+        if(fromSignup){
           this.stepTwoFormError=error.message;
-         }
-         else{
-          if(error.error.error == "Unauthorized" || error.error.status == 401) {
+        } else {
+          if (!error.error.error && !error.error.status) {
+            this.loginError = 'Connection Timed Out';
+          } else if (error.error.error == "Unauthorized" || error.error.status == 401) {
             this.loginError = "Invalid username or password";
           } else {
             this.loginError = error.message;
           }
           // this.clearForms();
-         }
-       }
+        }
+      }
     );
   }
   nextStep() {
@@ -173,7 +175,11 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
               }
           },
           error => {
-            this.signUpError=error
+            if (!error.error.error && !error.error.status) {
+              this.signUpError = 'Connection Timed Out';
+            } else {
+              this.signUpError = error.message;
+            }
             console.error(error);
           }
         );
