@@ -91,10 +91,10 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
 
   createSignupForm() {
     this.signupForm = new FormGroup({
-      name: new FormControl('', [Validators.required, EmptyStringValidator,Validators.pattern('^[A-Za-z]+$')]),
+      name: new FormControl('', [Validators.required, EmptyStringValidator,Validators.pattern('^[A-Za-z][A-Za-z ]+$')]),
       username: new FormControl ('', [Validators.required, EmptyStringValidator,Validators.pattern('^[a-zA-Z0-9\\d\\-\\_]*$')]),
       email:  new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]),
-      password: new FormControl('', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$')]),
+      password: new FormControl('', [Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*]{8,}$')]),
       confirmPassword: new FormControl('', [Validators.required])
     });
   }
@@ -103,7 +103,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       phoneNumber: new FormControl('', [Validators.required,Validators.pattern('^\\+?[0-9]{2}\\s?\\([0-9]{3}\\)\\s?[0-9]{3}\\-[0-9]{4}$')]),
       universityRepresentativePhoneNumber: new FormControl('', [Validators.required,Validators.pattern('^\\+?[0-9]{2}\\s?\\([0-9]{3}\\)\\s?[0-9]{3}\\-[0-9]{4}$')]),
       universityRepresentativeCnic: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{5}\\-[0-9]{7}\\-[0-9]{1}$')]),
-      universityRepresentativeName: new FormControl('', [Validators.required,Validators.pattern('^[A-Za-z]+$')]),
+      universityRepresentativeName: new FormControl('', [Validators.required,Validators.pattern('^[A-Za-z][A-Za-z ]+$')]),
       address: new FormControl('',[Validators.required])
     });
   }
