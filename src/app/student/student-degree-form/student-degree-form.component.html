@@ -12,7 +12,8 @@
   <div class="full-bg-img rgba-black-strong card-pad">
     <div class="container">
       <div class="card">
-        <p class="h5 text-center mb-4 verifyDegree-text">Degree Form</p>
+        <p *ngIf="universityName" class="h5 text-center mb-4 verifyDegree-text">{{universityName}}</p>
+        <p class="h5 text-center mb-4">Degree Form</p>
         <div class="card-body">
           <app-degree-form *ngIf="showDegreeForm && !submitted && universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'" (outputValue)="verifyDegree($event)" [independentCheck]="true"
             [degreeDetail]="reloadedDegree" [disablePrefilledForm]="true"></app-degree-form>

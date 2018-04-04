@@ -15,6 +15,7 @@ import { StudentService } from '../student.service';
 export class StudentDegreeFormComponent implements OnInit {
 
   universityID: string;
+  universityName: string;
   degreeID: string;
   submitted: boolean;
   validDegree: boolean;
@@ -49,7 +50,24 @@ export class StudentDegreeFormComponent implements OnInit {
 
   setUniversityID() {
     this.universityID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.getUniversityName();
     this.degreeID = this.activatedRoute.snapshot.paramMap.get('degreeId');
+  }
+
+  getUniversityName() {
+    // this.universityName;
+    console.log('Getting.......');
+    return this.universityService.getSpecificUniveristyInfo(this.universityID)
+      .subscribe(
+        (response) => {
+          if (response.status === 200) {
+            this.universityName = response.body.name;
+          }
+        },
+        (error) => {
+
+        }
+      );
   }
 
   getOptionalDegreeDetails() {
@@ -74,6 +92,7 @@ export class StudentDegreeFormComponent implements OnInit {
   }
 
   verifyDegree(degree) {
+    window.scrollTo(0, 0);
     this.submitted = true;
     this.validDegree = false;
     this.invalidDegree = false;

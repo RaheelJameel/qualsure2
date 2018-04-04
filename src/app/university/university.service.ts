@@ -135,6 +135,17 @@ private handleError (operation = 'operation', result?: any) {
         catchError(this.handleError('University Info'))
       )
   }
+
+  getSpecificUniveristyInfo(id: string): Observable<any> {
+    const url = this.universityUrl + '/universities/' + id;
+    return this.http.get(url, this.httpOptions)
+      .pipe(
+        tap((universiyInfo: any) => this.log(`fetched getUniveristyName`)),
+        catchError(this.handleError('getUniveristyName'))
+      );
+  }
+
+
   logout(){
     this.tokenStorage.signOut();
     this.isloggedin=false;
