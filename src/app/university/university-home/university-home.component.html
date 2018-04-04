@@ -294,7 +294,7 @@
               <h5><strong>We have got YOU covered! </strong></h5><br>
               <a class="btn btn-deep-purple waves-light" href="add-degree" (click)="redirectToAddDegree()" mdbRippleRadius>Add New Degree</a>
               <a class="btn btn-deep-purple waves-light" routerLink="./degrees" mdbRippleRadius>View All Degrees</a>
-              <a class="btn btn-deep-purple waves-light" routerLink="./edit-form" mdbRippleRadius>Edit Form</a>
+              <a *ngIf="!hideEditForm" class="btn btn-deep-purple waves-light" routerLink="./edit-form" mdbRippleRadius>Edit Form</a>
           </div>
       </div>
   </div>

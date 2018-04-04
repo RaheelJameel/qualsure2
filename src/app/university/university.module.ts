@@ -16,6 +16,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormsModule  } from "@angular/forms";     
 import { TokenStorage } from "./token.storage";
 import { AuthGuard } from "./auth-guard.service";
+import { AuthGuardEditForm } from './auth-guard-edit-form.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from './university.interceptor';
 import {Ng2Webstorage} from 'ngx-webstorage';
@@ -66,6 +67,7 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     HttpClientModule,
     TokenStorage,
     AuthGuard,
+    AuthGuardEditForm,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,

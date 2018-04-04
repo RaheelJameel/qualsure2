@@ -43,7 +43,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
   stepTwoFormInvalid: boolean;
   submitted: boolean;
   loginNotSignup: boolean;
-  promptBeforeAddDegree = true;
+  hideEditForm: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -242,11 +242,15 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
   }
 
   getUniversityInfo(id: any) {
+    console.log('getUniversityInfo: ');
     this.universityService.getInfo
     .subscribe(response => {
-      if(response.body)
-      this.universityInstance=response.body;
+      if (response.body) {
+        this.universityInstance = response.body;
+        this.hideEditForm = (this.universityInstance.firstTime === 'False');
+      }
       console.log(response);
+      console.log('getUniversityInfo subscribe: this.hideEditForm: ', this.hideEditForm);
     },
     error => {
       if(error)
@@ -268,7 +272,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
   }
 
   redirectToAddDegree() {
-    if (this.promptBeforeAddDegree) {
+    if (this.universityInstance.firstTime === 'True') {
       const modalRef: NgbModalRef = this.modalService.open(ConfirmChangesComponent, { backdrop: 'static', windowClass: 'align-modal' });
       modalRef.componentInstance.title = 'Important Information';
       modalRef.componentInstance.message = 'After adding your first degree the Edit-Form functionality will be permanently disabled. \

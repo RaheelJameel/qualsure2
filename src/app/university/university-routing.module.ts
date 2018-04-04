@@ -11,6 +11,7 @@ import {UniversityWalletComponent} from './university-wallet/university-wallet.c
 import { PendingChangesGuard } from './pending-changes-guard';
 
 import {AuthGuard} from './auth-guard.service';
+import { AuthGuardEditForm } from './auth-guard-edit-form.service';
 const univeristyRoutes: Routes = [
   {
     path: 'university',
@@ -19,7 +20,7 @@ const univeristyRoutes: Routes = [
       { path: '', component: UniversityHomeComponent, canDeactivate: [PendingChangesGuard] },
       { path: 'explore',  component: UniversityLearnMoreComponent, canDeactivate: [PendingChangesGuard] },
       { path: 'degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
-      { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuard] },
+      { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuardEditForm] },
       { path: 'wallet',  component: UniversityWalletComponent , canActivate: [AuthGuard]  },
       { path: 'add-degree',  component: UniversityAddDegreeComponent , canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard]  },
     ]

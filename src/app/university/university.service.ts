@@ -36,13 +36,6 @@ export class UniversityService {
   public loginObservable$ = this.loginObservable.asObservable();
 
   getInfo =  new Observable<any>((observer) => {
-    if (this.university) {
-      if (this.university.id) {
-          observer.next({'body' : this.university});
-          this.emitLoginObservable();
-          observer.complete();
-      }
-    }
       this.getUniversityInfo(this.tokenStorage.getId())
         .subscribe((response) => {
             this.emitLoginObservable();
@@ -228,7 +221,6 @@ private handleError (operation = 'operation', result?: any) {
   }
 
   saveUniversityInfo(): Observable<any> {
-    this.university.firstTime = false;
     const url = this.universityUrl + `/universities`;
     return this.http.put(url, this.university, this.httpOptions)
       .pipe(
