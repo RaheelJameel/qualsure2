@@ -33,11 +33,14 @@
                   Your Degree has been successfully verified
                 </h3>
               <p>
-                Please find the QR code attached below. 
+                Please find the customized link to this degree and it's QR code attached below. 
+              </p>
+              <p>
+                <a [href]="qrCodeData" target="_blank">{{qrCodeData}}</a>
               </p>
               
               <div style="display:table" id="img-downloader" class="img-responsive center-block">
-                <a href="#" download onclick=" this.href=document.querySelector('#img-downloader img').getAttribute('src');">
+                <a download onclick=" this.href=document.querySelector('#img-downloader img').getAttribute('src');">
                 
                 <qrcode *ngIf="qrCodeData" [qrdata]="qrCodeData" [size]="256" [level]="'M'" class="img-responsive center-block" style="display:table" download></qrcode>
                 </a>
