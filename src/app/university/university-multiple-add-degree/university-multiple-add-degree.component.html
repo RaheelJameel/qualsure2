@@ -34,25 +34,26 @@
 
                     <p class="h3 text-center mb-4 addDegree-text">Upload File</p>
                     <input type="file" class="upload" (change)="changeListener($event.target.files)">
-
-                    <div  *ngIf="errors">
-                      Some errors were encountered while uploading the file. 
-                      <br>
-                      The following fields are not in the correct format. Please check the format in "EDIT FORM" section and then proceed.
-                      <div *ngFor="let error of errors;">
-                        <div *ngIf="error.row && error.column">
-                            Error in line {{error.row}}, column {{error.column}}
-                        </div>
-                        <div *ngIf="!(error.row && error.column)">
-                            {{error}}
+                    <div *ngIf="!noFile">
+                      <div  *ngIf="errors">
+                        Some errors were encountered while uploading the file. 
+                        <br>
+                        The following fields are not in the correct format. Please check the format in "EDIT FORM" section and then proceed.
+                        <div *ngFor="let error of errors;">
+                          <div *ngIf="error.row && error.column">
+                              Error in line {{error.row}}, column {{error.column}}
+                          </div>
+                          <div *ngIf="!(error.row && error.column)">
+                              {{error}}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="text-green" *ngIf="!errors">
-                      <b>There were no errors found.</b>
-                    </div>
-                    <div *ngIf="validated">
-                        <button (click)="submitDegrees()" >Submit</button>
+                      <div class="text-green" *ngIf="validated && !errors">
+                        <b>There were no errors found.</b>
+                      </div>
+                      <div *ngIf="validated && !errors">
+                          <button (click)="submitDegrees()" >Submit</button>
+                      </div>
                     </div>
                   </div>
                   <div *ngIf="submitted">

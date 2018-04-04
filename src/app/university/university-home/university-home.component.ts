@@ -140,6 +140,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
             this.loginError = null;
             this.submitted = false;
             this.loginForm.reset();
+            this.signupForm.reset();
           }, 1000);
         }
       },

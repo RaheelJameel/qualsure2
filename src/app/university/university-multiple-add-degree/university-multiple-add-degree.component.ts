@@ -21,6 +21,7 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
   submitted: boolean;
   errorMessage: string;
   submissionFailed: boolean;
+  noFile = true;
   
   constructor(
     private router: Router,
@@ -38,6 +39,7 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
   public changeListener(files: FileList){
     console.log(files);
     if(files && files.length > 0) {
+      this.noFile=false;
        let file : File = files.item(0); 
          console.log(file.name);
          console.log(file.size);
@@ -212,6 +214,9 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
     observer.complete();
   })
   goBack() {
+    this.validated=false;
+    this.parsedData=null;
+    this.noFile=true;
     this.submitted = false;
     this.submissionFailed = false;
     this.errorMessage = null;
