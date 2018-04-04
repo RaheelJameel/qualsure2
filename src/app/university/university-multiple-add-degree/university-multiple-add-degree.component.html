@@ -1,56 +1,82 @@
 
+<div class="light-font">
+    <ol class="breadcrumb primary-color">
+        <li class="breadcrumb-item"><a class="white-text" routerLink="/university">University Home</a></li>
+        <li class="breadcrumb-item">Add Multiple Degrees</li>
+    </ol>
+</div>
+<a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/university"><i class="fa fa-caret-left  mr-1"></i> Back</a>
+<br>
 <div class="view intro hm-black-light">
   <div class="full-bg-img rgba-black-strong card-pad">
       <div class="container">
           <div class="card">
               <p class="h5 text-center mb-4 addDegree-text">Multiple Add Degree</p>
-              <div class="card-body">
-                  The file uploaded must: 
-                  <ul>
-                    <li>
-                      Be in CSV Format
-                    </li>
-                    <li>
-                      Have the same fields as in 'Edit Form' 
-                    </li>
-                    <li>
-                      Have the same order of fields
-                    </li>
-                    <li>
-                      Have first row containing the field names
-                    </li>
-                  </ul>
-                  Example File: 
-                  <img src="/assets/images/multiple-add-degree-csv-format.PNG" class="img-responsive center-block" >
+              <div class="card-body text-center">
+                <div *ngIf="!submitted">
+                    The file uploaded must: 
+                    <ul>
+                      <li>
+                        Be in CSV Format
+                      </li>
+                      <li>
+                        Have the same fields as in 'Edit Form' 
+                      </li>
+                      <li>
+                        Have the same order of fields
+                      </li>
+                      <li>
+                        Have first row containing the field names
+                      </li>
+                    </ul>
+                    Example File: 
+                    <img src="/assets/images/multiple-add-degree-csv-format.PNG" class="img-responsive center-block" >
 
-                  <p class="h3 text-center mb-4 addDegree-text">Upload File</p>
-                  <input type="file" class="upload" (change)="changeListener($event.target.files)">
+                    <p class="h3 text-center mb-4 addDegree-text">Upload File</p>
+                    <input type="file" class="upload" (change)="changeListener($event.target.files)">
 
-                  <div  *ngIf="errors">
-                    Some errors were encountered while uploading the file. 
-                    <br>
-                    The following fields are not in the correct format. Please check the format in "EDIT FORM" section and then proceed.
-                    <div *ngFor="let error of errors;">
-                      <div *ngIf="error.row && error.column">
-                          Error in line {{error.row}}, column {{error.column}}
-                      </div>
-                      <div *ngIf="!(error.row && error.column)">
-                          {{error}}
+                    <div  *ngIf="errors">
+                      Some errors were encountered while uploading the file. 
+                      <br>
+                      The following fields are not in the correct format. Please check the format in "EDIT FORM" section and then proceed.
+                      <div *ngFor="let error of errors;">
+                        <div *ngIf="error.row && error.column">
+                            Error in line {{error.row}}, column {{error.column}}
+                        </div>
+                        <div *ngIf="!(error.row && error.column)">
+                            {{error}}
+                        </div>
                       </div>
                     </div>
+                    <div class="text-green" *ngIf="!errors">
+                      <b>There were no errors found.</b>
+                    </div>
+                    <div *ngIf="validated">
+                        <button (click)="submitDegrees()" >Submit</button>
+                    </div>
                   </div>
-                  <div class="text-green" *ngIf="!errors">
-                    There were no errors found.
-                  </div>
-                  <!-- <div *ngIf="!validated">
-                      <img src="/assets/images/cyan-loading.gif">
+                  <div *ngIf="submitted">
+                    <div *ngIf="!submissionFailed">
+                      <img src="/assets/images/cyan-loading.gif" class="img-responsive center-block" style="width:225px">
                       <p>
                       Validating. Please Wait...
                       </p>
-                  </div> -->
-                  <div *ngIf="validated">
-                      <button (click)="submitDegrees()" >Submit</button>
+                    </div>
+                    <div *ngIf="submissionFailed">
+                        <img src="/assets/images/red-cross.png" class="img-responsive center-block" style="width:225px">
+                        <h2>
+                        Degrees submission failed!
+                        </h2><br/>
+                        <h4>
+                            {{errorMessage}}
+                        </h4>
+                        <div class="center-on-small-only">
+                        <a class="btn btn-primary waves-light" mdbRippleRadius (click)="goBack()">Go Back</a>
+                        </div>
+                    </div>
                   </div>
+                  
+                  
               </div>
           </div>
       </div>

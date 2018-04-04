@@ -21,7 +21,7 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
   submitted: boolean;
   errorMessage: string;
   submissionFailed: boolean;
-
+  
   constructor(
     private router: Router,
     private papa: PapaParseService,
@@ -149,6 +149,7 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
         this.universityService.addMultipleDegrees(degreeObj, result)
           .subscribe(
             (response) => {
+              console.log(response);
               if (response.body.status === 'false') {
                 this.errorMessage = response.body.errorMessage;
                 this.submissionFailed = true;
@@ -210,4 +211,10 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
     observer.next(check);
     observer.complete();
   })
+  goBack() {
+    this.submitted = false;
+    this.submissionFailed = false;
+    this.errorMessage = null;
+    window.scrollTo(0, 0);
+  }
 }

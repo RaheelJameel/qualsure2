@@ -18,7 +18,7 @@
           <app-degree-form *ngIf="showDegreeForm && !submitted && universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'" (outputValue)="verifyDegree($event)" [independentCheck]="true"
             [degreeDetail]="reloadedDegree" [disablePrefilledForm]="true"></app-degree-form>
           <div *ngIf="submitted" class="reponse-containers">
-            <div *ngIf="!validDegree && !invalidDegree">
+            <div *ngIf="!validDegree && !invalidDegree && !verificationError">
               <img src="/assets/images/cyan-loading.gif" class="img-responsive center-block" style="width:225px">
               <p>
                 Verifying Degree Please Wait...
@@ -33,7 +33,7 @@
                   Your Degree has been successfully verified
                 </h3>
               <p>
-                Please find the customized link to this degree and it's QR code attached below. 
+                Please find the customized link to this degree and it's QR code attached below. Click the QR code to download it. 
               </p>
               <p>
                 <a [href]="qrCodeData" target="_blank">{{qrCodeData}}</a>
@@ -45,20 +45,21 @@
                 <qrcode *ngIf="qrCodeData" [qrdata]="qrCodeData" [size]="256" [level]="'M'" class="img-responsive center-block" style="display:table" download></qrcode>
                 </a>
               </div>
-              <div class="center-on-small-only">
-                <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree">Go Back</a>
-              </div> 
+               
             </div>
             <div *ngIf="invalidDegree">
               <img src="/assets/images/red-cross.png" class="img-responsive center-block" style="width:225px">
               <h2>
                 Invalid Degree!
               </h2>
-              <div class="center-on-small-only">
-                <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree">Go Back</a>
-              </div>
+              
             </div>
-          </div>
+            <div *ngIf="verificationError">
+                <h2>
+                    {{verificationError}}
+                  </h2>
+                  
+            </div>
         </div>
       </div>
     </div>

@@ -14,15 +14,15 @@
                 <div class="card-body">
                     <app-degree-form *ngIf="uniID" [class.hide-object]="submitted" [uniID]="uniID" [buttonLabel]="'Add Degree'"(outputValue)="addDegree($event)"
                         (dirtyFormOutput)="isFormDity=$event"></app-degree-form>
-                    <div [class.hide-object]="!submitted" class="reponse-containers">
+                    <div [class.hide-object]="!submitted" class="reponse-containers text-center">
                         <div *ngIf="!submissionFailed">
-                            <img src="/assets/images/cyan-loading.gif">
+                            <img src="/assets/images/cyan-loading.gif" class="img-responsive center-block" style="width:225px">
                             <p>
                             Submitting. Please Wait...
                             </p>
                         </div>
                         <div *ngIf="submissionFailed">
-                            <img src="/assets/images/red-cross.png">
+                            <img src="/assets/images/red-cross.png" class="img-responsive center-block" style="width:225px">
                             <h2>
                             Degree submission failed!
                             </h2><br/>

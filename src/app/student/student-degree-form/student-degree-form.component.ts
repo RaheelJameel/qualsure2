@@ -25,7 +25,7 @@ export class StudentDegreeFormComponent implements OnInit {
 
   reloadedDegree: any;
   showDegreeForm: boolean;
-
+  verificationError:any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -98,8 +98,12 @@ export class StudentDegreeFormComponent implements OnInit {
     this.invalidDegree = false;
     this.studentService.verifyDegree(this.universityID, degree)
       .subscribe(response => {
+        console.log(response);
+          
         if (response && response.status) {
           if (response.status === 'Success') {
+            
+            console.log(response);
             setTimeout(() => {
               this.validDegree = true;
               this.success('Verified');
@@ -109,15 +113,28 @@ export class StudentDegreeFormComponent implements OnInit {
               // }, 3000);
             }, 2000);
           } else {
-            setTimeout(() => {
-              this.invalidDegree = true;
-              this.error('Verification Failed');
-            }, 2000);
+            if(response.errorMessage === 'DataCrypt not Responding')
+                this.verificationError = response.errorMessage;
+              else{
+              setTimeout(() => {
+                this.invalidDegree = true;
+                this.error('Verification Failed');
+              }, 2000);
+          }
           }
         }
       },
       error => {
         console.error(error);
+        console.log('Verification Error?:', error);
+            if (error.status === 0) {
+              this.verificationError = 'Connection Timed Out';
+            } else if (error.error.status === 'false') {
+              this.verificationError = error.error.errorMessage;
+            } else {
+              this.verificationError = error.message;
+            }
+            console.error(error);
       });
   }
 
