@@ -9,7 +9,7 @@ import { UniversityViewDegreesComponent} from './university-view-degrees/univers
 import { UniversityAddDegreeComponent } from './university-add-degree/university-add-degree.component';
 import {UniversityWalletComponent} from './university-wallet/university-wallet.component';
 import { PendingChangesGuard } from './pending-changes-guard';
-
+import {UniversityMultipleAddDegreeComponent} from './university-multiple-add-degree/university-multiple-add-degree.component'
 import {AuthGuard} from './auth-guard.service';
 import { AuthGuardEditForm } from './auth-guard-edit-form.service';
 const univeristyRoutes: Routes = [
@@ -23,6 +23,8 @@ const univeristyRoutes: Routes = [
       { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuardEditForm] },
       { path: 'wallet',  component: UniversityWalletComponent , canActivate: [AuthGuard]  },
       { path: 'add-degree',  component: UniversityAddDegreeComponent , canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard]  },
+      { path: 'add-multiple-degree',  component: UniversityMultipleAddDegreeComponent   }
+
     ]
   },
 ];

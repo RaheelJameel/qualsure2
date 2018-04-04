@@ -292,7 +292,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
     }
     return false;
   }
-
+  
   canDeactivate(): Observable<boolean> | boolean {
     // insert logic to check if there are pending changes here;
     // returning true will navigate without confirmation
