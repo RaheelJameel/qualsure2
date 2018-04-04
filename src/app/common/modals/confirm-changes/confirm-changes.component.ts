@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,6 +8,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./confirm-changes.component.scss']
 })
 export class ConfirmChangesComponent implements OnInit {
+
+  @Input() title = 'Unsaved Changes';
+  @Input() message = 'You have unsaved changes. Press Cancel to go back and save these changes, or OK to lose these changes.';
+  @Input() confirmButtonText = 'OK';
+  @Input() cancelButtonText = 'Cancel';
 
   constructor(
     public activeModal: NgbActiveModal,

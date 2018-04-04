@@ -7,10 +7,12 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { TokenStorage } from '../token.storage';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { phoneMask, cnicMask, UnsavedChangesErrorMsg } from '../../common/constants';
 import { HeaderFooterComponent } from '../../common/header-footer/header-footer.component';
 import { EmptyStringValidator } from '../../common/validators/empty-string-validator';
+import { ConfirmChangesComponent } from '../../common/modals/confirm-changes/confirm-changes.component';
 
 import { UniversityService } from '../university.service';
 import { University} from '../university';
@@ -41,6 +43,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
   stepTwoFormInvalid: boolean;
   submitted: boolean;
   loginNotSignup: boolean;
+  promptBeforeAddDegree = true;
 
   constructor(
     private fb: FormBuilder,
@@ -50,7 +53,8 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
     private activatedRoute: ActivatedRoute,
     private token: TokenStorage,
     private header: HeaderFooterComponent,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private modalService: NgbModal,
   ) {
     this.universityInstance = null;
 
@@ -261,6 +265,28 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
       this.loggedIn=false;
        return false;
     }
+  }
+
+  redirectToAddDegree() {
+    if (this.promptBeforeAddDegree) {
+      const modalRef: NgbModalRef = this.modalService.open(ConfirmChangesComponent, { backdrop: 'static', windowClass: 'align-modal' });
+      modalRef.componentInstance.title = 'Important Information';
+      modalRef.componentInstance.message = 'After adding your first degree the Edit-Form functionality will be permanently disabled. \
+        Please ensure that you have customized the degree form as per your requirements before adding any degree.';
+      modalRef.componentInstance.confirmButtonText = 'Proceed';
+      modalRef.componentInstance.cancelButtonText = 'Back';
+      modalRef.result.then(
+        (result) => {
+          if (result) {
+            this.router.navigate(['university', 'add-degree']);
+          }
+        }, (reason) => {
+          console.log(`Cancelled`);
+        });
+    } else {
+      this.router.navigate(['university', 'add-degree']);
+    }
+    return false;
   }
 
   canDeactivate(): Observable<boolean> | boolean {
