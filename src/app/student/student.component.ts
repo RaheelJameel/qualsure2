@@ -25,6 +25,7 @@ export class StudentComponent implements OnInit {
       response => {
         console.log(response);
         this.universityList=response;
+       
       }
     )
   }

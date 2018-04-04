@@ -28,6 +28,7 @@ import { UniversityHomeComponent } from './university-home/university-home.compo
 import { TextMaskModule } from 'angular2-text-mask';
 import { PendingChangesGuard } from './pending-changes-guard';
 import { UniversityWalletComponent } from './university-wallet/university-wallet.component';
+import {Ng2PageScrollModule} from 'ng2-page-scroll';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { UniversityWalletComponent } from './university-wallet/university-wallet
     AppCommonModule,
     NgbModule,
     TextMaskModule,
+    Ng2PageScrollModule,
   ],
   declarations: [
     UniversityComponent,

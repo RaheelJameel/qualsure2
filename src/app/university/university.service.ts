@@ -64,7 +64,8 @@ private handleError (operation = 'operation', result?: any) {
 
     // TODO: send the error to remote logging infrastructure
     console.error(error); // log to console instead
-
+    if(operation === 'University Info')
+      this.logout();
     // TODO: better job of transforming error for user consumption
     this.log(`${operation} failed: ${error.message}`);
     result=error;
@@ -132,7 +133,8 @@ private handleError (operation = 'operation', result?: any) {
           this.university.firstTime=universityInfo.body.firstTime;
         }
       ),
-        catchError(this.handleError('University Info'))
+        catchError(
+          this.handleError('University Info'))
       )
   }
 

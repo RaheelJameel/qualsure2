@@ -1,24 +1,65 @@
-<div class="row">
-  <div class="col-md-12">
+<section id="section01" class="hm-black-light rgba-black-strong main-section  demo">
+    <div class="layer">
+        <div style="margin-left:5%;" class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+            <div style="margin: auto">
+              <h5 class="custom-color-text"><i class="fa fa-pie-chart"></i> For Employers and Students</h5>
+              <h3 class="card-title pt-2"><strong>Decentralized Degrees</strong></h3>
+              <p>Your Degree verification and QR Code is just three steps away!</p>
+              <p>Select University <i class="fa fa-chevron-right" aria-hidden="true"></i> Fill degree details <i class="fa fa-chevron-right" aria-hidden="true"></i> Get it Verified!</p>
+              
+            </div>
+          </div>
+  
+
+<!-- <div class="row"> -->
+  <!-- <div class="col-md-12"> -->
     <!-- Card -->
-    <div class="card card-image mb-3" style="background-image: url(/assets/images/img%20%2814%29.jpg);background-size: cover;">
+    <!-- <div class="card card-image mb-3" style="background-image: url(/assets/images/img%20%2814%29.jpg);background-size: cover;"> -->
       <!-- Content -->
-      <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
-        <div style="margin: auto">
-          <h5 class="pink-text"><i class="fa fa-pie-chart"></i> For Employers and Students</h5>
-          <h3 class="card-title pt-2"><strong>Decentralized Degrees</strong></h3>
-          <p>Your Degree verification and QR Code is just three steps away!</p>
-          <p>Select University <i class="fa fa-chevron-right" aria-hidden="true"></i> Fill degree details <i class="fa fa-chevron-right" aria-hidden="true"></i> Get it Verified!</p>
+      <!-- <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4"> -->
+        <!-- <div style="margin: auto"> -->
+          <!-- <h5 class="pink-text"><i class="fa fa-pie-chart"></i> For Employers and Students</h5> -->
+          <!-- <h3 class="card-title pt-2"><strong>Decentralized Degrees</strong></h3> -->
+          <!-- <p>Your Degree verification and QR Code is just three steps away!</p> -->
+          <!-- <p>Select University <i class="fa fa-chevron-right" aria-hidden="true"></i> Fill degree details <i class="fa fa-chevron-right" aria-hidden="true"></i> Get it Verified!</p> -->
           
-        </div>
-      </div>
+        <!-- </div> -->
+      <!-- </div> -->
       <!-- Content -->
-    </div>
-  </div>
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </div> -->
+
+<main class=" large-devices text-left py-5"> <!-- py-5">  -->
+  <div style="margin-left:5%;" class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+      <blockquote class="blockquote bq-success">
+          <p class="bq-title">Select The University</p>
+      </blockquote>
+      <div class = "text-center">
+        <table class="table table-bordered table-hover">
+          <thead>
+              <th     style="text-align: -webkit-right;">
+                  <input class="form-control" type="search" name="search" placeholder="Search" [(ngModel)]="filterVar">      
+      
+                </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let university of universityList | filter:filterVar;" (click)="redirect(university.accountId)">
+              {{university.name}}
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+</div>
+</main>
 </div>
 
-<main class="text-left py-5"> <!-- py-5">  -->
-  <div class="container alt-style">
+</section>
+
+<main class=" small-devices text-left py-5"> <!-- py-5">  -->
+  <!-- <div class="container alt-style"></div> -->
+  <div class="container text-center  align-items-center ">
       <blockquote class="blockquote bq-success">
           <p class="bq-title">Select The University</p>
       </blockquote>
