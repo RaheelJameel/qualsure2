@@ -1,8 +1,10 @@
 <div *ngIf="!loggedIn">
   <div *ngIf="!submitted && !stepTwo">
-    <div class="view intro hm-black-light">
-      <div class="full-bg-img flex-center rgba-black-strong">
+    <section id="section01" class="hm-black-light rgba-black-strong main-section  demo">
+    <!-- <div class="view intro hm-black-light"> -->
+      <!-- <div class="full-bg-img flex-center rgba-black-strong"> -->
         <!--Card-->
+        <div class="layer">
         <div class="card">
           <!--Card image-->
           <div class="hm-white-slight waves-light card-bg" mdbRippleRadius>
@@ -13,13 +15,13 @@
 
           <!--Card content-->
           <div class="card-body">
-            <section class="section">
+            <section class="section ">
               <!--Grid row-->
-              <div class="row">
+              <div class="row ">
                 <!--Grid column-->
-                <div class="col-md-12">
+                <div class="col-md-12 ">
                   <!-- Login form -->
-                  <form [formGroup]="loginForm" novalidate>
+                  <form [formGroup]="loginForm" novalidate style="clear: both;">
                     <div class="md-form">
                       <i class="fa fa-user prefix grey-text"></i>
                       <input type="text" id="defaultForm-username" class="form-control" formControlName="username" mdbActive>
@@ -33,30 +35,33 @@
                     <div *ngIf="loginError" class="text-center">
                       <p class="red-text">{{loginError}}</p>
                     </div>
-                    <div class="text-center">
-                      <input type="submit" class="btn btn-default waves-light" (click)="login()" [disabled]='loginForm.invalid' value="Login" mdbRippleRadius>
+                    <div class="text-center defaultForm-btn">
+                      <input type="submit"  class="btn btn-default waves-light" (click)="login()" [disabled]='loginForm.invalid' value="Login" mdbRippleRadius>
                     </div>
+
                   </form>
+                  
                 </div>
                 <!--Grid column-->
               </div>
               <!--Grid row-->
             </section>  
+
           </div>
         </div>
         <!--/.Card-->
         <br>
-        <div class="row">
-          
-          <i class="fa fa-angle-down" aria-hidden="true"></i>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      
+        
+      <!-- </div> -->
+    <!-- </div> -->
+    <a pageScroll href="#signUpForm" ><span style="border-radius:50%; padding:1rem; background-color:#00bcd4 " class="badge "><i class="fa fa-angle-down" aria-hidden="true"></i></span></a>
+   </div> 
+  </section>
+    <div class="row" style="margin-top:5%" >
+        <a class="anchor" id="signUpForm"></a>
       <div class="col-md-6" style="margin: auto">
         <!--Register form-->
-        <form [formGroup]="signupForm">
+        <form [formGroup]="signupForm" >
           <div class="text-center deep-orange-text">
             <h3>
               <i class="fa fa-user deep-orange-text"></i> Sign up:</h3>
@@ -262,7 +267,7 @@
             </h3>
           </div>
         <div class="text-center">
-          <img src="/assets/images/cyan-loading.gif">
+          <img src="/assets/images/cyan-loading.gif" class="img-responsive center-block" style="width:225px">
           <p>
           Submitting. Please Wait...
           </p>

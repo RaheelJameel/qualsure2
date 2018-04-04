@@ -13,29 +13,40 @@
     <div class="container">
       <div class="card">
         <p class="h5 text-center mb-4 verifyDegree-text">Degree Form</p>
-        <div class="card-body">
+        <div class="card-body text-center">
           <app-degree-form *ngIf="showDegreeForm && !submitted && universityID" [uniID]="universityID" [buttonLabel]="'Verify Degree'" (outputValue)="verifyDegree($event)" [independentCheck]="true"
             [degreeDetail]="reloadedDegree" [disablePrefilledForm]="true"></app-degree-form>
           <div *ngIf="submitted" class="reponse-containers">
             <div *ngIf="!validDegree && !invalidDegree">
-              <img src="/assets/images/cyan-loading.gif">
+              <img src="/assets/images/cyan-loading.gif" class="img-responsive center-block" style="width:225px">
               <p>
                 Verifying Degree Please Wait...
               </p>
             </div>
-            <div *ngIf="validDegree">
-              <img src="/assets/images/green-tick.png">
-              <h2>
-                Degree Verified!
-              </h2>
-              <a [href]="qrCodeData">{{qrCodeData}}</a>
-              <qrcode *ngIf="qrCodeData" [qrdata]="qrCodeData" [size]="256" [level]="'M'"></qrcode>
+            <div class="center-block " *ngIf="validDegree">
+               
+                  <p>
+              <img src="/assets/images/green-tick.png" class="img-responsive center-block" style="width:225px">
+              </p>
+              <h3>
+                  Your Degree has been successfully verified
+                </h3>
+              <p>
+                Please find the QR code attached below. 
+              </p>
+              
+              <div style="display:table" id="img-downloader" class="img-responsive center-block">
+                <a href="#" download onclick=" this.href=document.querySelector('#img-downloader img').getAttribute('src');">
+                
+                <qrcode *ngIf="qrCodeData" [qrdata]="qrCodeData" [size]="256" [level]="'M'" class="img-responsive center-block" style="display:table" download></qrcode>
+                </a>
+              </div>
               <div class="center-on-small-only">
                 <a class="btn btn-primary waves-light" mdbRippleRadius routerLink="/degree">Go Back</a>
-              </div>
+              </div> 
             </div>
             <div *ngIf="invalidDegree">
-              <img src="/assets/images/red-cross.png">
+              <img src="/assets/images/red-cross.png" class="img-responsive center-block" style="width:225px">
               <h2>
                 Invalid Degree!
               </h2>

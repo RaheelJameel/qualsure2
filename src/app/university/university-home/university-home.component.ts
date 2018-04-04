@@ -14,7 +14,7 @@ import { EmptyStringValidator } from '../../common/validators/empty-string-valid
 import { UniversityService } from '../university.service';
 import { University} from '../university';
 import { error } from 'util';
-
+import {PageScrollConfig} from 'ng2-page-scroll';
 @Component({
   selector: 'app-university-home',
   templateUrl: './university-home.component.html',
@@ -57,6 +57,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
     this.createSignupForm();
     this.createStepTwoForm();
     this.subcribeToLogoutObservable();
+    PageScrollConfig.defaultScrollOffset = 56;
    }
 
   ngOnInit() {
@@ -235,7 +236,8 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
       console.log(response);
     },
     error => {
-      console.error(error)
+      if(error)
+        console.error(error)
     });
   }
   checkLoginStatus(){
@@ -251,4 +253,5 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
        return false;
     }
   }
+ 
 }
