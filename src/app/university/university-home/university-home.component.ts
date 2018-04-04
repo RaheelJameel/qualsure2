@@ -271,7 +271,7 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
     }
   }
 
-  redirectToAddDegree() {
+  redirectToAddDegree(link = 'add-degree') {
     if (this.universityInstance.firstTime === 'True') {
       const modalRef: NgbModalRef = this.modalService.open(ConfirmChangesComponent, { backdrop: 'static', windowClass: 'align-modal' });
       modalRef.componentInstance.title = 'Important Information';
@@ -282,13 +282,13 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
       modalRef.result.then(
         (result) => {
           if (result) {
-            this.router.navigate(['university', 'add-degree']);
+            this.router.navigate(['university', link]);
           }
         }, (reason) => {
           console.log(`Cancelled`);
         });
     } else {
-      this.router.navigate(['university', 'add-degree']);
+      this.router.navigate(['university', link]);
     }
     return false;
   }

@@ -23,7 +23,7 @@ const univeristyRoutes: Routes = [
       { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuardEditForm] },
       { path: 'wallet',  component: UniversityWalletComponent , canActivate: [AuthGuard]  },
       { path: 'add-degree',  component: UniversityAddDegreeComponent , canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard]  },
-      { path: 'add-multiple-degree',  component: UniversityMultipleAddDegreeComponent   }
+      { path: 'add-multiple-degrees',  component: UniversityMultipleAddDegreeComponent   }
 
     ]
   },

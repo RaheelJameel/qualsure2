@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PapaParseService } from 'ngx-papaparse';
 import { UniversityService } from '../university.service';
 import { Observable } from 'rxjs/Observable';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { PasswordDialogComponent } from '../../common/modals/password-dialog/password-dialog.component';
 @Component({
   selector: 'app-university-multiple-add-degree',
   templateUrl: './university-multiple-add-degree.component.html',
@@ -15,8 +18,16 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
   errors: any;
   degreesArray:Array<any>;
   validated: boolean;
-  constructor(private papa: PapaParseService,
-    private UniversityService: UniversityService,) {
+  submitted: boolean;
+  errorMessage: string;
+  submissionFailed: boolean;
+
+  constructor(
+    private router: Router,
+    private papa: PapaParseService,
+    private universityService: UniversityService,
+    private modalService: NgbModal,
+  ) {
       this.validated=false;
      }
 
@@ -40,10 +51,10 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
       }
   }
   checkUniInfoAndGetFormField() {
-    this.UniversityService.getInfo
+    this.universityService.getInfo
       .subscribe(response => {
         if (response.body) {
-          this.uniID = this.UniversityService.university.accountId;
+          this.uniID = this.universityService.university.accountId;
           this.getFormFields();
 
         }
@@ -128,16 +139,37 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
     this.validated=true;
     console.log(this.degreesArray);
   }
-  submitDegrees(){
-    var degreeObj={
-      degreeDetails: this.degreesArray
-    }
-    this.UniversityService.addMultipleDegrees(degreeObj,'Qwerty7890!').subscribe(
-      reponse=>{
-        console.log(reponse);
-      }
-    )
+
+
+  submitDegrees() {
+    this.modalService.open(PasswordDialogComponent, { backdrop: 'static', windowClass: 'align-modal' }).result
+      .then((result) => {
+        this.submitted = true;
+        const degreeObj = { degreeDetails: this.degreesArray };
+        this.universityService.addMultipleDegrees(degreeObj, result)
+          .subscribe(
+            (response) => {
+              if (response.body.status === 'false') {
+                this.errorMessage = response.body.errorMessage;
+                this.submissionFailed = true;
+              } else {
+                setTimeout(() => {
+                  this.router.navigate(['/university']);
+                }, 3000);
+              }
+            },
+            (error) => {
+              console.error(error);
+              if (error.status === 0) {
+                this.errorMessage = 'Connection Timed Out';
+                this.submissionFailed = true;
+              }
+            }
+        );
+      }, (reason) => {});
   }
+
+
   getReularExps () :any{
     
     var regularExps=[];
@@ -148,7 +180,7 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
   }
 
   getFormFields(): void {
-    this.UniversityService.getFormFields(this.uniID,true).subscribe(
+    this.universityService.getFormFields(this.uniID,true).subscribe(
       response => {
         this.formFields=response.formFields;
         var temp={
