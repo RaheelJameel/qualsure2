@@ -1,25 +1,27 @@
-import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { TokenStorage } from '../token.storage';
 
-import { phoneMask, cnicMask } from '../../common/constants';
+import { phoneMask, cnicMask, UnsavedChangesErrorMsg } from '../../common/constants';
 import { HeaderFooterComponent } from '../../common/header-footer/header-footer.component';
 import { EmptyStringValidator } from '../../common/validators/empty-string-validator';
 
 import { UniversityService } from '../university.service';
 import { University} from '../university';
+import { ComponentCanDeactivate } from '../pending-changes-guard';
 
 @Component({
   selector: 'app-university-home',
   templateUrl: './university-home.component.html',
   styleUrls: ['./university-home.component.scss']
 })
-export class UniversityHomeComponent implements OnInit, OnDestroy {
+export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
   universityInstance: University;
   loggedIn: boolean;
   loginForm: FormGroup;
@@ -255,6 +257,20 @@ export class UniversityHomeComponent implements OnInit, OnDestroy {
 
       this.loggedIn=false;
        return false;
+    }
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    // insert logic to check if there are pending changes here;
+    // returning true will navigate without confirmation
+    // returning false will show a confirm dialog before navigating away
+    return !(this.signupForm.dirty || this.stepTwoForm.dirty);
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (!this.canDeactivate()) {
+      $event.returnValue = UnsavedChangesErrorMsg;
     }
   }
 }

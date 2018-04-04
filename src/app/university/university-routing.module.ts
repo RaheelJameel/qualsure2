@@ -16,7 +16,7 @@ const univeristyRoutes: Routes = [
     path: 'university',
     component: UniversityComponent,
     children: [
-      { path: '', component: UniversityHomeComponent },
+      { path: '', component: UniversityHomeComponent, canDeactivate: [PendingChangesGuard] },
       { path: 'explore',  component: UniversityLearnMoreComponent, canDeactivate: [PendingChangesGuard] },
       { path: 'degrees',  component: UniversityViewDegreesComponent, canActivate: [AuthGuard] },
       { path: 'edit-form',  component: UniversityEditFormComponent , canActivate: [AuthGuard] },
