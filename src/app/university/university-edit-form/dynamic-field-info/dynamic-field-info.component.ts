@@ -45,6 +45,7 @@ export class DynamicFieldInfoComponent implements OnInit {
         this.isRange = false;
       }
       this.refinedValidators = this.getRefinedValidators(validatorType);
+      this.fieldInfoForm.get('fieldValidations').setValue(this.refinedValidators[0].name);
     });
     this.fieldInfoForm.get('fieldValidations').valueChanges.subscribe(validator => {
       if (validator === 'Range') {
