@@ -29,7 +29,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { PendingChangesGuard } from './pending-changes-guard';
 import { UniversityWalletComponent } from './university-wallet/university-wallet.component';
 import {Ng2PageScrollModule} from 'ng2-page-scroll';
-
+import { UniversityMultipleAddDegreeComponent } from './university-multiple-add-degree/university-multiple-add-degree.component';
+import { PapaParseModule } from 'ngx-papaparse';
 @NgModule({
   imports: [
     CommonModule,
@@ -46,6 +47,7 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     NgbModule,
     TextMaskModule,
     Ng2PageScrollModule,
+    PapaParseModule,
   ],
   declarations: [
     UniversityComponent,
@@ -56,6 +58,7 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     UniversityAddDegreeComponent,
     UniversityHomeComponent,
     UniversityWalletComponent,
+    UniversityMultipleAddDegreeComponent,
   ],
   exports: [
     UniversityComponent,

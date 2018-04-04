@@ -278,5 +278,14 @@ private handleError (operation = 'operation', result?: any) {
         catchError(this.handleError('getPublicAddress'))
       );
   }
+  addMultipleDegrees(degreeDetails,password){
+    const url = this.universityUrl + `/universities/${this.tokenStorage.getId()}/multipleDegrees`;
+    degreeDetails.password=password;
+    return this.http.post(url, degreeDetails, this.httpOptions)
+      .pipe(
+        tap((degreeInfo: any) => this.log(`MultipleAddDegree req sent for user`)),
+        catchError(this.handleError('MultipleAddDegree'))
+      );
+  }
 }
 
