@@ -19,10 +19,8 @@ export class UniversityWalletComponent implements OnInit {
     this.universityService.getPublicAddress().subscribe(
       response => {
         this.publicAddress=response.body.publicAddress
-        console.log(response.body.publicAddress);
       },
       error => {
-        console.error(error);
       }
     )
   }
@@ -30,10 +28,8 @@ export class UniversityWalletComponent implements OnInit {
     this.universityService.getAccountBalance().subscribe(
       response => {
         this.accountBalance=response.body.accountBalance
-        console.log(response.body.accountBalance);
       },
       error => {
-        console.error(error);
       }
     )
   }

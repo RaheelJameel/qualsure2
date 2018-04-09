@@ -23,17 +23,14 @@ export class StudentComponent implements OnInit {
   getUniversitiesList() {
     this.studentService.getListOfUniversities().subscribe(
       response => {
-        console.log(response);
         this.universityList=response;
        
       }
     )
   }
 
-  select(Sid: any){
-    console.log(Sid);
-     this.selectedUniversity= this.universityList.filter((list)=> list.id == Sid)
-    console.log(this.selectedUniversity)
+  select(Sid: any) {
+     this.selectedUniversity = this.universityList.filter((list)=> list.id == Sid)
   }
 
   redirect(universityID: string) {

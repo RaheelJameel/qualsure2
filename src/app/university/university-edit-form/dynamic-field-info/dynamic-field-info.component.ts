@@ -27,20 +27,16 @@ export class DynamicFieldInfoComponent implements OnInit {
 
   ngOnInit() {
     this.disableFields();
-  //  console.log(this.fieldInfoForm.get('fieldType').value);
     this.refinedValidators = this.getRefinedValidators(this.fieldInfoForm.get('fieldType').value);
     this.isRange = false;
     if (this.fieldInfoForm.get('fieldValidations').value === 'Range') {
            this.isRange = true;
     }
-    // this.fieldInfoForm.addControl('min', new FormControl('', Validators.required));
-    // this.fieldInfoForm.addControl('max', new FormControl('', Validators.required));
 
     this.onChanges();
   }
   onChanges(): void {
     this.fieldInfoForm.get('fieldType').valueChanges.subscribe(validatorType => {
-   //   console.log('valueee= ' + validatorType);
       if (validatorType !== 'number') {
         this.isRange = false;
       }

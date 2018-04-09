@@ -30,9 +30,6 @@ export class StudentService {
   private handleError (operation = 'operation', result?: any) {
     return (error: any): Observable<any> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
       result=error;
@@ -50,7 +47,6 @@ export class StudentService {
     .pipe(
       tap((response:any) => {
         this.log(`fetched list of universities`);
-        console.log(response);
         return this.getNameandId(response);
         
         //return universityNames;

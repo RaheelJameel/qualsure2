@@ -55,8 +55,6 @@ export class StudentDegreeFormComponent implements OnInit {
   }
 
   getUniversityName() {
-    // this.universityName;
-    console.log('Getting.......');
     return this.universityService.getSpecificUniveristyInfo(this.universityID)
       .subscribe(
         (response) => {
@@ -74,8 +72,6 @@ export class StudentDegreeFormComponent implements OnInit {
     if (this.degreeID) {
       this.studentService.getDegree(this.universityID, this.degreeID)
         .subscribe((response) => {
-          console.log('getOptionalDegreeDetails :', response);
-          //this.reloadedDegree = {"studentName":"a","gpa":"1","graduationYear":"1","degreeType":"a","degreeName":"a","CNIC":"11111-1111111-1","ABC":"11111-1111111-1"};
           if (response && response.degreeDetails && response.degreeDetails.universityId) {
             delete response.degreeDetails.universityId;
           }
@@ -83,7 +79,6 @@ export class StudentDegreeFormComponent implements OnInit {
           this.showDegreeForm = true;
           },
           error => {
-            console.error(error);
           }
         );
     } else {
@@ -98,12 +93,8 @@ export class StudentDegreeFormComponent implements OnInit {
     this.invalidDegree = false;
     this.studentService.verifyDegree(this.universityID, degree)
       .subscribe(response => {
-        console.log(response);
-          
         if (response && response.status) {
           if (response.status === 'Success') {
-            
-            console.log(response);
             setTimeout(() => {
               this.validDegree = true;
               this.success('Verified');
@@ -125,8 +116,6 @@ export class StudentDegreeFormComponent implements OnInit {
         }
       },
       error => {
-        console.error(error);
-        console.log('Verification Error?:', error);
             if (error.status === 0) {
               this.verificationError = 'Connection Timed Out';
             } else if (error.error.status === 'false') {
@@ -134,7 +123,6 @@ export class StudentDegreeFormComponent implements OnInit {
             } else {
               this.verificationError = error.message;
             }
-            console.error(error);
       });
   }
 

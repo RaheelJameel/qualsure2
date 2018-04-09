@@ -56,19 +56,16 @@ export class DegreeFormComponent implements OnInit {
             this.makeForm();
           }},
           error => {
-            console.error(error);
           }
         );
     } else {
       this.studentService.getFormFields(this.uniID)
         .subscribe((response) => {
-        //    console.log('1111111111111', response);
           if (response) {
             this.formFields = response.formFields;
             this.makeForm();
           }},
           error => {
-            console.error(error);
           }
         );
     }

@@ -53,7 +53,6 @@ export class UniversityEditFormComponent implements OnInit {
         if (response.body) {}
       },
       error => {
-        console.error(error);
       });
   }
 
@@ -107,7 +106,6 @@ export class UniversityEditFormComponent implements OnInit {
         }
       },
       error => {
-        console.error(error);
       });
   }
 
@@ -115,13 +113,10 @@ export class UniversityEditFormComponent implements OnInit {
     this.universityService.getFormFields()
       .subscribe((response) => {
         if (response.body) {
-          // console.log('----------------initForm():', response);
-          // console.log(response.body);
           this.formModel = response.body;
           this.initFormFields();
         }},
         error => {
-          console.error(error);
         }
       );
   }
@@ -131,11 +126,9 @@ export class UniversityEditFormComponent implements OnInit {
       .subscribe(
         response => {
         if (response.body) {
-       //   console.log(response.body);
           this.defaultFieldValidators = response.body;
         }},
         error => {
-          console.error(error);
         }
       );
   }
@@ -175,7 +168,6 @@ export class UniversityEditFormComponent implements OnInit {
   save() {
     this.formInvalid = false;
     if (this.editForm.valid) {
-    //  console.log(this.formApiValue);
       this.commonService.setForm(this.formApiValue);
       this.universityService.saveFormFields(this.formApiValue)
         .subscribe(
@@ -187,7 +179,6 @@ export class UniversityEditFormComponent implements OnInit {
           }, 3000);
         }},
         error => {
-          console.error(error);
         }
       );
     } else {

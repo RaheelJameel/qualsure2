@@ -146,7 +146,6 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
       },
       (error) => {
         this.submitted = false;
-        console.error(error);
         if (fromSignup) {
           this.stepTwoFormError = error.message;
         } else {
@@ -186,7 +185,6 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
             } else {
               this.signUpError = error.message;
             }
-            console.error(error);
           }
         );
     } else {
@@ -225,7 +223,6 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
             this.login(true);
           }},
           error => {
-            console.log('Signup Error?:', error);
             if (error.status === 0) {
               this.stepTwoFormError = 'Connection Timed Out';
             } else if (error.error.status === 'false') {
@@ -233,7 +230,6 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
             } else {
               this.stepTwoFormError = error.message;
             }
-            console.error(error);
             this.submitted = false;
           }
         );
@@ -243,24 +239,18 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
   }
 
   getUniversityInfo(id: any) {
-    console.log('getUniversityInfo: ');
     this.universityService.getInfo
     .subscribe(response => {
       if (response.body) {
         this.universityInstance = response.body;
         this.hideEditForm = (this.universityInstance.firstTime === 'False');
       }
-      console.log(response);
-      console.log('getUniversityInfo subscribe: this.hideEditForm: ', this.hideEditForm);
     },
     error => {
-      if(error)
-        console.error(error)
     });
   }
   checkLoginStatus(){
     if(this.universityService.checkLogin()){
-      console.log("correct");
        this.loggedIn=true;
        this.getUniversityInfo(this.token.getId());
        
@@ -286,7 +276,6 @@ export class UniversityHomeComponent implements OnInit, OnDestroy, ComponentCanD
             this.router.navigate(['university', link]);
           }
         }, (reason) => {
-          console.log(`Cancelled`);
         });
     } else {
       this.router.navigate(['university', link]);

@@ -103,10 +103,8 @@ export class CommonService {
 
   getForm(): FieldGroupAPI[] {
     if (this.previousForm) {
-      console.log('CommonService getForm(): giving Previous Form', this.previousForm);
       return this.previousForm;
     } else {
-      console.log('CommonService getForm(): giving Default Form', this.getDefaultForm());
       return this.getDefaultForm();
     }
   }

@@ -43,7 +43,6 @@ export class UniversityDegreeService {
     let url = this.degreesUrl + '/universities/' + this.tokenStorage.getId() + '/degrees/'+id
     return this.http.get<Degree>(url).pipe(
       tap(_ => {
-        console.log(_)
         this.log(`fetched degree id=${id}`)}),
       catchError(this.handleError<Degree>(`getDegree id=${id}`))
     );
@@ -98,9 +97,6 @@ export class UniversityDegreeService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
 
@@ -110,6 +106,5 @@ export class UniversityDegreeService {
   }
 
   private log(message: string) {
-    console.log('DegreeService: ', message);
   }
 }

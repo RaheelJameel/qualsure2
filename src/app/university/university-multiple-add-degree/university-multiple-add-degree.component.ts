@@ -37,13 +37,9 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
 
   }
   public changeListener(files: FileList){
-    console.log(files);
     if(files && files.length > 0) {
       this.noFile=false;
-       let file : File = files.item(0); 
-         console.log(file.name);
-         console.log(file.size);
-         console.log(file.type);
+       let file : File = files.item(0);
          let reader: FileReader = new FileReader();
          reader.readAsText(file);
          reader.onload = (e) => {
@@ -62,13 +58,11 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
         }
       },
       error => {
-        console.error(error);
       });
   }
   parser(data:any){
     this.papa.parse(data,{
       complete: (results, file) => {
-          console.log('Parsed: ', results);
         this.parsedData=results;
 
         this.equalFormFields();
@@ -78,33 +72,26 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
   equalFormFields(){
     this.compareFormFields.subscribe(
       response =>{
-        console.log(response);
         if(!response){
           this.errors=["The file doesn't have the same columns"];
           return;
         }
-        console.log(this.getReularExps());
         var errors=[];
       
         var regularExps=this.getReularExps();
         this.parsedData.data.shift();
         
         this.parsedData.data.forEach((element,i) => {
-          console.log(element);
-          console.log("testing regular exps-------------------------------");
           element.forEach((element2,j) => {
         
             if(!RegExp(regularExps[j]).test(element2))
             {
-              console.log(i,j);
            
               errors.push({row:i+2,column:j+1});
             }
             
-            //console.log(RegExp(regularExps[j]).test(element2));
           });
         });
-        console.log(errors);
         if(errors.length !== 0){
           this.errors=errors;
         }
@@ -118,8 +105,6 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
   makeDegreesArray(){
     this.degreesArray=[];
     this.parsedData.data.forEach((element,i) => {
-      console.log(element);
-      console.log("testing regular exps-------------------------------");
         
         const degreeObject = {
           studentName: element[0],
@@ -131,15 +116,12 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
         for (let j = 5; j < element.length; j++) {
           degreeObject[this.formFields[j].name] =element[j];
         }
-        console.log(degreeObject);
         if(degreeObject.studentName !== '' && degreeObject.gpa !== '' && degreeObject.graduationYear !== '' && degreeObject.degreeType !== '' && degreeObject.degreeName )
           this.degreesArray.push(degreeObject);
-        //console.log(RegExp(regularExps[j]).test(element2));
 
       
     });
     this.validated=true;
-    console.log(this.degreesArray);
   }
 
 
@@ -151,7 +133,6 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
         this.universityService.addMultipleDegrees(degreeObj, result)
           .subscribe(
             (response) => {
-              console.log(response);
               if (response.body.status === 'false') {
                 this.errorMessage = response.body.errorMessage;
                 this.submissionFailed = true;
@@ -162,7 +143,6 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
               }
             },
             (error) => {
-              console.error(error);
               if (error.status === 0) {
                 this.errorMessage = 'Connection Timed Out';
                 this.submissionFailed = true;
@@ -189,11 +169,8 @@ export class UniversityMultipleAddDegreeComponent implements OnInit {
         var temp={
           name: "Status"
         };
-        // this.formFields[this.formFields.length] =temp;
-        console.log(this.formFields);
       },
       error => {
-        console.error(error);
       }
     )
   }

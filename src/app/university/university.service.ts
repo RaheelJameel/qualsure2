@@ -55,9 +55,6 @@ export class UniversityService {
  */
 private handleError (operation = 'operation', result?: any) {
   return (error: any): Observable<any> => {
-
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); // log to console instead
     if(operation === 'University Info')
       this.logout();
     // TODO: better job of transforming error for user consumption
@@ -255,7 +252,6 @@ private handleError (operation = 'operation', result?: any) {
   }
 
   getPublicAddress(){
-    console.log(this.tokenStorage.getId());
     const url = this.universityUrl + `/universities/${this.tokenStorage.getId()}/getPublicAddress`;
     return this.http.get(url, this.httpOptions)
       .pipe(

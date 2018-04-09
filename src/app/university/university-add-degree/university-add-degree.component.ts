@@ -54,7 +54,6 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
         }
       },
       error => {
-        console.error(error);
       });
   }
 
@@ -65,11 +64,9 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
       .then((result) => {
         this.submitted = true;
         window.scrollTo(0, 0);
-        console.log(`Password Entered: ${result}`);
         this.universityService.addDegree(degree,result)
           .subscribe(
           (response) => {
-            console.log('addDegree success:', response);
             if (response.body.status === 'false') {
               this.errorMessage = response.body.errorMessage;
               this.submissionFailed = true;
@@ -81,8 +78,6 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
             }
           },
           (error ) => {
-            console.log('addDegree error:', error);
-            console.error(error);
             this.error('Operation Failed');
             if (error.status === 0) {
               this.errorMessage = 'Connection Timed Out';
@@ -91,17 +86,6 @@ export class UniversityAddDegreeComponent implements OnInit, ComponentCanDeactiv
           }
         );
       }, (reason) => {
-        console.log(`Cancelled`);
-      });
-  }
-
-  promptPassword() {
-    console.log('promptPassword');
-    this.modalService.open(PasswordDialogComponent, { backdrop: 'static', windowClass: 'align-modal' }).result
-      .then((result) => {
-        console.log(`Password Entered: ${result}`);
-      }, (reason) => {
-        console.log(`Cancelled`);
       });
   }
 

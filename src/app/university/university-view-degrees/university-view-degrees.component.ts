@@ -73,25 +73,19 @@ export class UniversityViewDegreesComponent implements OnInit {
         
         return this.makeInitCapWithSpace(key);
       })
-      console.log("blaolaoalaoal");
-      console.log(this.formFieldUniKeys[index]);
         })
   }
 
   getDegrees(): void {
     this.UniversitydegreeService.getDegrees()
     .subscribe(degrees => {
-      console.log(degrees);
       this.degrees = degrees;
       this.createFormFieldUni();
       setTimeout(()=>{
-        console.log("FormformFieldUniKeys",this.formFieldUniKeys );
-        console.log("formFieldUniValues", this.formFieldUniValues );
 
       },3000)
     },
       error => {
-        console.error(error);
       }
     );
   }
@@ -103,10 +97,8 @@ export class UniversityViewDegreesComponent implements OnInit {
           name: "Status"
         };
         this.formFields[this.formFields.length] =temp;
-        console.log(response);
       },
       error => {
-        console.error(error);
       }
     )
   }
