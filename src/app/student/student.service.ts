@@ -9,12 +9,14 @@ import { Response } from '@angular/http';
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 import { Router, ActivatedRoute }            from '@angular/router';
 
+import { webisteURL, qualsureBEPort } from '../common/constants';
+
 @Injectable()
 export class StudentService {
 
   constructor(private http: HttpClient,private messageService: MessageService) { }
 
-  private Url = 'http://localhost:9000';  // URL to web api
+  private Url = webisteURL + ':' + qualsureBEPort;  // URL to web api
   private httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   observe: "response" as 'body',

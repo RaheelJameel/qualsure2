@@ -11,6 +11,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/map';
 
+import { webisteURL, qualsureBEPort } from '../common/constants';
 import { MessageService } from '../messages/message.service';
 
 import { University } from './university';
@@ -23,7 +24,7 @@ export class UniversityService {
 
   isloggedin: boolean;
   public university: University;
-  private universityUrl = 'http://localhost:9000';  // URL to web api
+  private universityUrl = webisteURL + ':' + qualsureBEPort;  // URL to web api
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

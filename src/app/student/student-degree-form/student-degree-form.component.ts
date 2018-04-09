@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
+import { webisteURL } from '../../common/constants';
 import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
 
 import { UniversityService } from '../../university/university.service';
@@ -20,8 +21,8 @@ export class StudentDegreeFormComponent implements OnInit {
   submitted: boolean;
   validDegree: boolean;
   invalidDegree: boolean;
-  serverIp: string;
   qrCodeData: string;
+  serverIp = webisteURL;
 
   reloadedDegree: any;
   showDegreeForm: boolean;
@@ -35,7 +36,6 @@ export class StudentDegreeFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getFile();
     this.setUniversityID();
     this.getOptionalDegreeDetails();
   }
@@ -135,15 +135,6 @@ export class StudentDegreeFormComponent implements OnInit {
               this.verificationError = error.message;
             }
             console.error(error);
-      });
-  }
-
-  getFile() {
-    fetch('/assets/server-ip.txt')
-      .then(response => response.text())
-      .then((inputString) => {
-        const inputArray = inputString.split('\n');
-        this.serverIp = inputArray[0];
       });
   }
 

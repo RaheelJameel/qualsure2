@@ -8,7 +8,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Degree } from './degree';
 import { MessageService } from '../messages/message.service';
 import {UniversityService} from './university.service';
-import {TokenStorage} from './token.storage'
+import {TokenStorage} from './token.storage';
+
+import { webisteURL, qualsureBEPort } from '../common/constants';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -16,7 +19,7 @@ const httpOptions = {
 @Injectable()
 export class UniversityDegreeService {
 
-  private degreesUrl = 'http://localhost:9000';  // URL to web api
+  private degreesUrl = webisteURL + ':' + qualsureBEPort;  // URL to web api
 
   constructor(
     private http: HttpClient,
