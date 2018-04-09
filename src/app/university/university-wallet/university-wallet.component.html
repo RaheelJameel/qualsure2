@@ -11,10 +11,14 @@
         <span *ngIf="!publicAddress" class="d-block bg-primary p-3">Ethereum address goes here</span>
         <span *ngIf="publicAddress" class="d-block bg-primary p-3">{{publicAddress}}</span>
 
-        <p class="card-text">Your Account Balance</p>
+        <p class="card-text">Your Account Balance (Wei)</p>
         <span *ngIf="!accountBalance" class="d-block bg-primary p-3">Account Balance goes here</span>
         <span *ngIf="accountBalance" class="d-block bg-primary p-3">{{accountBalance}}</span>
-
+        <br>
+        <p>
+          <b>In order to deposit ether in this account you can buy ether from any coin exchange and transfer it to "Your address" mentioned above.
+        </b>
+         </p>
     </div>
   
   </div>
