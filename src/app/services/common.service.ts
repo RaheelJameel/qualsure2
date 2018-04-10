@@ -90,8 +90,15 @@ export interface FieldValidator {
 export class CommonService {
 
   private previousForm: FieldGroupAPI[];
+  public webisteURL: string;
+  public websitePort: string;
 
-  constructor() { }
+  constructor() {
+    this.webisteURL = window.location.protocol + '//' + window.location.hostname;
+    if (window.location.port !== '80') {
+      this.websitePort = window.location.port;
+    }
+  }
 
   getDefaultForm(): FieldGroupAPI[] {
     return DefaultFormArray;
