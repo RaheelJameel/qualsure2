@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
-import { webisteURL } from '../../common/constants';
 import { AlertService } from '../../common/angular2-alert-notifications/_services/index';
+import { CommonService } from '../../services/common.service';
 
 import { UniversityService } from '../../university/university.service';
 import { StudentService } from '../student.service';
@@ -22,7 +22,8 @@ export class StudentDegreeFormComponent implements OnInit {
   validDegree: boolean;
   invalidDegree: boolean;
   qrCodeData: string;
-  serverIp = webisteURL;
+  serverIp = this.commonService.webisteURL;
+  serverPort = this.commonService.websitePort;
 
   reloadedDegree: any;
   showDegreeForm: boolean;
@@ -33,11 +34,18 @@ export class StudentDegreeFormComponent implements OnInit {
     private universityService: UniversityService,
     private studentService: StudentService,
     private alertService: AlertService,
+    private commonService: CommonService,
   ) { }
 
   ngOnInit() {
     this.setUniversityID();
     this.getOptionalDegreeDetails();
+
+    this.serverIp = this.commonService.webisteURL;
+    // logic to set port if not default to 80
+    if (this.commonService.websitePort) {
+      this.serverIp += ':' + this.commonService.websitePort;
+    }
   }
 
   success(message: string) {

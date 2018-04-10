@@ -11,7 +11,8 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/map';
 
-import { webisteURL, qualsureBEPort } from '../common/constants';
+import { qualsureBEPort } from '../common/constants';
+import { CommonService } from '../services/common.service';
 import { MessageService } from '../messages/message.service';
 
 import { University } from './university';
@@ -24,7 +25,7 @@ export class UniversityService {
 
   isloggedin: boolean;
   public university: University;
-  private universityUrl = webisteURL + ':' + qualsureBEPort;  // URL to web api
+  private universityUrl = this.commonService.webisteURL + ':' + qualsureBEPort;  // URL to web api
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -72,6 +73,7 @@ private handleError (operation = 'operation', result?: any) {
     private messageService: MessageService,
     private tokenStorage: TokenStorage,
     private router: Router,
+    private commonService: CommonService,
   ) { }
 
   private log(message: string) {

@@ -10,7 +10,8 @@ import { MessageService } from '../messages/message.service';
 import {UniversityService} from './university.service';
 import {TokenStorage} from './token.storage';
 
-import { webisteURL, qualsureBEPort } from '../common/constants';
+import { qualsureBEPort } from '../common/constants';
+import { CommonService } from '../services/common.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,13 +20,14 @@ const httpOptions = {
 @Injectable()
 export class UniversityDegreeService {
 
-  private degreesUrl = webisteURL + ':' + qualsureBEPort;  // URL to web api
+  private degreesUrl = this.commonService.webisteURL + ':' + qualsureBEPort;  // URL to web api
 
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
     private universityService: UniversityService,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage,
+    private commonService: CommonService,
   ) { }
 
   /** GET degrees from the server */
