@@ -9,16 +9,27 @@ import {UniversityService} from '../university.service';
 export class UniversityWalletComponent implements OnInit {
   publicAddress: String;
   accountBalance: String;
-
+  uniID: any;
   constructor(private universityService: UniversityService) {
     this.getUniversityPublicAddress();
     this.getAccountBalance();
+    this.getUniversityInfo();
    }
-
+  
+   getUniversityInfo() {
+    this.universityService.getInfo
+    .subscribe(response => {
+      if (response.body) {
+        this.uniID = this.universityService.university.accountId;
+      }
+    },
+    error => {
+    });
+   }
   getUniversityPublicAddress() {
     this.universityService.getPublicAddress().subscribe(
       response => {
-        this.publicAddress=response.body.publicAddress
+        this.publicAddress=response.body.publicAddress;
       },
       error => {
       }
@@ -27,7 +38,7 @@ export class UniversityWalletComponent implements OnInit {
   getAccountBalance() {
     this.universityService.getAccountBalance().subscribe(
       response => {
-        this.accountBalance=response.body.accountBalance
+        this.accountBalance=response.body.accountBalance;
       },
       error => {
       }
